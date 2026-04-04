@@ -166,12 +166,19 @@ select:focus{border-color:var(--accent)}
   margin-top:8px;padding:8px 12px;border-radius:8px;
   background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12);
 }
-.ai-stars{display:flex;align-items:center;gap:2px;margin-bottom:3px}
+.ai-stars{display:flex;align-items:center;gap:2px;margin-bottom:3px;flex-wrap:wrap}
 .ai-star{font-size:12px}
 .ai-star.filled{color:#fbbf24}
 .ai-star.empty{color:var(--text3)}
 .ai-comment{font-size:12px;color:#c4b5fd;line-height:1.4;font-style:italic}
 .ai-label{font-size:10px;color:var(--text3);margin-right:6px;font-style:normal;font-weight:600}
+.ai-sentiment{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px}
+.ai-sentiment.positive{background:rgba(52,211,153,.15);color:#6ee7b7}
+.ai-sentiment.negative{background:rgba(239,68,68,.15);color:#fca5a5}
+.ai-sentiment.neutral{background:rgba(148,163,184,.1);color:#94a3b8}
+.ai-action{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px}
+.ai-action.act{background:rgba(245,158,11,.15);color:#fcd34d}
+.ai-action.watch{background:rgba(96,165,250,.12);color:#93c5fd}
 
 .post-summary{
   color:var(--text2);font-size:13px;margin:6px 0 8px;line-height:1.5;
@@ -330,6 +337,12 @@ select:focus{border-color:var(--accent)}
         {% for i in range(5) %}
         <span class="ai-star {{ 'filled' if i < p.ai_rating else 'empty' }}">★</span>
         {% endfor %}
+        {% if p.ai_sentiment %}
+        <span class="ai-sentiment {{ p.ai_sentiment }}">{{ '利好' if p.ai_sentiment == 'positive' else ('风险' if p.ai_sentiment == 'negative' else '中性') }}</span>
+        {% endif %}
+        {% if p.ai_action and p.ai_action != 'skip' %}
+        <span class="ai-action {{ p.ai_action }}">{{ '立即行动' if p.ai_action == 'act' else '持续关注' }}</span>
+        {% endif %}
       </div>
       {% if p.ai_comment %}
       <div class="ai-comment">{{ p.ai_comment }}</div>

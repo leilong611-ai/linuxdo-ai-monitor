@@ -32,6 +32,7 @@ jobs:
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python monitor.py
 
       - name: Deploy to GitHub Pages
