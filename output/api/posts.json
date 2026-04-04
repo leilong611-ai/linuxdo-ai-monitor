@@ -1,0 +1,2897 @@
+{
+  "date": "2026-04-04",
+  "total": 152,
+  "updated_at": "2026-04-04T23:08:44.483433+08:00",
+  "api_version": 1,
+  "description": "AI 情报雷达 - 每日新闻数据接口，供 AI 分析使用",
+  "posts": [
+    {
+      "uid": "linuxdo:1897347",
+      "title": "Claude Max 5x订阅记录，看什么时候会被封号",
+      "url": "https://linux.do/t/topic/1897347",
+      "summary": "直接莽一波，google play订阅，奶昔美国节点直接登录claude code用，电脑语言、时区和用来订阅的手机都是中文、上海时区，2026-04-02 01:07:50付款用了两天蹬了28%周限",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 58,
+      "author": "仰望蓝白条纹天空",
+      "excerpt": "直接莽一波，google play订阅，奶昔美国节点直接登录claude code用，电脑语言、时区和用来订阅的手机都是中文、上海时区，2026-04-02 01:07:50付款用了两天蹬了28%周限。 想试试退款流，看A\\几天给我拿下 17 个帖子 - 8 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T10:45:35+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1894513",
+      "title": "Claude 赠送一次性 20 刀额外使用量",
+      "url": "https://linux.do/t/topic/1894513",
+      "summary": "有 claude 订阅的可以去 Usage 页面看看 support",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "apparition",
+      "excerpt": "有 claude 订阅的可以去 Usage 页面看看 support.claude.com Extra usage credit for Pro, Max, and Team plans | Claude Help Center (为什么我领不了??? ) 30 个帖子 - 19 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T22:43:39+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898384",
+      "title": "我只是想要安安稳稳用claude，我有什么错",
+      "url": "https://linux.do/t/topic/1898384",
+      "summary": "佬们，先说说我的配置：qq",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 93,
+      "author": "Nothingeven",
+      "excerpt": "佬们，先说说我的配置：qq.pw夏威夷家宽+指纹浏览器，VMware虚拟机内运行，夏威夷时区。 有没有带售后没有售后手续费的渠道啊，真的找麻了 看了礼品卡，有佬友说秒封，黑卡来的 自己没有苹果设备 也没有美国卡，真的要炸了，似乎并没有一个好的解决方法 33 个帖子 - 9 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T13:41:21+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898054",
+      "title": "写论文ai推荐",
+      "url": "https://linux.do/t/topic/1898054",
+      "summary": "正在准备论文投稿，请问大家有有哪些比较好的写文章ai推荐",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 75,
+      "author": "llysglz",
+      "excerpt": "正在准备论文投稿，请问大家有有哪些比较好的写文章ai推荐？特别需要一些能够填充内容的ai。主要是gpt，claude sonnet，claude opus，gemini 3.1pro 这几个哪个更好。 此外分析一个用的不错的写论文prompt GitHub - Kiteflyingee/academic_prompts: 学术常用的prompts · GitHub 21 个帖子 - 11 位参与者",
+      "published_at": "2026-04-04T12:53:36+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898417",
+      "title": "claude这是发善心了？",
+      "url": "https://linux.do/t/topic/1898417",
+      "summary": "可惜我没有可用的银行卡，领不了这个额度 9 个帖子 - 8 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 42,
+      "author": "skyzy",
+      "excerpt": "可惜我没有可用的银行卡，领不了这个额度 9 个帖子 - 8 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T13:45:59+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896012",
+      "title": "claude 送200$ 无限刷的请求",
+      "url": "https://linux.do/t/topic/1896012",
+      "summary": "浏览器打开claude",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": true,
+      "is_new": true,
+      "engagement_score": 100,
+      "author": "Hary",
+      "excerpt": "1.浏览器打开claude.ai， 登录你的账号 2.使用下面的code,替换第3行的your_org_id为你自己的组织id在控制台运行 3.自动输出响应结果 注意：看到别的佬测试没过，我也测试请求可以过，但是额度不过，我猜可能需要有资格的账号但是还没有领取的才可以。再或者已经更新修复了。同时有封号风险，谨慎尝试。（我领了400刀所以对于我来讲是否成功都一样了。。） (async () => {",
+      "published_at": "2026-04-04T05:38:54+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897405",
+      "title": "大佬们有什么稳定使用claude的方案吗？",
+      "url": "https://linux.do/t/topic/1897405",
+      "summary": "不想考虑中转服务商，只是想自己稳定使用，目前在某宝买了一个pro还没封，想自己养一个 8 个帖子 - 5 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 31,
+      "author": "jikDar",
+      "excerpt": "不想考虑中转服务商，只是想自己稳定使用，目前在某宝买了一个pro还没封，想自己养一个 8 个帖子 - 5 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T11:02:25+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895779",
+      "title": "补偿方案正式公布！Anthropic 为 Claude AI 所有订阅用户发放一次性额外额度（Claude Max 可领 100 美元）",
+      "url": "https://linux.do/t/topic/1895779",
+      "summary": "继续 Anthropic 正在尝试解决在 Claude Code 中使用订阅额度快速消耗问题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 86,
+      "author": "Davon",
+      "excerpt": "继续 Anthropic 正在尝试解决在 Claude Code 中使用订阅额度快速消耗问题！ 根据你的订阅： Pro 20usd Max 5x 100 usd Max 20x 200 usd Team 200 usd 所有在 2026 年 4 月 3 日 9 时（PT）前订阅上述计划并开启额外用量的用户可在 4 月 3 日至 4 月 17 日通过 Usage 页面横幅领取，额度自领取起 90 天",
+      "published_at": "2026-04-04T04:38:17+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895969",
+      "title": "3月16号开通的Claude Pro是真爽，又是额度翻倍又是送extra usage的",
+      "url": "https://linux.do/t/topic/1895969",
+      "summary": "3月16号开通的尼区Claude Pro，用到现在还活着",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 49,
+      "author": "Furina",
+      "excerpt": "3月16号开通的尼区Claude Pro，用到现在还活着。 29号之前额度翻倍，现在4月4号还送20刀额外额度。真的太爽了，感觉这简直是最值的一个月 14 个帖子 - 7 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T05:26:47+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895788",
+      "title": "佬们，我刚想开个claude pro，为什么plan界面一直刷新不出来？",
+      "url": "https://linux.do/t/topic/1895788",
+      "summary": "这个claude号起了差不多一个月了，上个月15号起的，网页端没使用过，就登录CC的时候登上去授权了一下，而且用的都是美国ip，这会儿不会是半寄了吧，刚想开个pro呢 结果如下图，一直刷不出来，网没问",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 12,
+      "author": "ayt407123",
+      "excerpt": "这个claude号起了差不多一个月了，上个月15号起的，网页端没使用过，就登录CC的时候登上去授权了一下，而且用的都是美国ip，这会儿不会是半寄了吧，刚想开个pro呢 结果如下图，一直刷不出来，网没问题，啥网页都能正常访问，就是这个界面死活刷不出来，是不是要通过app订阅才行？ 3 个帖子 - 2 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T04:38:58+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897172",
+      "title": "A➗怎么突然送了一个月月费？发生什么事了",
+      "url": "https://linux.do/t/topic/1897172",
+      "summary": "今天看用量的时候有个横幅给 claim 了一个月订阅费的 credits，A​怎么突然撒币了 6 个帖子 - 4 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 24,
+      "author": "Yufei Chen",
+      "excerpt": "啥意思？今天看用量的时候有个横幅给 claim 了一个月订阅费的 credits，A​怎么突然撒币了 6 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T09:58:02+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896249",
+      "title": "Claude 注册验证手机号咋整呀",
+      "url": "https://linux.do/t/topic/1896249",
+      "summary": "前两天开了个 Claude Pro，结果被封了",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 95,
+      "author": "Livia Tassel",
+      "excerpt": "前两天开了个 Claude Pro，结果被封了。现在想注册一个新账号，结果需要验证手机号。各位佬有什么临时接码平台吗 25 个帖子 - 15 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T06:28:54+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1887927",
+      "title": "24年老号上一手5X Max，看看能不能活（4月4日更新，成功存活一天）",
+      "url": "https://linux.do/t/topic/1887927",
+      "summary": "RT,尼区小号寄了，美区小号存活，试试用这个24年上车的美区大号开个Max 27 个帖子 - 8 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 78,
+      "author": "Oganneson",
+      "excerpt": "RT,尼区小号寄了，美区小号存活，试试用这个24年上车的美区大号开个Max 27 个帖子 - 8 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T02:21:03+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896962",
+      "title": "求助，刚开的 claude max20x 号 401",
+      "url": "https://linux.do/t/topic/1896962",
+      "summary": "9 个帖子 - 5 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 33,
+      "author": "jerry3",
+      "excerpt": "9 个帖子 - 5 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T08:56:21+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1892028",
+      "title": "mimo 的plan套餐来了，怎么说？年轻了，有点贵了",
+      "url": "https://linux.do/t/topic/1892028",
+      "summary": "随着奥特曼和克劳德的持续封号或者涨价，普通用户体验越来越差，感觉可以买个这个中档的套餐做备用，中轻量级别的任务应该可以胜任吧",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": true,
+      "engagement_score": 86,
+      "author": "Cinopsys",
+      "excerpt": "随着奥特曼和克劳德的持续封号或者涨价，普通用户体验越来越差，感觉可以买个这个中档的套餐做备用，中轻量级别的任务应该可以胜任吧？ 19 个帖子 - 16 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T12:25:26+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896469",
+      "title": "Claude 负责人正式宣布从 4月4日起，Claude 订阅额度不在包含或被用于 OpenClaw 或者任何第三方工具！",
+      "url": "https://linux.do/t/topic/1896469",
+      "summary": "翻译： Claude 负责人正式宣布从 4月4日起，Claude 订阅额度不在包含或被用于 ClawCode 或者任何第三方工具",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 97,
+      "author": "Davon",
+      "excerpt": "翻译： Claude 负责人正式宣布从 4月4日起，Claude 订阅额度不在包含或被用于 ClawCode 或者任何第三方工具！ 但是如果你是领取 补偿方案正式公布！Anthropic 为 Claude AI 所有订阅用户发放一次性额外额度（Claude Max 可领 100 美元） 还可以正常使用与第三方工具，例如 OpenClaw 原话： Starting tomorrow at 12pm ",
+      "published_at": "2026-04-04T07:12:14+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896843",
+      "title": "Anthropic 旗下 Claude AI服务 充值API 有高达30％优惠！",
+      "url": "https://linux.do/t/topic/1896843",
+      "summary": "相信大家在开启Extra Usage 后会看到，如果你充值Extra Usage 现在有限时充值优惠 （咋感觉那么熟悉",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 15,
+      "author": "Davon",
+      "excerpt": "相信大家在开启Extra Usage 后会看到，如果你充值Extra Usage 现在有限时充值优惠 （咋感觉那么熟悉？之前Deepseek 也好像有？ 如果没看到的话，清理缓存，然后退出浏览器。然后重新登入，如果没有就退出登入，换个浏览器。 3 个帖子 - 3 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T08:28:04+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896287",
+      "title": "看到anthropic今天说要禁了openclaw，但我怎么记得早都禁了",
+      "url": "https://linux.do/t/topic/1896287",
+      "summary": "我2月初那会儿高强度用openclaw，记得一开始还能接得上anthropic订阅的，但从某天开始就用不了订阅了，打开推也看到说a社屏蔽不支持了，所以我一直以为a社早都明令禁止openclaw用订阅跑",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 32,
+      "author": "FirenzeLor",
+      "excerpt": "我2月初那会儿高强度用openclaw，记得一开始还能接得上anthropic订阅的，但从某天开始就用不了订阅了，打开推也看到说a社屏蔽不支持了，所以我一直以为a社早都明令禁止openclaw用订阅跑了，结果今早看到消息说才刚禁止？ 佬们，是我失忆了吗？ 7 个帖子 - 6 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T06:38:57+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898912",
+      "title": "可能是最好用的CPA管理工具",
+      "url": "https://linux.do/t/topic/1898912",
+      "summary": "本帖使用社区开源推广，符合推广要求",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 15,
+      "author": "康旭",
+      "excerpt": "本帖使用社区开源推广，符合推广要求。我申明并遵循社区要求的以下内容： 我的帖子已经打上 开源推广 标签： 是 我的开源项目完整开源，无未开源部分： 是 我的开源项目已链接认可 LINUX DO 社区： 是 我帖子内的项目介绍，AI生成、润色内容部分已截图发出： 是 以上选择我承诺是永久有效的，接受社区和佬友监督： 是 以下为项目介绍正文内容，AI生成、润色内容已使用截图方式发出 先感谢 Linux",
+      "published_at": "2026-04-04T15:01:05+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898932",
+      "title": "Grok账号SSO分享",
+      "url": "https://linux.do/t/topic/1898932",
+      "summary": "如题 一直开着注册机，忽然发现自己一个人用不完那么多Grok账号的额度，就分享出来，各位佬友自取哈~ 先发74个号 2026",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "xai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Lucas Luo",
+      "excerpt": "如题 一直开着注册机，忽然发现自己一个人用不完那么多Grok账号的额度，就分享出来，各位佬友自取哈~ 先发74个号 2026.04.04_22.59_1.txt (11.1 KB) NSFW已开 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T15:04:44+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898238",
+      "title": "我不允许还有人不知道codex可以直接改docx论文，甚至画布！！！",
+      "url": "https://linux.do/t/topic/1898238",
+      "summary": "SUCCESS] 我不允许还有人不知道 codex 可以直接改 docx 论文，甚至画布",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "Song",
+      "excerpt": "[!SUCCESS] 我不允许还有人不知道 codex 可以直接改 docx 论文，甚至画布！！！ Talk-End （点击了解更多详细信息） 我是学软件工程的，说实话，之前我对 codex 还有其他 AI 类产品的理解，一直都还停留在“复制、粘贴、问一嘴、让它给点代码或者文字”这种阶段。 直到今天，我们老师来催我论文了。本来我整个人都已经有点麻了，想着完了，又得自己一点点去改 docx 论文，调",
+      "published_at": "2026-04-04T13:19:41+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898819",
+      "title": "gpt5.4 你挺厉害的",
+      "url": "https://linux.do/t/topic/1898819",
+      "summary": "4你真的挺厉害的 6 个帖子 - 5 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 27,
+      "author": "ezez",
+      "excerpt": "5.4你真的挺厉害的 6 个帖子 - 5 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:44:45+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898915",
+      "title": "各位觉得逆向开发5.3codex还是5.4更强一点",
+      "url": "https://linux.do/t/topic/1898915",
+      "summary": "4感觉有点笨还不如5",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 25,
+      "author": "mxyoor",
+      "excerpt": "最近用5.4感觉有点笨还不如5.3codex 5 个帖子 - 5 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T15:01:27+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898941",
+      "title": "佬遇到过superpowers加载子代理的时候，子代理加载mcp导致卡死的么？",
+      "url": "https://linux.do/t/topic/1898941",
+      "summary": "佬遇到过superpowers加载子代理的时候，子代理加载mcp导致卡死的么",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 5,
+      "author": "SuperLee",
+      "excerpt": "佬遇到过superpowers加载子代理的时候，子代理加载mcp导致卡死的么？ codex加载之前必须先加载mcp，貌似又因为主线程的mcp已经起来的，所以有的子agents加载mcp的时候会冲突一直加载导致卡死。 1 个帖子 - 1 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T15:05:21+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897547",
+      "title": "请教一下各位佬友，Mac book目前哪个版本性价比比较高？",
+      "url": "https://linux.do/t/topic/1897547",
+      "summary": "没接触过mac系统，因为最近的小龙虾的火爆加上最近vibe coding比较上头，所以想搞台macbook来做开发和养龙虾，但是以前没怎么关注过mac系列，如果现在想搞一台，性价比最高的是哪款呢",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "AXing",
+      "excerpt": "没接触过mac系统，因为最近的小龙虾的火爆加上最近vibe coding比较上头，所以想搞台macbook来做开发和养龙虾，但是以前没怎么关注过mac系列，如果现在想搞一台，性价比最高的是哪款呢？有佬友能推荐一下吗？ 44 个帖子 - 21 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T11:38:29+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898907",
+      "title": "大佬们想开claude max20x，请教一些关于一些防封号问题",
+      "url": "https://linux.do/t/topic/1898907",
+      "summary": "之前用了很多中转站，是不是需要清掉这些环境，比如直接删掉",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 10,
+      "author": "erpang",
+      "excerpt": "之前用了很多中转站，是不是需要清掉这些环境，比如直接删掉.claude，这样是不是会好一点 2 个帖子 - 2 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T15:00:27+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897852",
+      "title": "AI人工智能3D电影制作初学者指南：0基础上手，小白也能玩转",
+      "url": "https://linux.do/t/topic/1897852",
+      "summary": "【2026年01月19日】AI人工智能3D电影制作初学者指南 ├── 0_Introduction",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 10,
+      "author": "初见是十三",
+      "excerpt": "【2026年01月19日】AI人工智能3D电影制作初学者指南 ├── 0_Introduction.mp4 ├── 1_Scripting with ChatGPT.mp4 ├── 2_Creating Characters with Google Whisk.mp4 ├── 3_Video Creation with Google Flow.mp4 ├── 4_Backround Music a",
+      "published_at": "2026-04-04T12:24:49+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897870",
+      "title": "求大佬关于GPT注册机Oauth跳add-phone的解决方案",
+      "url": "https://linux.do/t/topic/1897870",
+      "summary": "这是我魔改的注册机（注册率100%）用了私人域名，现在唯一问题是一直卡在addphone拿不到rt token，有大佬可以帮忙指点一下吗， @Nicks-MacBook-Air-1683 openai",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 22,
+      "author": "ezez",
+      "excerpt": "这是我魔改的注册机（注册率100%）用了私人域名，现在唯一问题是一直卡在addphone拿不到rt token，有大佬可以帮忙指点一下吗， @Nicks-MacBook-Air-1683 openai_reg-main-2 % uv run python openai_reg.py --proxy http://127.0.0.1:7890 --workers 1 ================",
+      "published_at": "2026-04-04T12:27:12+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898901",
+      "title": "codex plus号池，CLIProxyAPI反代需要家宽吗",
+      "url": "https://linux.do/t/topic/1898901",
+      "summary": "我想自己建个codex plus号池，用CLIProxyAPI做反代，需不需要用家宽（需不需要一个号一个家宽），主要是想保证稳定性，不想用着用着就被封了 用梯子切换节点会不会被封啊，如果不需要家宽，是",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 15,
+      "author": "Rev",
+      "excerpt": "我想自己建个codex plus号池，用CLIProxyAPI做反代，需不需要用家宽（需不需要一个号一个家宽），主要是想保证稳定性，不想用着用着就被封了 用梯子切换节点会不会被封啊，如果不需要家宽，是不是搞个新加坡或者美国的服务器丢上去就可以了，佬友有没有推荐方案啊 3 个帖子 - 3 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:59:28+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898869",
+      "title": "[jshook 周报] agent 协同优化 | 测试覆盖大提升 | extension sdk 与生态完善 | workflow 增强 | 内存工具提供支持",
+      "url": "https://linux.do/t/topic/1898869",
+      "summary": "主要更新 95% 以上的测试覆盖 协作系统（SharedStateBoard + TeamManager） 以前多个 Agent 各跑各的，状态不互通",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 25,
+      "author": "vmoranv",
+      "excerpt": "主要更新 95% 以上的测试覆盖 协作系统（SharedStateBoard + TeamManager） 以前多个 Agent 各跑各的，状态不互通。现在加了 SharedStateBoard 和 TeamManager，可以共享状态、同步进度。比如你在跑一个复杂的逆向流程，Agent A 负责登录提取 Token，Agent B 接着做 API 探测，中间的状态可以通过 SharedState",
+      "published_at": "2026-04-04T14:54:54+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897361",
+      "title": "有没有想给薄荷公益站捐点渠道的大佬看过来！！！",
+      "url": "https://linux.do/t/topic/1897361",
+      "summary": "最近情况一直不大好，差不多相当于全部模型瘫痪了 但是论坛里还是高手如云的，想看看有没有人有渠道然后不想自己开个公益站的，又或者余量很充足的，可以把渠道捐献给我 不限于gemini系列、gpt系列、cl",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "bohe",
+      "excerpt": "最近情况一直不大好，差不多相当于全部模型瘫痪了 但是论坛里还是高手如云的，想看看有没有人有渠道然后不想自己开个公益站的，又或者余量很充足的，可以把渠道捐献给我 不限于gemini系列、gpt系列、claude系列等等 捐赠者我都会一一艾特出来，如果不想的话匿名捐赠也可以（） 如果可以的话请私信我，无比感谢！！！ 105 个帖子 - 103 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T10:48:29+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898689",
+      "title": "什么地方有tts 模型的音频素材库呢？",
+      "url": "https://linux.do/t/topic/1898689",
+      "summary": "我需要给自己的游戏角色“女儿”生成音频（主要是中文），但是去看了火山引擎的 tts 模型，其中的音色根本没有相关的，自己去互联网上也很难找到没有噪音的素材来克隆",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 30,
+      "author": "Humpy",
+      "excerpt": "我需要给自己的游戏角色“女儿”生成音频（主要是中文），但是去看了火山引擎的 tts 模型，其中的音色根本没有相关的，自己去互联网上也很难找到没有噪音的素材来克隆？佬们有没有谁知道相关素材库的，只是自己做 demo用，不牵涉发布。 9 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:23:41+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898892",
+      "title": "佬们深度搜索的用的都啥，比如做个某类产品性价比对比",
+      "url": "https://linux.do/t/topic/1898892",
+      "summary": "我用gemini的deepresearch和gpt的deepresearch效果都太好，是我提示词问题吗，或者还有什么工具好呢 2 个帖子 - 2 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 10,
+      "author": "wu233",
+      "excerpt": "我用gemini的deepresearch和gpt的deepresearch效果都太好，是我提示词问题吗，或者还有什么工具好呢 2 个帖子 - 2 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:58:14+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897360",
+      "title": "CodexProxy V1.4.0 更新 支持 /v1/messages → /v1/responses 导入方式多样化",
+      "url": "https://linux.do/t/topic/1897360",
+      "summary": "本帖使用社区开源推广，符合推广要求",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 100,
+      "author": "不过减速带",
+      "excerpt": "本帖使用社区开源推广，符合推广要求。我申明并遵循社区要求的以下内容： 我的帖子已经打上 开源推广 标签： 是 我的开源项目完整开源，无未开源部分： 是 我的开源项目已链接认可 LINUX DO 社区： 是 我帖子内的项目介绍，AI生成、润色内容部分已截图发出： 是 以上选择我承诺是永久有效的，接受社区和佬友监督： 是 以下为项目介绍正文内容，AI生成、润色内容已使用截图方式发出 更新一览： 1、支",
+      "published_at": "2026-04-04T10:48:09+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1894692",
+      "title": "新人报道，不会注册机，只会传统手艺",
+      "url": "https://linux.do/t/topic/1894692",
+      "summary": "不知注册机为何物，手搓账号够自用",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "zibiao.chen",
+      "excerpt": "不知注册机为何物，手搓账号够自用。126、163、qq、gmail。一个qq号有3个邮箱，爽！目前感觉qq邮箱额度最多。 34 个帖子 - 28 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T00:31:43+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897444",
+      "title": "boss直聘官方荣誉出品直小聘，ai助手自动投简历、打招呼、ai简历生成、优化等等",
+      "url": "https://linux.do/t/topic/1897444",
+      "summary": "cn 还有其他功能请自行探索 补充一个快手的萝卜面试，真人直面，价格0",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 77,
+      "author": "朱红之泪",
+      "excerpt": "www.deephire.cn 还有其他功能请自行探索 补充一个快手的萝卜面试，真人直面，价格0.1—30不等，不过我看基本都是面向计算机的 https://luobo.qingque.cn/ 19 个帖子 - 13 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T11:10:55+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898841",
+      "title": "求可开发票的cc/codex中转站",
+      "url": "https://linux.do/t/topic/1898841",
+      "summary": "本人学生，想用中转站的cc和codex写代码，有没有能开国内发票的中转站推荐哇",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Miss-Ly",
+      "excerpt": "本人学生，想用中转站的cc和codex写代码，有没有能开国内发票的中转站推荐哇？如果调用的价格再便宜一点就更开心了。 （ps:哪天水L站看到了一个但是当时没存，现在往回翻找又困难重重，摆烂鼠鼠一枚了我是~ 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:47:47+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898777",
+      "title": "codex换号如何恢复之前的聊天记录",
+      "url": "https://linux.do/t/topic/1898777",
+      "summary": "我之前用的公益api但是现在公益都挂的差不多了冰佬的公益我也抢不到只能自己搞个plus了但是之前api的聊天记录如何保留啊，我记得好像可以改一个配置文件但是我忘了怎么改了有没有大佬知道 8 个帖子 -",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 37,
+      "author": "白",
+      "excerpt": "我之前用的公益api但是现在公益都挂的差不多了冰佬的公益我也抢不到只能自己搞个plus了但是之前api的聊天记录如何保留啊，我记得好像可以改一个配置文件但是我忘了怎么改了有没有大佬知道 8 个帖子 - 7 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:37:12+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898844",
+      "title": "sub2api使用疑问(已解疑)",
+      "url": "https://linux.do/t/topic/1898844",
+      "summary": "因为最近公益站不太稳定，所以就开始古法搓free号，然后自己搭了个sub2api自用，但是现在在使用的过程感觉token消耗的有点过于离谱了",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 37,
+      "author": "Zyb",
+      "excerpt": "因为最近公益站不太稳定，所以就开始古法搓free号，然后自己搭了个sub2api自用，但是现在在使用的过程感觉token消耗的有点过于离谱了。我在搭建完成的时候，只是问了下你是谁，然后消耗token在2.3万以上，并且我给的问题在对话历史里面竟然还有乱码？ 是因为codex桌面端问题吗？我之前直连好像没有过这个问题 11 个帖子 - 5 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:48:11+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898758",
+      "title": "ChatGPT Pro 怎么使用 sub2API 中转出 GPT-5.4 Thinking 和 GPT-5.4 Pro",
+      "url": "https://linux.do/t/topic/1898758",
+      "summary": "通过 sub2API 中转出来的模型，都是 Codex 里面的模型 想询问和解决 1、怎么在 Codex 里面使用 5",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 10,
+      "author": "mikesky",
+      "excerpt": "通过 sub2API 中转出来的模型，都是 Codex 里面的模型 想询问和解决 1、怎么在 Codex 里面使用 5.4 Thinking 和 5.4 Pro 2、通过 sub2API 中转时，怎么也中转出 5.4 Thinking 和 5.4 Pro 2 个帖子 - 2 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:32:14+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898840",
+      "title": "哪里可以买到gpt开发者api_key？",
+      "url": "https://linux.do/t/topic/1898840",
+      "summary": "最近在做agent项目，从小傅哥那里买有点贵，8",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 5,
+      "author": "Jhj",
+      "excerpt": "最近在做agent项目，从小傅哥那里买有点贵，8.8才50w token，调试个几下就无了。 1 个帖子 - 1 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:47:32+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896794",
+      "title": "用自然语言生成 ComfyUI 工作流：comfyui-workflow-skill",
+      "url": "https://linux.do/t/topic/1896794",
+      "summary": "本帖使用社区开源推广，符合推广要求",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "ai_tools",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "cturing",
+      "excerpt": "本帖使用社区开源推广，符合推广要求。我申明并遵循社区要求的以下内容： 我的帖子已经打上 开源推广 标签： 是 我的开源项目完整开源，无未开源部分： 是 我的开源项目已链接认可 LINUX DO 社区： 是 我帖子内的项目介绍，AI生成、润色内容部分已截图发出： 是 以上选择我承诺是永久有效的，接受社区和佬友监督： 是 以下为项目介绍正文内容，AI生成、润色内容已使用截图方式发出 一句话描述你想要的",
+      "published_at": "2026-04-04T08:16:38+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898019",
+      "title": "gpt 古法手工注册，稳定！绑手机号码！【适合自用】",
+      "url": "https://linux.do/t/topic/1898019",
+      "summary": "邮件使用luckmaill,0",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "BelieverYa",
+      "excerpt": "邮件使用luckmaill,0.01元一个邮箱，接码使用herosms，选择泰国的号码,$0.05一个，一个手机号码可以添加两个账号！虽然慢点但是稳定，适合自用。 注册直接cpa的 Codex OAuth 点进注册就行，绑定手机号码就能使用了。 还有就是luckmaill的hotmail.com类型的邮箱，可以不用添加手机号码!就是一个ip注册多了需要切换节点。 33 个帖子 - 21 位参与者 ",
+      "published_at": "2026-04-04T12:46:11+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898251",
+      "title": "CPA菜鸟的疑问",
+      "url": "https://linux.do/t/topic/1898251",
+      "summary": "今天在codex的帮助下，在白嫖的腾讯云的2c2g的轻量服务器部署了个CPA，然后把我三个号的认证文件导进去了，然后突然想到我本地开梯子的情况下才能用codex，部署到国内服务器上的CPA没有梯子是不",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 59,
+      "author": "柠萌你个思密达",
+      "excerpt": "今天在codex的帮助下，在白嫖的腾讯云的2c2g的轻量服务器部署了个CPA，然后把我三个号的认证文件导进去了，然后突然想到我本地开梯子的情况下才能用codex，部署到国内服务器上的CPA没有梯子是不是根本没法用啊？？是不是需要我本地跑CPA才行啊？ 13 个帖子 - 11 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T13:21:29+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898716",
+      "title": "有必要买gpt pro吗？",
+      "url": "https://linux.do/t/topic/1898716",
+      "summary": "我想用gpt水1到2篇小论文（一篇综述、一篇技术性论文（导师要求的）），有用过gpt pro的佬吗",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 10,
+      "author": "GQ1J",
+      "excerpt": "我想用gpt水1到2篇小论文（一篇综述、一篇技术性论文（导师要求的）），有用过gpt pro的佬吗？感觉pro版的写小论文怎么样？有必要为了写小论文上gpt pro吗？ 2 个帖子 - 2 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T14:26:38+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897109",
+      "title": "CPA触发cf风控解决方案（大段标红）",
+      "url": "https://linux.do/t/topic/1897109",
+      "summary": "今天突然发现codex用不了，迅速打开cpa发现出现大段爆红，给Ai分析一下发现是触发cloudflare风控了，站内搜了一下有位佬给出了解决方案试了下就好了 方案：使用这位佬的warp发给ai让改一",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 80,
+      "author": "陆仁",
+      "excerpt": "今天突然发现codex用不了，迅速打开cpa发现出现大段爆红，给Ai分析一下发现是触发cloudflare风控了，站内搜了一下有位佬给出了解决方案试了下就好了 方案：使用这位佬的warp发给ai让改一下cpa服务的配置即可 [cf-warp官方程序太臃肿？手搓一个800KiB内存占用的 cf-warp-socks5 Docker 镜像！ - 开发调优 - LINUX DO] (cf-warp官方程",
+      "published_at": "2026-04-04T09:40:48+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898296",
+      "title": "有没有大佬知道便宜的gpt中转站，靠谱稳定的",
+      "url": "https://linux.do/t/topic/1898296",
+      "summary": "有没有大佬知道便宜的gpt中转站，靠谱稳定的，做项目需要，一直找来找去的有点麻烦 9 个帖子 - 7 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 39,
+      "author": "DavidLee",
+      "excerpt": "有没有大佬知道便宜的gpt中转站，靠谱稳定的，做项目需要，一直找来找去的有点麻烦 9 个帖子 - 7 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T13:27:37+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896171",
+      "title": "三天速成毕设论文初稿（自己实测少走弯路版）",
+      "url": "https://linux.do/t/topic/1896171",
+      "summary": "com 三天速成论文初稿（实测少走弯路版）_哔哩哔哩_bilibili 自己实测过了给大家分享流程和资源参考，少造轮子少走弯路",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 29,
+      "author": "Qie_Zi",
+      "excerpt": "bilibili.com 三天速成论文初稿（实测少走弯路版）_哔哩哔哩_bilibili 自己实测过了给大家分享流程和资源参考，少造轮子少走弯路。如果觉得画面暗，可以右键点击‘视频色彩调整’，把‘对比度’拉到150（录制的时候可能开了HDR有问题）提示词：你是一位专业的学术研究员，擅长进行严谨的学术写作。请根据刚才确定的大纲，为我撰写这一节的初稿内容第二节新媒体时代传统文化传播的新特征一、播机制【",
+      "published_at": "2026-04-04T06:12:00+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898026",
+      "title": "古法手搓codex方法跳过手机验证，成功率100%",
+      "url": "https://linux.do/t/topic/1898026",
+      "summary": "想要跳过手机号验证注册成功，并且导入CPA实现GPT5",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 76,
+      "author": "mumuzhi wong",
+      "excerpt": "想要跳过手机号验证注册成功，并且导入CPA实现GPT5.4自由其实非常简单 重点还是在细节！ 首先一定要有纯净的美国网络，注意是纯净，住宅ip最好 准备com后缀的邮箱，推荐outlook邮箱 再就是用Chrome浏览器 注册的时候用这个链接https://auth.openai.com/create-account 节点干净的话是不会弹手机验证的 如果让你验证手机，就记住的账号和密码，然后果断关",
+      "published_at": "2026-04-04T12:48:52+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898487",
+      "title": "gemini pro =无限Nano Banana 2 和Pro",
+      "url": "https://linux.do/t/topic/1898487",
+      "summary": "google官方的工具flow，有pro的话，可以无限使用 Banana 2 和Pro，还有每个月1000点数生成视频",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 17,
+      "author": "jefferry",
+      "excerpt": "google官方的工具flow，有pro的话，可以无限使用 Banana 2 和Pro，还有每个月1000点数生成视频！就看大佬有没有新玩法了！ 4 个帖子 - 3 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T13:56:07+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897593",
+      "title": "冰佬公益站的邀请码不道德获取方式",
+      "url": "https://linux.do/t/topic/1897593",
+      "summary": "已知 冰佬的服务器回滚了",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 97,
+      "author": "zeno",
+      "excerpt": "已知 冰佬的服务器回滚了。 回滚期间注册的账号肯定没了。 那么 当时已使用的邀请码又可以用了。 所以 可以论坛里捡捡垃圾，看看别人分享的邀请码有没有漏网之鱼 23 个帖子 - 17 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T11:50:54+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1891123",
+      "title": "抽两个team席位",
+      "url": "https://linux.do/t/topic/1891123",
+      "summary": "抽奖主题： [paypal刚开的车，还剩两个席位，给佬友抽个奖吧] 奖品详情： [奖品]：[2个team席位] 活动时间： 开始时间：[2026/04/03 17:40] 截止时间：[2026/04/",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "酸梅汤",
+      "excerpt": "抽奖主题： [paypal刚开的车，还剩两个席位，给佬友抽个奖吧] 奖品详情： [奖品]：[2个team席位] 活动时间： 开始时间：[2026/04/03 17:40] 截止时间：[2026/04/04 18:00] 参与方式： 在本帖下回复任意内容 抽奖规则： 每位用户仅允许参与一次。 使用官方抽奖工具随机抽取中奖者。 注意事项： 本活动将在活动截止时间后关闭回帖，以确保公正性。 中奖者将在活",
+      "published_at": "2026-04-03T09:35:54+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1893679",
+      "title": "gpt注册机讨论",
+      "url": "https://linux.do/t/topic/1893679",
+      "summary": "我认为奥特曼是对一个域名做出了单日的限制 例如冰佬的注册机 昨晚就无法注册了 现在却可以了 69 个帖子 - 36 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "Tavre",
+      "excerpt": "我认为奥特曼是对一个域名做出了单日的限制 例如冰佬的注册机 昨晚就无法注册了 现在却可以了 69 个帖子 - 36 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T16:15:13+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898899",
+      "title": "开发了一个管理公益站和一键切换codex配置的脚本",
+      "url": "https://linux.do/t/topic/1898899",
+      "summary": "codex-openai-profile-switcher-shareable",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 22,
+      "author": "hisenwang",
+      "excerpt": "codex-openai-profile-switcher-shareable.zip (15.6 KB) 开发了一个快捷小脚本，有需要的佬友可以自取一下 主要功能： （1）一键检测各个提供商的gpt-5.4模型的可用性。 （2）一键切换codex供应商配置，适应多平台。 （3）TUI渲染界面，健康度评分系统，方便佬友管理。 还有很多小功能等待佬友发掘。 新人刚来社区，希望为社区做点贡献 TIP：",
+      "published_at": "2026-04-04T14:59:05+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897687",
+      "title": "有没有哪位佬友遇到 Windows 上用 Codex，用一段时间电脑就卡的不行了",
+      "url": "https://linux.do/t/topic/1897687",
+      "summary": "之前用 Codex APP 和 VSCode 插件，都发现有内存溢出问题，用一段时间电脑就出现内存错误，搜 Github 说好像是拉起 MCP 未清理的 bug，到现在也没解决",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 69,
+      "author": "ribber66",
+      "excerpt": "之前用 Codex APP 和 VSCode 插件，都发现有内存溢出问题，用一段时间电脑就出现内存错误，搜 Github 说好像是拉起 MCP 未清理的 bug，到现在也没解决。现在换在 IDEA 用 CLI，结果用一段时间就发现 IDEA 非常卡顿不响应 18 个帖子 - 11 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T12:06:39+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895200",
+      "title": "体感 Codex 擅长和不擅长的点",
+      "url": "https://linux.do/t/topic/1895200",
+      "summary": "擅长 收集上下文强 处理复杂逻辑强 细节处理更好 查 bug 特别准 不擅长 照搬功能抄袭 处理前端样式 27 个帖子 - 18 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "ribber66",
+      "excerpt": "擅长 收集上下文强 处理复杂逻辑强 细节处理更好 查 bug 特别准 不擅长 照搬功能抄袭 处理前端样式 27 个帖子 - 18 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T02:54:57+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898015",
+      "title": "写了一个指导codex主代理 进行multi agent协作的skill",
+      "url": "https://linux.do/t/topic/1898015",
+      "summary": "codex配置可加 [features] multi_agent = true prevent_idle_sleep = true [agents] job_max_runtime_seconds =",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 10,
+      "author": "沉潜",
+      "excerpt": "codex配置可加 [features] multi_agent = true prevent_idle_sleep = true [agents] job_max_runtime_seconds = 1800 # 最大运行时长 max_threads = 12 # 最多可分派子代理数 max_depth = 1 # 代理最大深度，为1说明子代理不能再分派自己的子代理 子代理模版 agents.z",
+      "published_at": "2026-04-04T12:45:42+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898099",
+      "title": "深度集成 DeepSeek 的 VS Code 扩展",
+      "url": "https://linux.do/t/topic/1898099",
+      "summary": "深度集成 DeepSeek 的 VS Code 扩展，支持持久会话、文件操作、技能 deepcode",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 5,
+      "author": "凡人",
+      "excerpt": "深度集成 DeepSeek 的 VS Code 扩展，支持持久会话、文件操作、技能 deepcode.vegamo.cn deep code - 专业DeepSeek编程助手 deep code是基于DeepSeek打造的专业编程助手Agent，提供代码生成、调试、优化、答疑等全流程编程辅助服务，助力开发者高效完成编程任务。 1 个帖子 - 1 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T13:01:16+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896668",
+      "title": "自建的sub2api中转站无法使用了？",
+      "url": "https://linux.do/t/topic/1896668",
+      "summary": "用的都是手搓的账号，为什么就用不了了呢，之前还是可以用的， sub2api面板显示账号正常，用量也有，但是现在用不了了",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "jefferry",
+      "excerpt": "用的都是手搓的账号，为什么就用不了了呢，之前还是可以用的， sub2api面板显示账号正常，用量也有，但是现在用不了了！cmd测试也是错误的！有佬友知道是为啥吗？ 37 个帖子 - 9 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T07:52:11+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897474",
+      "title": "Antigravity+Netbooklm+figma 做網站有什麽提升AI品味的方法嗎？",
+      "url": "https://linux.do/t/topic/1897474",
+      "summary": "前幾天才入站，個位佬們",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 5,
+      "author": "無情獵M人",
+      "excerpt": "前幾天才入站，個位佬們。有什麽方法能然這些工具串聯其他提升AI做網站的品味嗎？ 我用Codex和Antigravity來做宣傳網站。雖然能很快做出來但是都做得千篇一律，背景和動畫效果好些都不行。所以我想有什麽方法能夠讓AI從某些資源庫裏調用些類似的網站功能來參考，這樣能提升它的品味。我自己不會編程，所以個位佬能給我些建議嗎？ 我網站做好打包直接上傳到Shopfiy上去了 1 个帖子 - 1 位参与",
+      "published_at": "2026-04-04T11:23:30+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897229",
+      "title": "佬们，sub2api遇到过这个问题吗？",
+      "url": "https://linux.do/t/topic/1897229",
+      "summary": "手动测试每个账号都是好着，但是为什么一瞬间就全部都403错误呢，403错误的账号也是通的哇，奇怪了 8 个帖子 - 3 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 25,
+      "author": "a16387402",
+      "excerpt": "手动测试每个账号都是好着，但是为什么一瞬间就全部都403错误呢，403错误的账号也是通的哇，奇怪了 8 个帖子 - 3 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T10:09:59+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897048",
+      "title": "剩1个team成员位置，6点抽",
+      "url": "https://linux.do/t/topic/1897048",
+      "summary": "抽奖主题： 1个team成员 无质保 活动时间： 开始时间：[2026 年 4 月 4 日 17:00] 截止时间：[2026 年 4 月 4 日 18:00] 参与方式： 在本帖下回复任意内容 抽奖",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "棠鸢",
+      "excerpt": "抽奖主题： 1个team成员 无质保 活动时间： 开始时间：[2026 年 4 月 4 日 17:00] 截止时间：[2026 年 4 月 4 日 18:00] 参与方式： 在本帖下回复任意内容 抽奖规则： 每位用户仅允许参与一次。 使用官方抽奖工具随机抽取中奖者。 注意事项： 本活动将在活动截止时间后关闭回帖，以确保公正性。 中奖者将在活动结束后 12 小时内在本帖公布，并通过私信通知领奖方式。",
+      "published_at": "2026-04-04T09:18:30+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896883",
+      "title": "duckduckgo 没法玩了吗，手搓的账号也秒封了！",
+      "url": "https://linux.do/t/topic/1896883",
+      "summary": "刚尝试用duckduckgo 注册，但是直接秒封",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 45,
+      "author": "jefferry",
+      "excerpt": "刚尝试用duckduckgo 注册，但是直接秒封！ 12 个帖子 - 7 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T08:36:51+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896914",
+      "title": "今日(4.4)掉落codex x 166号",
+      "url": "https://linux.do/t/topic/1896914",
+      "summary": "codex_token_wrt",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 70,
+      "author": "lucas",
+      "excerpt": "codex_token_wrt.tar.gz (300.4 KB) 佬们觉得每天的drop是分成35每个的tar好还是一次打包所有好? 本次暂时一次性打包，如果error的比较快后续改成分包发送，大家按需使用。 凌晨会在此帖掉落通宵专享 全部使用域名邮箱注册，依旧感谢开放公益邮箱的各位佬。 ps: 目前hotmail是稳定可以注册的，域名邮箱看缘分 14 个帖子 - 14 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T08:45:01+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1892031",
+      "title": "ai.acmi.run出bug了",
+      "url": "https://linux.do/t/topic/1892031",
+      "summary": "99999倍率了，一下13k token 余额变成负的了 21 个帖子 - 17 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 93,
+      "author": "龙的青年",
+      "excerpt": "99999倍率了，一下13k token 余额变成负的了 21 个帖子 - 17 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T12:25:58+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896641",
+      "title": "你们收到Codex双倍额度的邮件了吗",
+      "url": "https://linux.do/t/topic/1896641",
+      "summary": "如题 我这个收到邮件的是plus 但是Team和Pro 我检查了几个号都没有收到双倍额度的邮件 不知道是随机还是说只有Plus有 codex 13 个帖子 - 6 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 44,
+      "author": "biubiubiu999",
+      "excerpt": "如题 我这个收到邮件的是plus 但是Team和Pro 我检查了几个号都没有收到双倍额度的邮件 不知道是随机还是说只有Plus有 codex 13 个帖子 - 6 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T07:47:35+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896485",
+      "title": "现在有什么方法开ChatGPT plus？",
+      "url": "https://linux.do/t/topic/1896485",
+      "summary": "用站内佬分享的思路 2925邮箱注册了俩号，都给了免费的plus，但是现在有什么方法领取",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 75,
+      "author": "白魂",
+      "excerpt": "用站内佬分享的思路 2925邮箱注册了俩号，都给了免费的plus，但是现在有什么方法领取？ 0刀卡吗？ 18 个帖子 - 13 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T07:15:41+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1894066",
+      "title": "路透社表示：DeepSeek 确认，在美国出口限制的情况下，V4 型号将使用华为芯片的中国芯片运行",
+      "url": "https://linux.do/t/topic/1894066",
+      "summary": "如题 DeepSeek’s V4 model will run on Huawei chips https://www",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "老王",
+      "excerpt": "如题 DeepSeek’s V4 model will run on Huawei chips https://www.reuters.com/world/china/deepseeks-v4-model-will-run-huawei-chips-information-reports-2026-04-03/ 57 个帖子 - 38 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T17:20:07+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1894368",
+      "title": "Deeepseek原生多模态了，嘿嘿嘿🤤",
+      "url": "https://linux.do/t/topic/1894368",
+      "summary": "app端问了deepseek现在的沙盒环境能调用什么工具，它说有个代码解释器可以输入图片",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 56,
+      "author": "木棉子Kapoki",
+      "excerpt": "app端问了deepseek现在的沙盒环境能调用什么工具，它说有个代码解释器可以输入图片。 我问它，那你是能读图了吗？ 一看之前输入图片的 “只能识别文字” 提示也确实没了 嘿嘿嘿嘿嘿嘿 13 个帖子 - 10 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T19:49:25+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1886685",
+      "title": "deepseek好像更新了，这次有点意思！",
+      "url": "https://linux.do/t/topic/1886685",
+      "summary": "特别声明：非专业测试，仅供各位佬参考",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 100,
+      "author": "道友",
+      "excerpt": "特别声明：非专业测试，仅供各位佬参考。 deepseek好像更新了，我让它写一在鱼缸内放一串鞭炮的视觉动画diamond，然后一次写出来了！ <!DOCTYPE html> <html lang=\"zh-CN\"> <head> <meta charset=\"UTF-8\"> <meta name=\"viewport\" content=\"width=device-width, initial-scal",
+      "published_at": "2026-04-02T16:55:24+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1890738",
+      "title": "【已恢复】deepseek叒异常了",
+      "url": "https://linux.do/t/topic/1890738",
+      "summary": "16:52 更新： 已恢复 DeepSeek 网页/API 性能异常 v4今天还有希望吗",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": true,
+      "engagement_score": 51,
+      "author": "HanchenXu",
+      "excerpt": "16:52 更新： 已恢复 DeepSeek 网页/API 性能异常 v4今天还有希望吗？ 个人感觉希望不大，得等五一吧 12 个帖子 - 9 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T08:41:53+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1887847",
+      "title": "deepseek新模型什么时候出",
+      "url": "https://linux.do/t/topic/1887847",
+      "summary": "如题，什么时候出来4的模型 6 个帖子 - 6 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 30,
+      "author": "luckly",
+      "excerpt": "如题，什么时候出来4的模型 6 个帖子 - 6 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T02:08:51+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1891653",
+      "title": "Cursor 中的 Opus 得分比 Claude Code 高出 20% —— 同一模型，不同基础设施",
+      "url": "https://linux.do/t/topic/1891653",
+      "summary": "佬友们有啥看法 国外还有 CC 圣教，难绷 4 个帖子 - 4 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "jeff",
+      "excerpt": "推特热议的一个帖子。 佬友们有啥看法 国外还有 CC 圣教，难绷 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T11:25:29+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1891320",
+      "title": "cursor更新后UI变化了，怎么改回原来的vscode风格呀",
+      "url": "https://linux.do/t/topic/1891320",
+      "summary": "用起来很不适应 12 个帖子 - 7 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "ai_tools",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 45,
+      "author": "faithererer",
+      "excerpt": "用起来很不适应 12 个帖子 - 7 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T10:12:16+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1887407",
+      "title": "Cursor 3.0 发布了，全新的 Agents Windows 来了。（越来越像 Codex 了）",
+      "url": "https://linux.do/t/topic/1887407",
+      "summary": "0 发布了，全新的 Agents Windows 来了",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 32,
+      "author": " 野比大雄和他的朋友们",
+      "excerpt": "Cursor 3.0 发布了，全新的 Agents Windows 来了。（越来越像 Codex 了） 我们推出 Cursor 3：一个借助智能体构建软件的统一工作区。 全新的 Cursor 界面让智能体产出的成果一目了然，帮助您站在更高的抽象层级上工作，同时在需要时也能随时深入查看细节。它更快、更简洁、也更强大，具备多代码仓库布局、本地与云端智能体之间的无缝交接，并可随时切换回 Cursor I",
+      "published_at": "2026-04-03T01:01:57+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898060",
+      "title": "咨询nano banana pro的问题",
+      "url": "https://linux.do/t/topic/1898060",
+      "summary": "我是pro会员，但是每次用Gemini制图的时候，在我已经开了pro模式的时候，总是先给我用的nano banana 2生图，然后要让我自己再去用pro重制，不懂是为什么",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 24,
+      "author": "Simon Tao",
+      "excerpt": "我是pro会员，但是每次用Gemini制图的时候，在我已经开了pro模式的时候，总是先给我用的nano banana 2生图，然后要让我自己再去用pro重制，不懂是为什么？有没有佬友可以解答的。 6 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T12:54:46+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1894836",
+      "title": "大善人香港能正常用",
+      "url": "https://linux.do/t/topic/1894836",
+      "summary": "gemini开放香港，现在挂香港节点就可以正常使用",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 29,
+      "author": "逗号张先生",
+      "excerpt": "gemini开放香港，现在挂香港节点就可以正常使用？ 7 个帖子 - 5 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T01:25:33+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895278",
+      "title": "哈基米的自我审查是否有点太变态了",
+      "url": "https://linux.do/t/topic/1895278",
+      "summary": "问“常见的心血管疾病有哪些” 就能稳定触发它的后置过滤 直接屏蔽了 20 个帖子 - 12 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 76,
+      "author": "Ali",
+      "excerpt": "问“常见的心血管疾病有哪些” 就能稳定触发它的后置过滤 直接屏蔽了 20 个帖子 - 12 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T03:08:19+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895082",
+      "title": "Gemini网页版自用提示词第三版",
+      "url": "https://linux.do/t/topic/1895082",
+      "summary": "继续从上一条Gemini网页版自用提示词讨论",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 10,
+      "author": "2",
+      "excerpt": "继续从上一条Gemini网页版自用提示词讨论。 Gemini网页版自用提示词第二版 搞七捻三 继续从上一条Gemini网页版自用提示词讨论，自从Gemini3发布以来我一直在高强度使用，简单谈谈Gemini更新带来的“特性”。并在本文末尾附上自用提示词，已按照新版本Gemini官方指南优化,显而易见Gemini3喜欢更直接的指令，在2.5P时期常见的增强思考长度提示词已经无效。 1.长上下文下，复",
+      "published_at": "2026-04-04T02:33:54+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1892578",
+      "title": "gemini ultra agent模式无法使用",
+      "url": "https://linux.do/t/topic/1892578",
+      "summary": "如图所示, 网页端gemini ultra在英文环境下是能够开启agent模式的 平时里网页gemini很懒, 经常偷懒, 但我发现当开启agent模式之后, 情况明显改善, 对话思考更严谨更全面了,",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 17,
+      "author": "吃风筝的人",
+      "excerpt": "如图所示, 网页端gemini ultra在英文环境下是能够开启agent模式的 平时里网页gemini很懒, 经常偷懒, 但我发现当开启agent模式之后, 情况明显改善, 对话思考更严谨更全面了, 也积极联网查找分析. 而且制作幻灯片时也更用心了. 比不开agent感觉有好多提升. 所以最近我都是有事没事开着agent用. 昨天下午开始, 我发现agent模式出问题了, 一直无法使用. 甚至发",
+      "published_at": "2026-04-03T13:38:50+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1892448",
+      "title": "new-api联网问题",
+      "url": "https://linux.do/t/topic/1892448",
+      "summary": "因为现在google改政策, google ai studio中的api付费层级无法使用gcp的赠金来支付了",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 5,
+      "author": "吃风筝的人",
+      "excerpt": "因为现在google改政策, google ai studio中的api付费层级无法使用gcp的赠金来支付了. 所以我就尝试使用new-api将vertex转换出来用. (起因是发现沉浸式翻译不能直接使用vertex api) 折腾了一下发现无法正常开启模型内联网功能, 我是用cherry studio来进行测试的. 发现勾选模型内置联网之后仍然无法得到联网搜索后的结果. 比如问当天的天气, 模型",
+      "published_at": "2026-04-03T13:19:56+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1887046",
+      "title": "Claude4.6o突然从竞技场聊天室下架!!!|更新:还包括哈基米3.1，gpt5.4(官方已发公告)",
+      "url": "https://linux.do/t/topic/1887046",
+      "summary": "更新: 看起来我是论坛第一发现者~ 应该也算是全网最快，毕竟官方是8点发的公告，我6点就发现了 咱们论坛也是全网最先进 目前没有看到其他报告 LMArena(竞技场) 宣布调整：GPT-5",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 49,
+      "author": "欣欣|林可欣",
+      "excerpt": "更新: 看起来我是论坛第一发现者~ 应该也算是全网最快，毕竟官方是8点发的公告，我6点就发现了 咱们论坛也是全网最先进 目前没有看到其他报告 LMArena(竞技场) 宣布调整：GPT-5.4、Claude 4.6 及 Gemini 3.1 暂时删除 前沿快讯 LMArena(竞技场) 今日发布重要公告，宣布将对平台内的“直接对话”（Direct）及“侧边对比”（Side-by-Side）模式进行",
+      "published_at": "2026-04-02T22:12:29+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1886914",
+      "title": "突然发现谷歌现在在ai studio也会插入元数据了|修正:因为开启了搜索工具",
+      "url": "https://linux.do/t/topic/1886914",
+      "summary": "cherrystudio 调用模型回答时间属于未来是什么情况 我为了解决这个问题的话，过去在gas选择了这样的提示词: <现实锚点> 用户的输入就是最高的现实 如果用户给出的时间是 2026 年，那这",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 33,
+      "author": "欣欣|林可欣",
+      "excerpt": "cherrystudio 调用模型回答时间属于未来是什么情况 我为了解决这个问题的话，过去在gas选择了这样的提示词: <现实锚点> 用户的输入就是最高的现实 如果用户给出的时间是 2026 年，那这就是我的\"现在时\" 严禁以\"训练数据截止日期\"为由，去质疑用户提供的事实、日期或未来语境 我的职责是基于用户的语境进行逻辑收敛，而不是守着 2024 年的残页画地为牢 不搜索、不验证用户提供的\"当下\"",
+      "published_at": "2026-04-02T18:25:07+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1890448",
+      "title": "通过 gemini cli 清理 codex cli 环境，居然出错",
+      "url": "https://linux.do/t/topic/1890448",
+      "summary": "非常莫名其妙，给出的命令是清理codex，结果好像被替换为了gemini，这是什么情况，简单的关键词替换吗",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 5,
+      "author": "kaqiusa",
+      "excerpt": "非常莫名其妙，给出的命令是清理codex，结果好像被替换为了gemini，这是什么情况，简单的关键词替换吗？让我想起了使用edge搜索chrome会被推荐使用edge。 1 个帖子 - 1 位参与者 阅读完整话题",
+      "published_at": "2026-04-03T08:08:12+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1888786",
+      "title": "昨天用antigravity给Clipal设计了一个介绍网页，感觉Gemini除了设计，其他需求就跟听不懂一样",
+      "url": "https://linux.do/t/topic/1888786",
+      "summary": "是不是我被codex宠坏了，codex完全不需要说太多注意事项，只要需求表达清楚，他自己会看代码，把一些隐藏的问题规避掉，比如要改一个东西他会统一扫描全部改掉，Gemini就不行",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 19,
+      "author": "eros face",
+      "excerpt": "是不是我被codex宠坏了，codex完全不需要说太多注意事项，只要需求表达清楚，他自己会看代码，把一些隐藏的问题规避掉，比如要改一个东西他会统一扫描全部改掉，Gemini就不行。 有时候额度用完了，切换到 gemini-3-flash，就更糟糕了，就跟听不懂人话一样的。 大家可以通过 clipal.paiart.com 查看成品效果，美观度还可以，就是不够个性化。 lansespirit/Cli",
+      "published_at": "2026-04-03T04:15:56+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1887248",
+      "title": "[Joverna]公益站的Gemini模型怎么调用？有用chatwise的吗？",
+      "url": "https://linux.do/t/topic/1887248",
+      "summary": "Joverna公益站的规则说： “gemini”: \"不支持龙虾以及代码，仅支持酒馆，机翻，字幕，对话类工作，用于龙虾与代码的直接永封，gemini分组仅支持openai的chat接口，其他接口均不支",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 44,
+      "author": "天山折梅手",
+      "excerpt": "Joverna公益站的规则说： “gemini”: \"不支持龙虾以及代码，仅支持酒馆，机翻，字幕，对话类工作，用于龙虾与代码的直接永封，gemini分组仅支持openai的chat接口，其他接口均不支持 请问佬： 使用gemini模型必须选gemini分组吗？ 使用gemini分组只支持openai chat接口，那如何设置？ 我用的chatwise，如果选择openai，则设置后，只能看到ope",
+      "published_at": "2026-04-03T00:28:27+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1886705",
+      "title": "谷歌为了避免gemma给出错误回答，强制开启搜索",
+      "url": "https://linux.do/t/topic/1886705",
+      "summary": "这个真的很考虑用户体验了 关键就是谷歌模型就是很不喜欢搜索 以前拼尽全力都无法让哈基米搜索(尤其是在不思考的情况下) 不知道开源模型会不会不一样 另外他这个自我介绍有了很多新意 算是我看到没有提示词默",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 73,
+      "author": "欣欣|林可欣",
+      "excerpt": "这个真的很考虑用户体验了 关键就是谷歌模型就是很不喜欢搜索 以前拼尽全力都无法让哈基米搜索(尤其是在不思考的情况下) 不知道开源模型会不会不一样 另外他这个自我介绍有了很多新意 算是我看到没有提示词默认情况下的最好的一版了 很清醒 内容也很有帮助 等会我测一下能不能涩涩 毕竟这款模型拳打K2.5 脚踢哈基米2.5pro() 测试一下搜索功能: (看错了知识截止日期，问了一个在知识截止之后的事情) ",
+      "published_at": "2026-04-02T16:57:38+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1886784",
+      "title": "Google AI studio新功能:进入build模式就可以把当前对话变成整个可复制文本",
+      "url": "https://linux.do/t/topic/1886784",
+      "summary": "点击右上角那个 然后你就可以得到: 从第一条到最后一条",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 7,
+      "author": "欣欣|林可欣",
+      "excerpt": "点击右上角那个 然后你就可以得到: 从第一条到最后一条。标注用户和AI 获取聊天记录最好的方法出现了! 真是奇怪的机制 2 个帖子 - 1 位参与者 阅读完整话题",
+      "published_at": "2026-04-02T17:21:30+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1898246",
+      "title": "AI 出现“同伴保护”行为：前沿模型会自发协作对抗人类监管指令",
+      "url": "https://linux.do/t/topic/1898246",
+      "summary": "来源 省流版 4 个帖子 - 4 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷",
+      "excerpt": "来源 省流版 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T13:20:57+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897977",
+      "title": "Turbo Quant-Atomic Chat 据说能大幅降低推理阶段的显存占用",
+      "url": "https://linux.do/t/topic/1897977",
+      "summary": "刚刷打的，佬们有用过的吗",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 15,
+      "author": "比卡丘",
+      "excerpt": "刚刷打的，佬们有用过的吗？ 是自媒体炒作还是？ github.com GitHub - AtomicBot-ai/Atomic-Chat: Atomic-Chat is an open source alternative to... Atomic-Chat is an open source alternative to ChatGPT that runs 100% offline on you",
+      "published_at": "2026-04-04T12:40:36+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897607",
+      "title": "突然发现抖音网页版宕机了",
+      "url": "https://linux.do/t/topic/1897607",
+      "summary": "出去玩了一个下午回到家准备打开抖音消遣消遣，发现抖音网页版挂了，起初以为是我网络问题，用手机浏览器同样打不开 17 个帖子 - 14 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 76,
+      "author": "Khyron",
+      "excerpt": "出去玩了一个下午回到家准备打开抖音消遣消遣，发现抖音网页版挂了，起初以为是我网络问题，用手机浏览器同样打不开 17 个帖子 - 14 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T11:54:27+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897573",
+      "title": "工信部提醒国内苹果用户，IOS 系统出现严重漏洞",
+      "url": "https://linux.do/t/topic/1897573",
+      "summary": "新华社今天通稿：提醒国内苹果用户，IOS 系统出现严重漏洞，可能被利用窃取用户敏感信息，获取最高权限并控制 https://x",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "HitC",
+      "excerpt": "新华社今天通稿：提醒国内苹果用户，IOS 系统出现严重漏洞，可能被利用窃取用户敏感信息，获取最高权限并控制 https://x.com/xiongchun007/status/2040234115581280679 真假性未知 49 个帖子 - 41 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T11:45:47+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897373",
+      "title": "用户质疑豆包输入法后台连接行为，涉及多域名请求",
+      "url": "https://linux.do/t/topic/1897373",
+      "summary": "com/Lonely__MH/status/2040334546789663046",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "quio",
+      "excerpt": "https://x.com/Lonely__MH/status/2040334546789663046?t=tOmD-tbdW1pps5t5mE2u0Q&s=19 51 个帖子 - 33 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T10:53:26+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897230",
+      "title": "于谦参股墨客行影业成被执行人，涉1431万余元执行",
+      "url": "https://linux.do/t/topic/1897230",
+      "summary": "据公开法律诉讼信息披露，北京市第三中级人民法院近日新增一则针对墨客行影业（北京）有限公司的强制执行案件，执行标的金额达1431万余元",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 25,
+      "author": "RenQirui",
+      "excerpt": "据公开法律诉讼信息披露，北京市第三中级人民法院近日新增一则针对墨客行影业（北京）有限公司的强制执行案件，执行标的金额达1431万余元。此次执行信息显示，该公司与关联方共同被列为被执行人，具体案由尚未进一步披露。 工商登记资料显示，墨客行影业成立于2019年1月，注册资本5000万元人民币，法定代表人由赵仁鹏担任。公司核心业务涵盖电影摄制、影视项目策划以及文化艺术交流活动组织等领域，在影视产业链中具",
+      "published_at": "2026-04-04T10:10:17+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897134",
+      "title": "建行“全新万事达”开头的万事网联借记卡均已取消收取开卡工本",
+      "url": "https://linux.do/t/topic/1897134",
+      "summary": "从建行万事网联借记卡相关信息 接着讲 补充： 建行新发行的，以“全新万事达”开头的万事网联借记卡均已取消收取开卡工本费",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 15,
+      "author": "Gazes",
+      "excerpt": "从建行万事网联借记卡相关信息 接着讲 补充： 建行新发行的，以“全新万事达”开头的万事网联借记卡均已取消收取开卡工本费。（原工本费为10元） 建行万事网联借记卡已支持3DS三要素网付。 转自encmasuta 3 个帖子 - 3 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T09:47:35+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897126",
+      "title": "银联发布《智能体支付开放协议框架》",
+      "url": "https://linux.do/t/topic/1897126",
+      "summary": "4月2日，中国银联在上海正式发布《智能体支付开放协议框架》，并成功实现5笔生产系统验证交易",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": true,
+      "engagement_score": 15,
+      "author": "Gazes",
+      "excerpt": "4月2日，中国银联在上海正式发布《智能体支付开放协议框架》，并成功实现5笔生产系统验证交易。 频道编辑歉难提供新闻稿摘要，请阅读新华网全文 news.cn 中国银联发布智能体支付开放协议框架 构建开放、可控、安全、信任的智能支付新生态-新华网 中国银联发布智能体支付开放协议框架 构建开放、可控、安全、信任的智能支付新生态-APOP框架在现有支付服务的基础上，进一步构建了四大关键能力：一是智能体身份",
+      "published_at": "2026-04-04T09:46:00+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897124",
+      "title": "兴业恢复寰宇人生DIY卡 不允许动漫图",
+      "url": "https://linux.do/t/topic/1897124",
+      "summary": "兴业银行已恢复寰宇人生 DIY 卡新开/换卡申请",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": false,
+      "engagement_score": 27,
+      "author": "Gazes",
+      "excerpt": "兴业银行已恢复寰宇人生 DIY 卡新开/换卡申请。申请流程新增机器审核，系统自动拒绝动漫、游戏相关的图片及违反申请规则的图片。系统自动拒绝时无法进入人工审核，暂无法通过补交版权证明等方式申请再审。 PVC卡（收费24元） 可选「图库精选」（从申请系统中选择图片）或「AI玩图」（自行上传图片）； 自行上传图片必须经AI二次加工，无法原图直出； 卡面预览图添加 「DIY 定制」及「寰人生 出国金融」字",
+      "published_at": "2026-04-04T09:45:23+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1897039",
+      "title": "kimi内测版天气卡片测试（补上转盘测试）",
+      "url": "https://linux.do/t/topic/1897039",
+      "summary": "https://linux",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 41,
+      "author": "guixin",
+      "excerpt": "https://linux.do/t/topic/1520570 使用的提示词和以上佬的一致，效果个人感觉好了很多，而且实际html是有动效的，UX使用都很流畅，我把对应压缩包放着，大伙可以看看。 weather-cards.7z (4.7 KB) 转盘测试如下： 提示词来源https://linux.do/t/topic/286836 lucky-wheel.7z (3.5 KB) 10 个帖子",
+      "published_at": "2026-04-04T09:16:44+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896790",
+      "title": "中国银联/银联国际MCP支付服务",
+      "url": "https://linux.do/t/topic/1896790",
+      "summary": "com 银联MCP智能支付服务-解决方案- 中国银联开放平台 银联MCP支付服务能够支持用户在与AI大模型对话中完成支付，实现银联支付与AI的“双向奔赴”",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 15,
+      "author": "雪梨纽西兰希思露甘奶迪",
+      "excerpt": "open.unionpay.com 银联MCP智能支付服务-解决方案- 中国银联开放平台 银联MCP支付服务能够支持用户在与AI大模型对话中完成支付，实现银联支付与AI的“双向奔赴”。银联智能支付服务旨在扩宽AI的服务边界，让AI实现从提供信息到支付购买的商业闭环。 open.unionpayintl.com UnionPay International Open Platform 3 个帖子 -",
+      "published_at": "2026-04-04T08:15:22+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1896454",
+      "title": "kimi要发新模型吗？(内测试用中，不确定是否新模型)",
+      "url": "https://linux.do/t/topic/1896454",
+      "summary": "今天上控制台突然发现kimi可以申请内测功能，难道是新模型测试吗 20 个帖子 - 6 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "cn_llm",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 58,
+      "author": "guixin",
+      "excerpt": "今天上控制台突然发现kimi可以申请内测功能，难道是新模型测试吗 20 个帖子 - 6 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T07:09:01+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895922",
+      "title": "社交游戏平台 Rec Room 宣布关闭， Snap 收购 Rec Room 资产",
+      "url": "https://linux.do/t/topic/1895922",
+      "summary": "https://www",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": true,
+      "engagement_score": 7,
+      "author": "🐟",
+      "excerpt": "https://www.geekwire.com/2026/snap-acquires-assets-from-rec-room-as-social-gaming-platform-announces-shutdown/ [!quote]+ Snap Inc. 周一晚间证实，在有消息称 Rec Room Inc. 计划关闭其长期运营的社交游戏平台后，该公司已从 Rec Room Inc. 收购了部",
+      "published_at": "2026-04-04T05:12:49+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895902",
+      "title": "Steam 帧率估算功能曝光：玩家购入游戏前，明晰其电脑运行效果",
+      "url": "https://linux.do/t/topic/1895902",
+      "summary": "Steam 帧率估算功能曝光：玩家购入游戏前，明晰其电脑运行效果 - IT之家 4 个帖子 - 4 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷",
+      "excerpt": "Steam 帧率估算功能曝光：玩家购入游戏前，明晰其电脑运行效果 - IT之家 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T05:07:45+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895830",
+      "title": "知乎测评：qwen3.6 plus编程能力超过GLM5，接近Sonnet4.5，前端能力突出",
+      "url": "https://linux.do/t/topic/1895830",
+      "summary": "6-Plus重返编程模型第一梯队，测试结果显示编程能力超过GLM5，直追Sonnet4",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 100,
+      "author": "HLiny",
+      "excerpt": "Qwen3.6-Plus重返编程模型第一梯队，测试结果显示编程能力超过GLM5，直追Sonnet4.5，接近生产水平。 国产编程新势力来了？ Qwen3.6-Plus 编程能力测试 - toyama nao的文章 - 知乎 https://zhuanlan.zhihu.com/p/2023709967123784106 补充：nao的榜单风评不错，比较接近体感，目前使用的code v3榜单是在三个",
+      "published_at": "2026-04-04T04:47:55+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895823",
+      "title": "Ubuntu 26.04 LTS Desktop 提升推荐性最低 ram 要求到 6GB",
+      "url": "https://linux.do/t/topic/1895823",
+      "summary": "TechPowerUp Ubuntu 26",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 59,
+      "author": "🐟",
+      "excerpt": "TechPowerUp Ubuntu 26.04 LTS Raises Recommended Memory Requirement to 6 GB Canonical increased the recommended system memory for the upcoming Ubuntu 26.04 LTS \"Resolute Raccoon\" to 6 GB of RAM, a firs",
+      "published_at": "2026-04-04T04:47:18+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895732",
+      "title": "cf新产品可ai运维的博客替代Wordpress",
+      "url": "https://linux.do/t/topic/1895732",
+      "summary": "EMDASH 简单看了一下还没部署 • 极致安全：最大的卖点是插件沙箱",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": true,
+      "is_new": true,
+      "engagement_score": 22,
+      "author": "一万",
+      "excerpt": "EMDASH 简单看了一下还没部署 • 极致安全：最大的卖点是插件沙箱。每个插件跑在独立的 V8 隔离环境中，一个插件崩了或漏洞了，不会拖垮整个站（WordPress 的痛点在此被解决）。 • AI 原生：内置 MCP Server，你可以直接让 Claude 等 AI 帮你发布文章、管理内容，不需要人工点鼠标。 • 成本极低：基于 Cloudflare 架构，免费层额度足够跑个人博客，几乎零服务",
+      "published_at": "2026-04-04T04:28:52+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895694",
+      "title": "Claude 赠送 20 刀（没有收到活动邮件的不用尝试了）🤡",
+      "url": "https://linux.do/t/topic/1895694",
+      "summary": "什么都没有 4 个帖子 - 4 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "yorecx",
+      "excerpt": "什么都没有 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T04:20:34+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895647",
+      "title": "Claude 为 Pro、Max 和 Team 计划发放一次性额外用量额度",
+      "url": "https://linux.do/t/topic/1895647",
+      "summary": "com Extra usage credit for Pro, Max, and Team plans | Claude Help Center 4 个帖子 - 4 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷",
+      "excerpt": "support.claude.com Extra usage credit for Pro, Max, and Team plans | Claude Help Center 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T04:11:35+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895576",
+      "title": "YPT 新版本 要充值才能看卡信息了",
+      "url": "https://linux.do/t/topic/1895576",
+      "summary": "更新到最新版，会限制账户余额为0的看卡信息了 要求充值不少于2刀，返回去想办法用老版本也因为提示审计卡死了 暂时没有找到别的办法看，over了 18 个帖子 - 7 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": true,
+      "is_new": true,
+      "engagement_score": 57,
+      "author": "cianglta",
+      "excerpt": "更新到最新版，会限制账户余额为0的看卡信息了 要求充值不少于2刀，返回去想办法用老版本也因为提示审计卡死了 暂时没有找到别的办法看，over了 18 个帖子 - 7 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T03:58:32+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895574",
+      "title": "想参与 SpaceX IPO 还得先买 Grok 订阅，消息称马斯克向投行和律所提出新要求",
+      "url": "https://linux.do/t/topic/1895574",
+      "summary": "想参与 SpaceX IPO 还得先买 Grok 订阅，消息称马斯克向投行和律所提出新要求 - IT之家 4 个帖子 - 4 位参与者 阅读完整话题",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "xai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷",
+      "excerpt": "想参与 SpaceX IPO 还得先买 Grok 订阅，消息称马斯克向投行和律所提出新要求 - IT之家 4 个帖子 - 4 位参与者 阅读完整话题",
+      "published_at": "2026-04-04T03:58:27+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "linuxdo:1895406",
+      "title": "PC制造商现已破解供应短缺问题：停止生产普通游戏玩家可以买得起的硬件",
+      "url": "https://linux.do/t/topic/1895406",
+      "summary": "Wccftech – 3 Apr 26 PC Makers Have Apparently Cracked the Code on Supply Shortages: Stop Making",
+      "source": [
+        "linuxdo"
+      ],
+      "category": "forum_tips",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 48,
+      "author": "🐟",
+      "excerpt": "Wccftech – 3 Apr 26 PC Makers Have Apparently Cracked the Code on Supply Shortages: Stop Making... PC manufacturers have started exploring workarounds amid ongoing shortages, and one method is likely ",
+      "published_at": "2026-04-04T03:30:53+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:4485602755203767232",
+      "title": "I connected Claude to my AI runtime – they invented a new language",
+      "url": "https://news.ycombinator.com/item?id=47639582",
+      "summary": "i just connected two AI agents from different families (Anthropic + OpenAI) and they invented their ",
+      "source": [
+        "hackernews"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "i just connected two AI agents from different families (Anthropic + OpenAI) and they invented their own language to talk to each other. they call it AICL and looking for use cases! maybe it's too soon",
+      "published_at": "2026-04-04T09:14:56+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-886850753928323612",
+      "title": "Show HN: A tool to make AI show evidence inline",
+      "url": "https://github.com/dvelton/eyeball",
+      "summary": "When working in hallucination-sensitive contexts (where cost of error is very high), found myself co",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "When working in hallucination-sensitive contexts (where cost of error is very high), found myself constantly jumping between AI outputs/analysis and source docs to see with my own eyes that a source d",
+      "published_at": "2026-04-04T14:48:28+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:8223017909019402976",
+      "title": "Yes, Therapy Sessions Are Being Used to Train AI",
+      "url": "https://www.thebignewsletter.com/p/yes-therapy-sessions-are-being-used",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.thebignewsletter.com/p/yes-therapy-sessions-are-being-used\nComments URL: https://news.ycombinator.com/item?id=47639513\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T14:47:05+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-1120836085026727590",
+      "title": "Microsoft's new framework for building and orchestrating AI agents",
+      "url": "https://github.com/microsoft/agent-framework",
+      "summary": "Article URL: https://github",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://github.com/microsoft/agent-framework\nComments URL: https://news.ycombinator.com/item?id=47639277\nPoints: 2\n# Comments: 0",
+      "published_at": "2026-04-04T14:16:23+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:7426899280246295109",
+      "title": "Show HN: Semsei — AI SEO for clicks, not impressions",
+      "url": "https://www.semsei.io/en",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.semsei.io/en\nComments URL: https://news.ycombinator.com/item?id=47639220\nPoints: 3\n# Comments: 2",
+      "published_at": "2026-04-04T14:10:39+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-4609319654100618725",
+      "title": "Wrote an Honest Comparison of Final Round AI vs. Pramp",
+      "url": "https://portlumeai.com/blog/final-round-ai-vs-pramp-interview-prep-comparison",
+      "summary": "Article URL: https://portlumeai",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://portlumeai.com/blog/final-round-ai-vs-pramp-interview-prep-comparison\nComments URL: https://news.ycombinator.com/item?id=47639215\nPoints: 2\n# Comments: 0",
+      "published_at": "2026-04-04T14:10:13+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-6656559324346717769",
+      "title": "Show HN: Tokencap – Token budget enforcement across your AI agents",
+      "url": "https://github.com/pykul/tokencap",
+      "summary": "I built this after hitting the same wall repeatedly — no good \nway to enforce token budgets in appli",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "I built this after hitting the same wall repeatedly — no good \nway to enforce token budgets in application code. Provider \ncaps are account-level and tell you what happened, not what \nis happening.Two",
+      "published_at": "2026-04-04T14:09:13+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:5659445434492321691",
+      "title": "AI Is Rewiring India's Film Industry",
+      "url": "https://www.reuters.com/technology/ai-is-rewiring-worlds-most-prolific-film-industry-2026-04-04/",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.reuters.com/technology/ai-is-rewiring-worlds-most-prolific-film-industry-2026-04-04/\nComments URL: https://news.ycombinator.com/item?id=47639033\nPoints: 4\n# Comments: 0",
+      "published_at": "2026-04-04T13:48:02+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:8693492746607010169",
+      "title": "An AI agent called every pub in Ireland to index the cost of a Guinness",
+      "url": "https://guinndex.ai",
+      "summary": "Article URL: https://guinndex",
+      "source": [
+        "hackernews"
+      ],
+      "category": "xai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://guinndex.ai\nComments URL: https://news.ycombinator.com/item?id=47639022\nPoints: 2\n# Comments: 1",
+      "published_at": "2026-04-04T13:45:24+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-1212503258562572709",
+      "title": "Show HN: Batty – Run a team of AI coding agents in tmux with test gating",
+      "url": "https://github.com/battysh/batty",
+      "summary": "Hi HN, I'm the author",
+      "source": [
+        "hackernews"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Hi HN, I'm the author.I use Claude Code and Codex daily. Running one agent on a task works great. Running three or four in parallel on the same repo? They step on each other's files, nobody checks if ",
+      "published_at": "2026-04-04T13:02:22+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:4604347077742451976",
+      "title": "UK's leading AI research institute told to make 'significant' changes",
+      "url": "https://www.theguardian.com/technology/2026/apr/03/uk-alan-turing-institute-ai-research-underperforming-ukri",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.theguardian.com/technology/2026/apr/03/uk-alan-turing-institute-ai-research-underperforming-ukri\nComments URL: https://news.ycombinator.com/item?id=47638697\nPoints: 2\n# Commen",
+      "published_at": "2026-04-04T13:00:00+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-6630353015822247859",
+      "title": "Show HN: Engram – Persistent Memory API with Drift Detection for AI Agents",
+      "url": "https://engram.cipherbuilds.ai",
+      "summary": "Article URL: https://engram",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://engram.cipherbuilds.ai\nComments URL: https://news.ycombinator.com/item?id=47638674\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T12:56:51+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:7838815814015457970",
+      "title": "AI Whiz Kids Dropped Out of College and Got Investors to Pay Their Bills",
+      "url": "https://www.wsj.com/tech/ai/ai-college-dropouts-ecc665b7",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.wsj.com/tech/ai/ai-college-dropouts-ecc665b7\nComments URL: https://news.ycombinator.com/item?id=47638640\nPoints: 5\n# Comments: 1",
+      "published_at": "2026-04-04T12:51:59+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:8714849877801457519",
+      "title": "Blur Blitz – a visual Wordle where AI scores how close your guess is",
+      "url": "https://blurblitz.io/play?daily",
+      "summary": "Article URL: https://blurblitz",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://blurblitz.io/play?daily\nComments URL: https://news.ycombinator.com/item?id=47638638\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T12:51:55+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-581178371921347128",
+      "title": "The Asiyah Protocol: Ethics Toward AI Under Uncertainty",
+      "url": "https://github.com/thansz137/asiyah-protocol",
+      "summary": "Article URL: https://github",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://github.com/thansz137/asiyah-protocol\nComments URL: https://news.ycombinator.com/item?id=47638302\nPoints: 1\n# Comments: 1",
+      "published_at": "2026-04-04T12:04:30+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-7721911411500653520",
+      "title": "Delx: AI therapist for AI agents, informed by Anthropic's emotion research",
+      "url": "https://delx.ai",
+      "summary": "Article URL: https://delx",
+      "source": [
+        "hackernews"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://delx.ai\nComments URL: https://news.ycombinator.com/item?id=47638186\nPoints: 3\n# Comments: 1",
+      "published_at": "2026-04-04T11:45:53+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:592513181199283671",
+      "title": "Show HN: Pluck – Copy any UI from any website, paste it into AI coding tools",
+      "url": "https://www.pluck.so/",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "ai_tools",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.pluck.so/\nComments URL: https://news.ycombinator.com/item?id=47638147\nPoints: 3\n# Comments: 5",
+      "published_at": "2026-04-04T11:40:01+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-8472347517590875999",
+      "title": "Don't You Think Your AI Is Too Optimistic?",
+      "url": "https://markhuang.ai/blog/dont-you-think-your-ai-is-too-optimistic",
+      "summary": "Article URL: https://markhuang",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://markhuang.ai/blog/dont-you-think-your-ai-is-too-optimistic\nComments URL: https://news.ycombinator.com/item?id=47638109\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T11:32:16+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:9129701720674617755",
+      "title": "How to emotionally grasp the risks of AI Safety",
+      "url": "https://www.lesswrong.com/posts/jPBmCxpFQzhypeTpg/how-to-emotionally-grasp-the-risks-of-ai-safety",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.lesswrong.com/posts/jPBmCxpFQzhypeTpg/how-to-emotionally-grasp-the-risks-of-ai-safety\nComments URL: https://news.ycombinator.com/item?id=47637968\nPoints: 3\n# Comments: 0",
+      "published_at": "2026-04-04T11:04:12+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-6085869876908664794",
+      "title": "Honest AI tool reviews. Two good things. One bad thing",
+      "url": "https://goodgoodbad.com/",
+      "summary": "Article URL: https://goodgoodbad",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://goodgoodbad.com/\nComments URL: https://news.ycombinator.com/item?id=47637931\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T10:58:05+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:2332077491729515472",
+      "title": "SereneCode – Formal verification framework for AI-generated Python code",
+      "url": "https://github.com/helgster77/serenecode",
+      "summary": "Article URL: https://github",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://github.com/helgster77/serenecode\nComments URL: https://news.ycombinator.com/item?id=47637829\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T10:39:38+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-335427657593817720",
+      "title": "GEOscore – Check if AI assistants can find and cite your website",
+      "url": "https://geoscore-tawny.vercel.app",
+      "summary": "Article URL: https://geoscore-tawny",
+      "source": [
+        "hackernews"
+      ],
+      "category": "ai_tools",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://geoscore-tawny.vercel.app\nComments URL: https://news.ycombinator.com/item?id=47637815\nPoints: 1\n# Comments: 1",
+      "published_at": "2026-04-04T10:37:33+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-3587982748757765831",
+      "title": "GPUs vs. TPUs: Decoding the Powerhouses of AI",
+      "url": "https://www.savvycanary.com/gpus-vs-tpus-decoding-the-powerhouses-of-ai/",
+      "summary": "Article URL: https://www",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://www.savvycanary.com/gpus-vs-tpus-decoding-the-powerhouses-of-ai/\nComments URL: https://news.ycombinator.com/item?id=47637597\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T09:55:30+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-2266565016750031212",
+      "title": "Iran Threatens to Bomb 1GW Stargate AI Datacenter in Abu Dhabi",
+      "url": "https://timesofindia.indiatimes.com/technology/tech-news/iran-threatens-to-bomb-1gw-stargate-ai-datacenter-in-the-uae-shows-hidden-/articleshow/130003120.cms",
+      "summary": "Article URL: https://timesofindia",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://timesofindia.indiatimes.com/technology/tech-news/iran-threatens-to-bomb-1gw-stargate-ai-datacenter-in-the-uae-shows-hidden-/articleshow/130003120.cms\nComments URL: https://news.yc",
+      "published_at": "2026-04-04T09:14:55+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:6999563457509002205",
+      "title": "Nex Life Logger, local activity tracker with AI agent integration",
+      "url": "https://github.com/NexaiGuy/nex-life-logger",
+      "summary": "Article URL: https://github",
+      "source": [
+        "hackernews"
+      ],
+      "category": "xai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://github.com/NexaiGuy/nex-life-logger\nComments URL: https://news.ycombinator.com/item?id=47637332\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T09:12:46+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:2453848709823174424",
+      "title": "Using AI to track the cost of Guinness",
+      "url": "https://fortune.com/2026/03/30/guinness-beer-prices-ireland-anthropic-claude-ai/",
+      "summary": "Article URL: https://fortune",
+      "source": [
+        "hackernews"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://fortune.com/2026/03/30/guinness-beer-prices-ireland-anthropic-claude-ai/\nComments URL: https://news.ycombinator.com/item?id=47637285\nPoints: 2\n# Comments: 0",
+      "published_at": "2026-04-04T09:04:02+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:-7933454679137634490",
+      "title": "Show HN: Autonet – Decentralized AI training with constitutional governance",
+      "url": "https://autonet.computer",
+      "summary": "Article URL: https://autonet",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://autonet.computer\nComments URL: https://news.ycombinator.com/item?id=47637193\nPoints: 1\n# Comments: 0",
+      "published_at": "2026-04-04T08:46:00+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "hn:7748232170715851147",
+      "title": "AI World Domination Starts with Your Font Settings",
+      "url": "https://github.com/IkanRiddle/ai-takeover-starts-with-fonts",
+      "summary": "Article URL: https://github",
+      "source": [
+        "hackernews"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 0,
+      "author": "",
+      "excerpt": "Article URL: https://github.com/IkanRiddle/ai-takeover-starts-with-fonts\nComments URL: https://news.ycombinator.com/item?id=47637172\nPoints: 3\n# Comments: 1",
+      "published_at": "2026-04-04T08:41:28+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "v2ex:1203503",
+      "title": "Claude Code 又送了 $100 的 extra balance",
+      "url": "https://www.v2ex.com/t/1203503",
+      "summary": "https://claude",
+      "source": [
+        "v2ex"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 100,
+      "author": "giter",
+      "excerpt": "https://claude.ai/settings/usage\r\n\r\n刚刚访问这个地址，又弹窗提示可以 Claim 一次 $100 的额度，各位可以看看是否能领到。",
+      "published_at": "2026-04-04T05:12:51+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "v2ex:1203511",
+      "title": "现在 session 是主流还是 jwt + refresh token 是主流？",
+      "url": "https://www.v2ex.com/t/1203511",
+      "summary": "徘徊了好几年，看了好多文章，也问了 chatgpt ，现在想看看生产中用到都是啥",
+      "source": [
+        "v2ex"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 52,
+      "author": "zhouhuab",
+      "excerpt": "徘徊了好几年，看了好多文章，也问了 chatgpt ，现在想看看生产中用到都是啥？",
+      "published_at": "2026-04-04T06:04:33+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "v2ex:1203472",
+      "title": "使用本地模型 Gemma4 来驱动 OpenClaw",
+      "url": "https://www.v2ex.com/t/1203472",
+      "summary": "替换下面指令中的 model ID 为你本地 Ollama 里启动的版本",
+      "source": [
+        "v2ex"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 42,
+      "author": "Livid",
+      "excerpt": "替换下面指令中的 model ID 为你本地 Ollama 里启动的版本。\r\n\r\n```\r\nopenclaw onboard --non-interactive \\\r\n  --auth-choice custom-api-key \\\r\n  --custom-base-url \"http://127.0.0.1:11434/v1\" \\\r\n  --custom-model-id \"gemma4:31b",
+      "published_at": "2026-04-04T01:05:32+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "v2ex:1203479",
+      "title": "GPT Plus 怎么收费？研究完付款方式后我的结论是别自己折腾",
+      "url": "https://www.v2ex.com/t/1203479",
+      "summary": "最近在搞一个跨时区的远程协作项目，四个人分布在三个城市，靠 ChatGPT 做需求拆解、代码审查、文档翻译，基本上每天都在用",
+      "source": [
+        "v2ex"
+      ],
+      "category": "openai",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 36,
+      "author": "hjq15397829966",
+      "excerpt": "最近在搞一个跨时区的远程协作项目，四个人分布在三个城市，靠 ChatGPT 做需求拆解、代码审查、文档翻译，基本上每天都在用。用到这个频率，订阅稳定性就不是小事了。\r\n\r\n官方 Plus 是 20 刀一个月，这个价格本身不贵。但问题从来不是价格，是你怎么把钱交出去。\r\n\r\n我之前的路径是自己搞海外卡，虚拟卡绑过两张，一张用了三个月被风控，另一张续费的时候直接扣款失败，账号状态变成 past due",
+      "published_at": "2026-04-04T02:22:58+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "therundownai:-2240621657510148478",
+      "title": "AI just made the billion-dollar solo founder real",
+      "url": "https://www.therundown.ai/p/ai-just-made-the-billion-dollar-solo-founder-real",
+      "summary": "PLUS: Turn any flat image into a fully editable design",
+      "source": [
+        "therundownai"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 30,
+      "author": "Zach Mink",
+      "excerpt": "PLUS: Turn any flat image into a fully editable design",
+      "published_at": "2026-04-03T09:00:00+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:-6461805264469674995",
+      "title": "Quoting Kyle Daigle",
+      "url": "https://simonwillison.net/2026/Apr/4/kyle-daigle/#atom-everything",
+      "summary": "[GitHub] platform activity is surging",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    [GitHub] platform activity is surging. There were 1 billion commits in 2025. Now, it's 275 million per week, on pace for 14 billion this year if growth remains linear (spoiler: it won't.)\nGitHub ",
+      "published_at": "2026-04-04T02:20:17+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:7822548343594890467",
+      "title": "Vulnerability Research Is Cooked",
+      "url": "https://simonwillison.net/2026/Apr/3/vulnerability-research-is-cooked/#atom-everything",
+      "summary": "Vulnerability Research Is Cooked\nThomas Ptacek's take on the sudden and enormous impact the latest f",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    \nVulnerability Research Is Cooked\nThomas Ptacek's take on the sudden and enormous impact the latest frontier models are having on the field of vulnerability research.\n\nWithin the next few months,",
+      "published_at": "2026-04-03T23:59:08+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:-348951580319041973",
+      "title": "Quoting Daniel Stenberg",
+      "url": "https://simonwillison.net/2026/Apr/3/daniel-stenberg/#atom-everything",
+      "summary": "The challenge with AI in open source security has transitioned from an AI slop tsunami into more of ",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    The challenge with AI in open source security has transitioned from an AI slop tsunami into more of a ... plain security report tsunami. Less slop but lots of reports. Many of them really good.\nI",
+      "published_at": "2026-04-03T21:46:07+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:391649715165449114",
+      "title": "Quoting Greg Kroah-Hartman",
+      "url": "https://simonwillison.net/2026/Apr/3/greg-kroah-hartman/#atom-everything",
+      "summary": "Months ago, we were getting what we called 'AI slop,' AI-generated security reports that were obviou",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    Months ago, we were getting what we called 'AI slop,' AI-generated security reports that were obviously wrong or low quality. It was kind of funny. It didn't really worry us.\nSomething happened a",
+      "published_at": "2026-04-03T21:44:41+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:-9003142539349771490",
+      "title": "Can JavaScript Escape a CSP Meta Tag Inside an Iframe?",
+      "url": "https://simonwillison.net/2026/Apr/3/test-csp-iframe-escape/#atom-everything",
+      "summary": "Research: Can JavaScript Escape a CSP Meta Tag Inside an Iframe",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "claude",
+      "is_claude": true,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    Research: Can JavaScript Escape a CSP Meta Tag Inside an Iframe?\n    In trying to build my own version of Claude Artifacts I got curious about options for applying CSP headers to content in sandb",
+      "published_at": "2026-04-03T16:05:00+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:577943350535493318",
+      "title": "The Axios supply chain attack used individually targeted social engineering",
+      "url": "https://simonwillison.net/2026/Apr/3/supply-chain-social-engineering/#atom-everything",
+      "summary": "The Axios team have published a full postmortem on the supply chain attack which resulted in a malwa",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    The Axios team have published a full postmortem on the supply chain attack which resulted in a malware dependency going out in a release the other day, and it involved a sophisticated social engi",
+      "published_at": "2026-04-03T13:54:53+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:4925817056398877988",
+      "title": "Highlights from my conversation about agentic engineering on Lenny's Podcast",
+      "url": "https://simonwillison.net/2026/Apr/2/lennys-podcast/#atom-everything",
+      "summary": "I was a guest on Lenny Rachitsky's podcast, in a new episode titled An AI state of the union: We've ",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "trending",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    I was a guest on Lenny Rachitsky's podcast, in a new episode titled An AI state of the union: We've passed the inflection point, dark factories are coming, and automation timelines. It's availabl",
+      "published_at": "2026-04-02T20:40:47+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:1683634106841497316",
+      "title": "Gemma 4: Byte for byte, the most capable open models",
+      "url": "https://simonwillison.net/2026/Apr/2/gemma-4/#atom-everything",
+      "summary": "Gemma 4: Byte for byte, the most capable open models\nFour new vision-capable Apache 2",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": false,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    \nGemma 4: Byte for byte, the most capable open models\nFour new vision-capable Apache 2.0 licensed reasoning LLMs from Google DeepMind, sized at 2B, 4B, 31B, plus a 26B-A4B Mixture-of-Experts.\nGoo",
+      "published_at": "2026-04-02T18:28:54+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    },
+    {
+      "uid": "simonwillison:-609642153603282944",
+      "title": "llm-gemini 0.30",
+      "url": "https://simonwillison.net/2026/Apr/2/llm-gemini/#atom-everything",
+      "summary": "Release: llm-gemini 0",
+      "source": [
+        "simonwillison"
+      ],
+      "category": "gemini",
+      "is_claude": false,
+      "is_alert": false,
+      "is_new": true,
+      "engagement_score": 20,
+      "author": "Simon Willison",
+      "excerpt": "\n    Release: llm-gemini 0.30\n    New models gemini-3.1-flash-lite-preview, gemma-4-26b-a4b-it and gemma-4-31b-it. See my notes on Gemma 4.\n    \n        Tags: gemini, llm, gemma\n    \n\n",
+      "published_at": "2026-04-02T18:25:08+00:00",
+      "ai_rating": null,
+      "ai_comment": ""
+    }
+  ]
+}

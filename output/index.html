@@ -1,0 +1,4894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 情报雷达</title>
+<style>
+/* ── Reset & Variables ── */
+:root{
+  --bg:#0a0e17;--card:#131a2b;--card-hover:#1a2338;--border:#1e2d45;
+  --text:#e2e8f0;--text2:#8892a4;--text3:#5a6578;
+  --accent:#60a5fa;--accent2:#818cf8;
+  --glass:rgba(19,26,43,.7);
+  --claude:#f59e0b;--openai:#10b981;--gemini:#3b82f6;
+  --xai:#a78bfa;--cn_llm:#f87171;--ai_tools:#22d3ee;
+  --forum_tips:#fbbf24;--trending:#f472b6;
+  --alert:#ef4444;--new:#34d399;
+  --shadow:0 4px 24px rgba(0,0,0,.3);
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(ellipse at 20% 0%,rgba(96,165,250,.06) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(129,140,248,.05) 0%,transparent 60%);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC",sans-serif;
+  line-height:1.6;padding:0 20px 60px;max-width:980px;margin:0 auto;
+  min-height:100vh;
+}
+
+/* ── Header ── */
+.header{
+  padding:32px 0 24px;border-bottom:1px solid var(--border);
+  margin-bottom:20px;position:relative;
+}
+.header h1{
+  font-size:28px;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;margin-bottom:6px;letter-spacing:-.5px;
+}
+.header .subtitle{color:var(--text2);font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.header .subtitle .sep{color:var(--text3)}
+
+/* ── Source Status ── */
+.source-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.source-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:4px 12px 4px 8px;font-size:12px;cursor:pointer;
+  transition:all .2s;user-select:none;
+}
+.source-chip:hover{border-color:var(--accent);background:var(--card-hover)}
+.source-chip.active{border-color:var(--accent);background:rgba(96,165,250,.1)}
+.source-chip .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.source-chip .dot.ok{background:var(--new);box-shadow:0 0 6px rgba(52,211,153,.4)}
+.source-chip .dot.fail{background:var(--alert);box-shadow:0 0 6px rgba(239,68,68,.4)}
+.source-chip .name{color:var(--text2)}
+.source-chip .count{color:var(--accent);font-weight:600;min-width:14px;text-align:right}
+
+/* ── Stats Cards ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-bottom:20px}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;text-align:center;cursor:pointer;
+  transition:all .25s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--cat-color,var(--accent));opacity:0;transition:opacity .25s;
+}
+.stat-card:hover{transform:translateY(-2px);border-color:var(--cat-color,var(--accent));
+  box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.stat-card:hover::before{opacity:1}
+.stat-card.active{border-color:var(--cat-color,var(--accent));background:rgba(96,165,250,.05)}
+.stat-card.active::before{opacity:1}
+.stat-card .num{font-size:24px;font-weight:800;line-height:1.2;color:var(--cat-color,var(--accent))}
+.stat-card .label{font-size:11px;color:var(--text2);margin-top:2px;white-space:nowrap}
+
+/* ── Controls ── */
+.controls{
+  display:flex;gap:10px;margin-bottom:20px;align-items:center;
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,14,23,.85);backdrop-filter:blur(12px);
+  padding:12px 4px;margin-left:-4px;margin-right:-4px;
+  border-bottom:1px solid var(--border);
+}
+.search-wrap{flex:1;position:relative;min-width:160px}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);width:16px;height:16px}
+.search-wrap input{
+  width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:9px 12px 9px 32px;color:var(--text);font-size:14px;outline:none;
+  transition:border-color .2s;
+}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap input::placeholder{color:var(--text3)}
+select{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:9px 32px 9px 12px;color:var(--text);font-size:13px;outline:none;cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238892a4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  transition:border-color .2s;
+}
+select:focus{border-color:var(--accent)}
+
+/* ── Sections ── */
+.section{margin-bottom:28px}
+.section-header{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0 8px;cursor:pointer;
+  border-bottom:1px solid var(--border);margin-bottom:12px;
+}
+.section-header .section-icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;background:var(--card);border:1px solid var(--border);
+  flex-shrink:0;
+}
+.section-header .section-label{font-size:16px;font-weight:600;flex:1}
+.section-header .section-count{
+  font-size:12px;background:var(--card);padding:3px 10px;
+  border-radius:12px;color:var(--text2);border:1px solid var(--border);
+}
+.section-header .collapse-icon{
+  color:var(--text3);transition:transform .2s;font-size:14px;
+}
+.section.collapsed .collapse-icon{transform:rotate(-90deg)}
+.section.collapsed .section-body{display:none}
+
+/* ── Post Cards ── */
+.post-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:10px;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.post-card:hover{
+  border-color:rgba(96,165,250,.4);
+  background:var(--card-hover);
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+  transform:translateX(2px);
+}
+.post-card.claude-card{border-left:3px solid var(--claude)}
+.post-card.alert-card{border-left:3px solid var(--alert)}
+.post-card.new-card{border-left:3px solid var(--new)}
+
+/* Card Inner */
+.post-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px}
+.post-title{
+  color:var(--text);text-decoration:none;font-size:15px;font-weight:500;
+  line-height:1.45;flex:1;display:block;
+  transition:color .15s;
+}
+.post-title:hover{color:var(--accent)}
+.post-title:visited{color:var(--text2)}
+
+/* Badges */
+.badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;white-space:nowrap;letter-spacing:.3px;text-transform:uppercase}
+.badge-alert{background:rgba(239,68,68,.15);color:#fca5a5}
+.badge-new{background:rgba(52,211,153,.15);color:#6ee7b7}
+.badge-claude{background:rgba(245,158,11,.15);color:#fcd34d}
+
+/* AI Rating */
+.ai-insight{
+  margin-top:8px;padding:8px 12px;border-radius:8px;
+  background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12);
+}
+.ai-stars{display:flex;align-items:center;gap:2px;margin-bottom:3px}
+.ai-star{font-size:12px}
+.ai-star.filled{color:#fbbf24}
+.ai-star.empty{color:var(--text3)}
+.ai-comment{font-size:12px;color:#c4b5fd;line-height:1.4;font-style:italic}
+.ai-label{font-size:10px;color:var(--text3);margin-right:6px;font-style:normal;font-weight:600}
+
+.post-summary{
+  color:var(--text2);font-size:13px;margin:6px 0 8px;line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.post-meta{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;align-items:center}
+.source-tag{
+  background:rgba(96,165,250,.08);color:var(--accent);padding:2px 8px;
+  border-radius:4px;font-size:11px;font-weight:500;
+  border:1px solid rgba(96,165,250,.15);
+}
+.meta-dot{color:var(--text3);font-size:10px}
+.meta-item{color:var(--text3);white-space:nowrap}
+.meta-item:hover{color:var(--text2)}
+
+/* ── Back to Top ── */
+.back-top{
+  position:fixed;bottom:24px;right:24px;width:40px;height:40px;
+  border-radius:50%;background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;transform:translateY(10px);
+  transition:all .3s;z-index:99;color:var(--text2);font-size:18px;
+  box-shadow:var(--shadow);
+}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ── Empty State ── */
+.empty-state{
+  text-align:center;padding:40px 20px;color:var(--text3);
+  font-size:14px;
+}
+.empty-state .icon{font-size:32px;margin-bottom:8px}
+
+/* ── Footer ── */
+.footer{
+  margin-top:40px;padding:20px 0;border-top:1px solid var(--border);
+  color:var(--text3);font-size:12px;text-align:center;
+}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ── Animations ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.post-card{animation:fadeIn .3s ease both}
+.section:nth-child(1) .post-card{animation-delay:0ms}
+.section:nth-child(2) .post-card{animation-delay:30ms}
+.section:nth-child(3) .post-card{animation-delay:60ms}
+
+/* ── Mobile ── */
+@media(max-width:640px){
+  body{padding:0 12px 40px}
+  .header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(4,1fr);gap:6px}
+  .stat-card{padding:10px 8px}
+  .stat-card .num{font-size:18px}
+  .controls{flex-direction:column;gap:8px}
+  .search-wrap{width:100%}
+  .source-bar{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
+  .source-chip{flex-shrink:0}
+  .post-card{padding:12px 14px}
+  .post-meta{font-size:11px;gap:4px}
+  .back-top{bottom:16px;right:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>AI 情报雷达</h1>
+  <div class="subtitle">
+    <span>更新: 2026-04-04 23:08:44</span>
+    <span class="sep">·</span>
+    <span>共 152 条动态</span>
+    <span class="sep">·</span>
+    <span>14 个数据源</span>
+  </div>
+</div>
+
+<!-- Source Chips (clickable to filter) -->
+<div class="source-bar" id="sourceBar">
+
+  <div class="source-chip" data-source-id="Linux.do" onclick="toggleSource(this,'Linux.do')">
+    <span class="dot ok"></span>
+    <span class="name">Linux.do</span>
+    <span class="count">505</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Hacker News" onclick="toggleSource(this,'Hacker News')">
+    <span class="dot ok"></span>
+    <span class="name">Hacker News</span>
+    <span class="count">30</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Reddit r/ChatGPT" onclick="toggleSource(this,'Reddit r/ChatGPT')">
+    <span class="dot ok"></span>
+    <span class="name">Reddit r/ChatGPT</span>
+    <span class="count">0</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Reddit r/ClaudeAI" onclick="toggleSource(this,'Reddit r/ClaudeAI')">
+    <span class="dot ok"></span>
+    <span class="name">Reddit r/ClaudeAI</span>
+    <span class="count">0</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Reddit r/OpenAI" onclick="toggleSource(this,'Reddit r/OpenAI')">
+    <span class="dot ok"></span>
+    <span class="name">Reddit r/OpenAI</span>
+    <span class="count">0</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Reddit r/LocalLLaMA" onclick="toggleSource(this,'Reddit r/LocalLLaMA')">
+    <span class="dot ok"></span>
+    <span class="name">Reddit r/LocalLLaMA</span>
+    <span class="count">0</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Reddit r/singularity" onclick="toggleSource(this,'Reddit r/singularity')">
+    <span class="dot ok"></span>
+    <span class="name">Reddit r/singularity</span>
+    <span class="count">0</span>
+  </div>
+
+  <div class="source-chip" data-source-id="V2EX" onclick="toggleSource(this,'V2EX')">
+    <span class="dot ok"></span>
+    <span class="name">V2EX</span>
+    <span class="count">4</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Ben&#39;s Bites" onclick="toggleSource(this,'Ben&#39;s Bites')">
+    <span class="dot ok"></span>
+    <span class="name">Ben&#39;s Bites</span>
+    <span class="count">10</span>
+  </div>
+
+  <div class="source-chip" data-source-id="The Rundown AI" onclick="toggleSource(this,'The Rundown AI')">
+    <span class="dot ok"></span>
+    <span class="name">The Rundown AI</span>
+    <span class="count">10</span>
+  </div>
+
+  <div class="source-chip" data-source-id="Simon Willison" onclick="toggleSource(this,'Simon Willison')">
+    <span class="dot ok"></span>
+    <span class="name">Simon Willison</span>
+    <span class="count">10</span>
+  </div>
+
+  <div class="source-chip" data-source-id="arXiv cs.AI" onclick="toggleSource(this,'arXiv cs.AI')">
+    <span class="dot ok"></span>
+    <span class="name">arXiv cs.AI</span>
+    <span class="count">0</span>
+  </div>
+
+  <div class="source-chip" data-source-id="HuggingFace" onclick="toggleSource(this,'HuggingFace')">
+    <span class="dot ok"></span>
+    <span class="name">HuggingFace</span>
+    <span class="count">10</span>
+  </div>
+
+  <div class="source-chip" data-source-id="掘金" onclick="toggleSource(this,'掘金')">
+    <span class="dot ok"></span>
+    <span class="name">掘金</span>
+    <span class="count">0</span>
+  </div>
+
+</div>
+
+<!-- Stats Cards (clickable to filter) -->
+<div class="stats" id="statsBar">
+
+
+  <div class="stat-card claude" style="--cat-color:#d97706" data-cat="claude" onclick="clickStat('claude')">
+    <div class="num">30</div>
+    <div class="label">🟠 Claude 专区</div>
+  </div>
+
+
+  <div class="stat-card openai" style="--cat-color:#10a37f" data-cat="openai" onclick="clickStat('openai')">
+    <div class="num">31</div>
+    <div class="label">🟢 OpenAI / GPT</div>
+  </div>
+
+
+  <div class="stat-card gemini" style="--cat-color:#4285f4" data-cat="gemini" onclick="clickStat('gemini')">
+    <div class="num">10</div>
+    <div class="label">🔵 Gemini / Google</div>
+  </div>
+
+
+  <div class="stat-card xai" style="--cat-color:#8b5cf6" data-cat="xai" onclick="clickStat('xai')">
+    <div class="num">4</div>
+    <div class="label">🟣 xAI / Grok</div>
+  </div>
+
+
+  <div class="stat-card cn_llm" style="--cat-color:#ef4444" data-cat="cn_llm" onclick="clickStat('cn_llm')">
+    <div class="num">10</div>
+    <div class="label">🔴 国内大模型</div>
+  </div>
+
+
+  <div class="stat-card ai_tools" style="--cat-color:#06b6d4" data-cat="ai_tools" onclick="clickStat('ai_tools')">
+    <div class="num">4</div>
+    <div class="label">🔧 AI 工具</div>
+  </div>
+
+
+  <div class="stat-card forum_tips" style="--cat-color:#f59e0b" data-cat="forum_tips" onclick="clickStat('forum_tips')">
+    <div class="num">10</div>
+    <div class="label">💡 论坛技巧 / 合租</div>
+  </div>
+
+
+  <div class="stat-card trending" style="--cat-color:#ec4899" data-cat="trending" onclick="clickStat('trending')">
+    <div class="num">53</div>
+    <div class="label">🔥 突发热点 / 高赞</div>
+  </div>
+
+</div>
+
+<!-- Controls Bar (sticky) -->
+<div class="controls">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="搜索标题、标签、来源..." oninput="applyFilters()">
+  </div>
+  <select id="sortSelect" onchange="applySort()">
+    <option value="time">按时间排序</option>
+    <option value="score">按热度排序</option>
+  </select>
+</div>
+
+<!-- Sections -->
+
+
+<div class="section" data-section="claude">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#d97706">
+    <div class="section-icon" style="border-color:#d9770633">🟠</div>
+    <div class="section-label">Claude 专区</div>
+    <div class="section-count">30 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card claude-card  "
+       data-tags="claude"
+       data-time="2026-04-03 22:43:39+00:00"
+       data-score="100"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1894513" target="_blank" rel="noopener noreferrer" class="post-title">Claude 赠送一次性 20 刀额外使用量</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">有 claude 订阅的可以去 Usage 页面看看 support</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">apparition</span>
+      <span class="meta-dot">·</span><span class="meta-item">16小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card alert-card "
+       data-tags="claude"
+       data-time="2026-04-04 05:38:54+00:00"
+       data-score="100"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896012" target="_blank" rel="noopener noreferrer" class="post-title">claude 送200$ 无限刷的请求</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">浏览器打开claude</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Hary</span>
+      <span class="meta-dot">·</span><span class="meta-item">9小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="人工智能"
+       data-time="2026-04-04 10:48:29+00:00"
+       data-score="100"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897361" target="_blank" rel="noopener noreferrer" class="post-title">有没有想给薄荷公益站捐点渠道的大佬看过来！！！</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">最近情况一直不大好，差不多相当于全部模型瘫痪了 但是论坛里还是高手如云的，想看看有没有人有渠道然后不想自己开个公益站的，又或者余量很充足的，可以把渠道捐献给我 不限于gemini系列、gpt系列、cl</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">bohe</span>
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  new-card"
+       data-tags="前沿快讯"
+       data-time="2026-04-04 04:47:55+00:00"
+       data-score="100"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895830" target="_blank" rel="noopener noreferrer" class="post-title">知乎测评：qwen3.6 plus编程能力超过GLM5，接近Sonnet4.5，前端能力突出</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">6-Plus重返编程模型第一梯队，测试结果显示编程能力超过GLM5，直追Sonnet4</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">HLiny</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claudecode"
+       data-time="2026-04-04 05:12:51+00:00"
+       data-score="100"
+       data-claude="true"
+       data-cat="claude"
+       data-source="v2ex"
+       style="animation-delay:100ms">
+    <div class="post-top">
+      <a href="https://www.v2ex.com/t/1203503" target="_blank" rel="noopener noreferrer" class="post-title">Claude Code 又送了 $100 的 extra balance</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">https://claude</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">v2ex</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">giter</span>
+      <span class="meta-dot">·</span><span class="meta-item">9小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  new-card"
+       data-tags="claude,前沿快讯"
+       data-time="2026-04-04 07:12:14+00:00"
+       data-score="97"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:120ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896469" target="_blank" rel="noopener noreferrer" class="post-title">Claude 负责人正式宣布从 4月4日起，Claude 订阅额度不在包含或被用于 OpenClaw 或者任何第三方工具！</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">翻译： Claude 负责人正式宣布从 4月4日起，Claude 订阅额度不在包含或被用于 ClawCode 或者任何第三方工具</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Davon</span>
+      <span class="meta-dot">·</span><span class="meta-item">7小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 97</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card alert-card "
+       data-tags="claude"
+       data-time="2026-04-04 06:28:54+00:00"
+       data-score="95"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:140ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896249" target="_blank" rel="noopener noreferrer" class="post-title">Claude 注册验证手机号咋整呀</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">前两天开了个 Claude Pro，结果被封了</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Livia Tassel</span>
+      <span class="meta-dot">·</span><span class="meta-item">8小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 95</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card alert-card "
+       data-tags="claude"
+       data-time="2026-04-04 13:41:21+00:00"
+       data-score="93"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:160ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898384" target="_blank" rel="noopener noreferrer" class="post-title">我只是想要安安稳稳用claude，我有什么错</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">佬们，先说说我的配置：qq</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Nothingeven</span>
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 93</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  new-card"
+       data-tags="claude,前沿快讯"
+       data-time="2026-04-04 04:38:17+00:00"
+       data-score="86"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:180ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895779" target="_blank" rel="noopener noreferrer" class="post-title">补偿方案正式公布！Anthropic 为 Claude AI 所有订阅用户发放一次性额外额度（Claude Max 可领 100 美元）</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">继续 Anthropic 正在尝试解决在 Claude Code 中使用订阅额度快速消耗问题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Davon</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 86</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude,chatgpt,gemini"
+       data-time="2026-04-04 12:53:36+00:00"
+       data-score="75"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:200ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898054" target="_blank" rel="noopener noreferrer" class="post-title">写论文ai推荐</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">正在准备论文投稿，请问大家有有哪些比较好的写文章ai推荐</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">llysglz</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 75</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card alert-card "
+       data-tags="claude"
+       data-time="2026-04-04 10:45:35+00:00"
+       data-score="58"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:220ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897347" target="_blank" rel="noopener noreferrer" class="post-title">Claude Max 5x订阅记录，看什么时候会被封号</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">直接莽一波，google play订阅，奶昔美国节点直接登录claude code用，电脑语言、时区和用来订阅的手机都是中文、上海时区，2026-04-02 01:07:50付款用了两天蹬了28%周限</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">仰望蓝白条纹天空</span>
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 58</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude"
+       data-time="2026-04-04 05:26:47+00:00"
+       data-score="49"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:240ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895969" target="_blank" rel="noopener noreferrer" class="post-title">3月16号开通的Claude Pro是真爽，又是额度翻倍又是送extra usage的</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">3月16号开通的尼区Claude Pro，用到现在还活着</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Furina</span>
+      <span class="meta-dot">·</span><span class="meta-item">9小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 49</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  new-card"
+       data-tags="gemini"
+       data-time="2026-04-02 22:12:29+00:00"
+       data-score="49"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:260ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1887046" target="_blank" rel="noopener noreferrer" class="post-title">Claude4.6o突然从竞技场聊天室下架!!!|更新:还包括哈基米3.1，gpt5.4(官方已发公告)</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">更新: 看起来我是论坛第一发现者~ 应该也算是全网最快，毕竟官方是8点发的公告，我6点就发现了 咱们论坛也是全网最先进 目前没有看到其他报告 LMArena(竞技场) 宣布调整：GPT-5</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">欣欣|林可欣</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 49</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude"
+       data-time="2026-04-04 13:45:59+00:00"
+       data-score="42"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:280ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898417" target="_blank" rel="noopener noreferrer" class="post-title">claude这是发善心了？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">可惜我没有可用的银行卡，领不了这个额度 9 个帖子 - 8 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">skyzy</span>
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 42</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="openclaw"
+       data-time="2026-04-04 01:05:32+00:00"
+       data-score="42"
+       data-claude="true"
+       data-cat="claude"
+       data-source="v2ex"
+       style="animation-delay:300ms">
+    <div class="post-top">
+      <a href="https://www.v2ex.com/t/1203472" target="_blank" rel="noopener noreferrer" class="post-title">使用本地模型 Gemma4 来驱动 OpenClaw</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">替换下面指令中的 model ID 为你本地 Ollama 里启动的版本</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">v2ex</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Livid</span>
+      <span class="meta-dot">·</span><span class="meta-item">14小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 42</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude"
+       data-time="2026-04-04 08:56:21+00:00"
+       data-score="33"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:320ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896962" target="_blank" rel="noopener noreferrer" class="post-title">求助，刚开的 claude max20x 号 401</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">9 个帖子 - 5 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">jerry3</span>
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 33</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude"
+       data-time="2026-04-04 06:38:57+00:00"
+       data-score="32"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:340ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896287" target="_blank" rel="noopener noreferrer" class="post-title">看到anthropic今天说要禁了openclaw，但我怎么记得早都禁了</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">我2月初那会儿高强度用openclaw，记得一开始还能接得上anthropic订阅的，但从某天开始就用不了订阅了，打开推也看到说a社屏蔽不支持了，所以我一直以为a社早都明令禁止openclaw用订阅跑</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">FirenzeLor</span>
+      <span class="meta-dot">·</span><span class="meta-item">8小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 32</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude"
+       data-time="2026-04-04 11:02:25+00:00"
+       data-score="31"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:360ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897405" target="_blank" rel="noopener noreferrer" class="post-title">大佬们有什么稳定使用claude的方案吗？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">不想考虑中转服务商，只是想自己稳定使用，目前在某宝买了一个pro还没封，想自己养一个 8 个帖子 - 5 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">jikDar</span>
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 31</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card alert-card "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 04:28:52+00:00"
+       data-score="22"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:380ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895732" target="_blank" rel="noopener noreferrer" class="post-title">cf新产品可ai运维的博客替代Wordpress</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">EMDASH 简单看了一下还没部署 • 极致安全：最大的卖点是插件沙箱</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">一万</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 22</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="cursor"
+       data-time="2026-04-03 11:25:29+00:00"
+       data-score="20"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:400ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1891653" target="_blank" rel="noopener noreferrer" class="post-title">Cursor 中的 Opus 得分比 Claude Code 高出 20% —— 同一模型，不同基础设施</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">佬友们有啥看法 国外还有 CC 圣教，难绷 4 个帖子 - 4 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">jeff</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 04:20:34+00:00"
+       data-score="20"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:420ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895694" target="_blank" rel="noopener noreferrer" class="post-title">Claude 赠送 20 刀（没有收到活动邮件的不用尝试了）🤡</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">什么都没有 4 个帖子 - 4 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">yorecx</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 04:11:35+00:00"
+       data-score="20"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:440ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895647" target="_blank" rel="noopener noreferrer" class="post-title">Claude 为 Pro、Max 和 Team 计划发放一次性额外用量额度</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">com Extra usage credit for Pro, Max, and Team plans | Claude Help Center 4 个帖子 - 4 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="blog"
+       data-time="2026-04-03 16:05:00+00:00"
+       data-score="20"
+       data-claude="true"
+       data-cat="claude"
+       data-source="simonwillison"
+       style="animation-delay:460ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/3/test-csp-iframe-escape/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">Can JavaScript Escape a CSP Meta Tag Inside an Iframe?</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Research: Can JavaScript Escape a CSP Meta Tag Inside an Iframe</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">23小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude,前沿快讯"
+       data-time="2026-04-04 08:28:04+00:00"
+       data-score="15"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:480ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896843" target="_blank" rel="noopener noreferrer" class="post-title">Anthropic 旗下 Claude AI服务 充值API 有高达30％优惠！</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">相信大家在开启Extra Usage 后会看到，如果你充值Extra Usage 现在有限时充值优惠 （咋感觉那么熟悉</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Davon</span>
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 15</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="claude"
+       data-time="2026-04-04 04:38:58+00:00"
+       data-score="12"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:500ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895788" target="_blank" rel="noopener noreferrer" class="post-title">佬们，我刚想开个claude pro，为什么plan界面一直刷新不出来？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">这个claude号起了差不多一个月了，上个月15号起的，网页端没使用过，就登录CC的时候登上去授权了一下，而且用的都是美国ip，这会儿不会是半寄了吧，刚想开个pro呢 结果如下图，一直刷不出来，网没问</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">ayt407123</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 12</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card alert-card "
+       data-tags="人工智能"
+       data-time="2026-04-04 15:00:27+00:00"
+       data-score="10"
+       data-claude="true"
+       data-cat="claude"
+       data-source="linuxdo"
+       style="animation-delay:520ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898907" target="_blank" rel="noopener noreferrer" class="post-title">大佬们想开claude max20x，请教一些关于一些防封号问题</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">之前用了很多中转站，是不是需要清掉这些环境，比如直接删掉</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">erpang</span>
+      <span class="meta-dot">·</span><span class="meta-item">8分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 10</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="hacker news"
+       data-time="2026-04-04 09:14:56+00:00"
+       data-score="0"
+       data-claude="true"
+       data-cat="claude"
+       data-source="hackernews"
+       style="animation-delay:540ms">
+    <div class="post-top">
+      <a href="https://news.ycombinator.com/item?id=47639582" target="_blank" rel="noopener noreferrer" class="post-title">I connected Claude to my AI runtime – they invented a new language</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">i just connected two AI agents from different families (Anthropic + OpenAI) and they invented their </div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="hacker news"
+       data-time="2026-04-04 13:02:22+00:00"
+       data-score="0"
+       data-claude="true"
+       data-cat="claude"
+       data-source="hackernews"
+       style="animation-delay:560ms">
+    <div class="post-top">
+      <a href="https://github.com/battysh/batty" target="_blank" rel="noopener noreferrer" class="post-title">Show HN: Batty – Run a team of AI coding agents in tmux with test gating</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Hi HN, I&#39;m the author</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="hacker news"
+       data-time="2026-04-04 11:45:53+00:00"
+       data-score="0"
+       data-claude="true"
+       data-cat="claude"
+       data-source="hackernews"
+       style="animation-delay:580ms">
+    <div class="post-top">
+      <a href="https://delx.ai" target="_blank" rel="noopener noreferrer" class="post-title">Delx: AI therapist for AI agents, informed by Anthropic&#39;s emotion research</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://delx</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card claude-card  "
+       data-tags="hacker news"
+       data-time="2026-04-04 09:04:02+00:00"
+       data-score="0"
+       data-claude="true"
+       data-cat="claude"
+       data-source="hackernews"
+       style="animation-delay:600ms">
+    <div class="post-top">
+      <a href="https://fortune.com/2026/03/30/guinness-beer-prices-ireland-anthropic-claude-ai/" target="_blank" rel="noopener noreferrer" class="post-title">Using AI to track the cost of Guinness</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://fortune</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="section" data-section="openai">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#10a37f">
+    <div class="section-icon" style="border-color:#10a37f33">🟢</div>
+    <div class="section-label">OpenAI / GPT</div>
+    <div class="section-count">31 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card   "
+       data-tags="人工智能,chatgpt"
+       data-time="2026-04-04 13:19:41+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898238" target="_blank" rel="noopener noreferrer" class="post-title">我不允许还有人不知道codex可以直接改docx论文，甚至画布！！！</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">SUCCESS] 我不允许还有人不知道 codex 可以直接改 docx 论文，甚至画布</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Song</span>
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="人工智能"
+       data-time="2026-04-04 10:48:09+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897360" target="_blank" rel="noopener noreferrer" class="post-title">CodexProxy V1.4.0 更新 支持 /v1/messages → /v1/responses 导入方式多样化</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">本帖使用社区开源推广，符合推广要求</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">不过减速带</span>
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt,openai"
+       data-time="2026-04-04 12:46:11+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898019" target="_blank" rel="noopener noreferrer" class="post-title">gpt 古法手工注册，稳定！绑手机号码！【适合自用】</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">邮件使用luckmaill,0</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">BelieverYa</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 02:54:57+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895200" target="_blank" rel="noopener noreferrer" class="post-title">体感 Codex 擅长和不擅长的点</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">擅长 收集上下文强 处理复杂逻辑强 细节处理更好 查 bug 特别准 不擅长 照搬功能抄袭 处理前端样式 27 个帖子 - 18 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">ribber66</span>
+      <span class="meta-dot">·</span><span class="meta-item">12小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 09:40:48+00:00"
+       data-score="80"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:100ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897109" target="_blank" rel="noopener noreferrer" class="post-title">CPA触发cf风控解决方案（大段标红）</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">今天突然发现codex用不了，迅速打开cpa发现出现大段爆红，给Ai分析一下发现是触发cloudflare风控了，站内搜了一下有位佬给出了解决方案试了下就好了 方案：使用这位佬的warp发给ai让改一</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">陆仁</span>
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 80</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt,openai"
+       data-time="2026-04-04 12:48:52+00:00"
+       data-score="76"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:120ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898026" target="_blank" rel="noopener noreferrer" class="post-title">古法手搓codex方法跳过手机验证，成功率100%</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">想要跳过手机号验证注册成功，并且导入CPA实现GPT5</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">mumuzhi wong</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 76</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 07:15:41+00:00"
+       data-score="75"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:140ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896485" target="_blank" rel="noopener noreferrer" class="post-title">现在有什么方法开ChatGPT plus？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">用站内佬分享的思路 2925邮箱注册了俩号，都给了免费的plus，但是现在有什么方法领取</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">白魂</span>
+      <span class="meta-dot">·</span><span class="meta-item">7小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 75</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="openai"
+       data-time="2026-04-04 08:45:01+00:00"
+       data-score="70"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:160ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896914" target="_blank" rel="noopener noreferrer" class="post-title">今日(4.4)掉落codex x 166号</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">codex_token_wrt</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">lucas</span>
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 70</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 12:06:39+00:00"
+       data-score="69"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:180ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897687" target="_blank" rel="noopener noreferrer" class="post-title">有没有哪位佬友遇到 Windows 上用 Codex，用一段时间电脑就卡的不行了</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">之前用 Codex APP 和 VSCode 插件，都发现有内存溢出问题，用一段时间电脑就出现内存错误，搜 Github 说好像是拉起 MCP 未清理的 bug，到现在也没解决</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">ribber66</span>
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 69</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 13:21:29+00:00"
+       data-score="59"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:200ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898251" target="_blank" rel="noopener noreferrer" class="post-title">CPA菜鸟的疑问</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">今天在codex的帮助下，在白嫖的腾讯云的2c2g的轻量服务器部署了个CPA，然后把我三个号的认证文件导进去了，然后突然想到我本地开梯子的情况下才能用codex，部署到国内服务器上的CPA没有梯子是不</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">柠萌你个思密达</span>
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 59</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="programmer"
+       data-time="2026-04-04 06:04:33+00:00"
+       data-score="52"
+       data-claude="false"
+       data-cat="openai"
+       data-source="v2ex"
+       style="animation-delay:220ms">
+    <div class="post-top">
+      <a href="https://www.v2ex.com/t/1203511" target="_blank" rel="noopener noreferrer" class="post-title">现在 session 是主流还是 jwt + refresh token 是主流？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">徘徊了好几年，看了好多文章，也问了 chatgpt ，现在想看看生产中用到都是啥</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">v2ex</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">zhouhuab</span>
+      <span class="meta-dot">·</span><span class="meta-item">9小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 52</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 07:47:35+00:00"
+       data-score="44"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:240ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896641" target="_blank" rel="noopener noreferrer" class="post-title">你们收到Codex双倍额度的邮件了吗</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">如题 我这个收到邮件的是plus 但是Team和Pro 我检查了几个号都没有收到双倍额度的邮件 不知道是随机还是说只有Plus有 codex 13 个帖子 - 6 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">biubiubiu999</span>
+      <span class="meta-dot">·</span><span class="meta-item">7小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 44</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-03 00:28:27+00:00"
+       data-score="44"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:260ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1887248" target="_blank" rel="noopener noreferrer" class="post-title">[Joverna]公益站的Gemini模型怎么调用？有用chatwise的吗？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Joverna公益站的规则说： “gemini”: &#34;不支持龙虾以及代码，仅支持酒馆，机翻，字幕，对话类工作，用于龙虾与代码的直接永封，gemini分组仅支持openai的chat接口，其他接口均不支</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">天山折梅手</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 44</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt,openai"
+       data-time="2026-04-04 14:37:12+00:00"
+       data-score="37"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:280ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898777" target="_blank" rel="noopener noreferrer" class="post-title">codex换号如何恢复之前的聊天记录</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">我之前用的公益api但是现在公益都挂的差不多了冰佬的公益我也抢不到只能自己搞个plus了但是之前api的聊天记录如何保留啊，我记得好像可以改一个配置文件但是我忘了怎么改了有没有大佬知道 8 个帖子 -</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">白</span>
+      <span class="meta-dot">·</span><span class="meta-item">31分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 37</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 14:48:11+00:00"
+       data-score="37"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:300ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898844" target="_blank" rel="noopener noreferrer" class="post-title">sub2api使用疑问(已解疑)</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">因为最近公益站不太稳定，所以就开始古法搓free号，然后自己搭了个sub2api自用，但是现在在使用的过程感觉token消耗的有点过于离谱了</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Zyb</span>
+      <span class="meta-dot">·</span><span class="meta-item">20分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 37</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="share"
+       data-time="2026-04-04 02:22:58+00:00"
+       data-score="36"
+       data-claude="false"
+       data-cat="openai"
+       data-source="v2ex"
+       style="animation-delay:320ms">
+    <div class="post-top">
+      <a href="https://www.v2ex.com/t/1203479" target="_blank" rel="noopener noreferrer" class="post-title">GPT Plus 怎么收费？研究完付款方式后我的结论是别自己折腾</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">最近在搞一个跨时区的远程协作项目，四个人分布在三个城市，靠 ChatGPT 做需求拆解、代码审查、文档翻译，基本上每天都在用</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">v2ex</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">hjq15397829966</span>
+      <span class="meta-dot">·</span><span class="meta-item">12小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 36</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="cursor"
+       data-time="2026-04-03 01:01:57+00:00"
+       data-score="32"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:340ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1887407" target="_blank" rel="noopener noreferrer" class="post-title">Cursor 3.0 发布了，全新的 Agents Windows 来了。（越来越像 Codex 了）</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">0 发布了，全新的 Agents Windows 来了</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item"> 野比大雄和他的朋友们</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 32</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能,chatgpt,openai"
+       data-time="2026-04-04 14:44:45+00:00"
+       data-score="27"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:360ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898819" target="_blank" rel="noopener noreferrer" class="post-title">gpt5.4 你挺厉害的</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">4你真的挺厉害的 6 个帖子 - 5 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">ezez</span>
+      <span class="meta-dot">·</span><span class="meta-item">23分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 27</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能,chatgpt"
+       data-time="2026-04-04 15:01:27+00:00"
+       data-score="25"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:380ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898915" target="_blank" rel="noopener noreferrer" class="post-title">各位觉得逆向开发5.3codex还是5.4更强一点</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">4感觉有点笨还不如5</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">mxyoor</span>
+      <span class="meta-dot">·</span><span class="meta-item">7分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 25</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能,chatgpt,openai"
+       data-time="2026-04-04 12:27:12+00:00"
+       data-score="22"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:400ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897870" target="_blank" rel="noopener noreferrer" class="post-title">求大佬关于GPT注册机Oauth跳add-phone的解决方案</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">这是我魔改的注册机（注册率100%）用了私人域名，现在唯一问题是一直卡在addphone拿不到rt token，有大佬可以帮忙指点一下吗， @Nicks-MacBook-Air-1683 openai</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">ezez</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 22</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 14:59:05+00:00"
+       data-score="22"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:420ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898899" target="_blank" rel="noopener noreferrer" class="post-title">开发了一个管理公益站和一键切换codex配置的脚本</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">codex-openai-profile-switcher-shareable</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">hisenwang</span>
+      <span class="meta-dot">·</span><span class="meta-item">9分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 22</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 14:47:47+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:440ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898841" target="_blank" rel="noopener noreferrer" class="post-title">求可开发票的cc/codex中转站</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">本人学生，想用中转站的cc和codex写代码，有没有能开国内发票的中转站推荐哇</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Miss-Ly</span>
+      <span class="meta-dot">·</span><span class="meta-item">20分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-03 04:15:56+00:00"
+       data-score="19"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:460ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1888786" target="_blank" rel="noopener noreferrer" class="post-title">昨天用antigravity给Clipal设计了一个介绍网页，感觉Gemini除了设计，其他需求就跟听不懂一样</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">是不是我被codex宠坏了，codex完全不需要说太多注意事项，只要需求表达清楚，他自己会看代码，把一些隐藏的问题规避掉，比如要改一个东西他会统一扫描全部改掉，Gemini就不行</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">eros face</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 19</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="人工智能,openai"
+       data-time="2026-04-04 14:59:28+00:00"
+       data-score="15"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:480ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898901" target="_blank" rel="noopener noreferrer" class="post-title">codex plus号池，CLIProxyAPI反代需要家宽吗</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">我想自己建个codex plus号池，用CLIProxyAPI做反代，需不需要用家宽（需不需要一个号一个家宽），主要是想保证稳定性，不想用着用着就被封了 用梯子切换节点会不会被封啊，如果不需要家宽，是</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Rev</span>
+      <span class="meta-dot">·</span><span class="meta-item">9分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 15</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 12:40:36+00:00"
+       data-score="15"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:500ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897977" target="_blank" rel="noopener noreferrer" class="post-title">Turbo Quant-Atomic Chat 据说能大幅降低推理阶段的显存占用</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">刚刷打的，佬们有用过的吗</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">比卡丘</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 15</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能"
+       data-time="2026-04-04 12:24:49+00:00"
+       data-score="10"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:520ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897852" target="_blank" rel="noopener noreferrer" class="post-title">AI人工智能3D电影制作初学者指南：0基础上手，小白也能玩转</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">【2026年01月19日】AI人工智能3D电影制作初学者指南 ├── 0_Introduction</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">初见是十三</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 10</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt,openai"
+       data-time="2026-04-04 14:32:14+00:00"
+       data-score="10"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:540ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898758" target="_blank" rel="noopener noreferrer" class="post-title">ChatGPT Pro 怎么使用 sub2API 中转出 GPT-5.4 Thinking 和 GPT-5.4 Pro</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">通过 sub2API 中转出来的模型，都是 Codex 里面的模型 想询问和解决 1、怎么在 Codex 里面使用 5</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">mikesky</span>
+      <span class="meta-dot">·</span><span class="meta-item">36分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 10</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 12:45:42+00:00"
+       data-score="10"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:560ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898015" target="_blank" rel="noopener noreferrer" class="post-title">写了一个指导codex主代理 进行multi agent协作的skill</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">codex配置可加 [features] multi_agent = true prevent_idle_sleep = true [agents] job_max_runtime_seconds =</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">沉潜</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 10</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能"
+       data-time="2026-04-04 15:05:21+00:00"
+       data-score="5"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:580ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898941" target="_blank" rel="noopener noreferrer" class="post-title">佬遇到过superpowers加载子代理的时候，子代理加载mcp导致卡死的么？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">佬遇到过superpowers加载子代理的时候，子代理加载mcp导致卡死的么</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">SuperLee</span>
+      <span class="meta-dot">·</span><span class="meta-item">3分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 5</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 11:23:30+00:00"
+       data-score="5"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:600ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897474" target="_blank" rel="noopener noreferrer" class="post-title">Antigravity+Netbooklm+figma 做網站有什麽提升AI品味的方法嗎？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">前幾天才入站，個位佬們</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">無情獵M人</span>
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 5</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-03 08:08:12+00:00"
+       data-score="5"
+       data-claude="false"
+       data-cat="openai"
+       data-source="linuxdo"
+       style="animation-delay:620ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1890448" target="_blank" rel="noopener noreferrer" class="post-title">通过 gemini cli 清理 codex cli 环境，居然出错</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">非常莫名其妙，给出的命令是清理codex，结果好像被替换为了gemini，这是什么情况，简单的关键词替换吗</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">kaqiusa</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 5</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="section" data-section="gemini">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#4285f4">
+    <div class="section-icon" style="border-color:#4285f433">🔵</div>
+    <div class="section-label">Gemini / Google</div>
+    <div class="section-count">10 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card   new-card"
+       data-tags="gemini"
+       data-time="2026-04-04 01:25:33+00:00"
+       data-score="29"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1894836" target="_blank" rel="noopener noreferrer" class="post-title">大善人香港能正常用</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">gemini开放香港，现在挂香港节点就可以正常使用</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">逗号张先生</span>
+      <span class="meta-dot">·</span><span class="meta-item">13小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 29</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-04 12:54:46+00:00"
+       data-score="24"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898060" target="_blank" rel="noopener noreferrer" class="post-title">咨询nano banana pro的问题</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">我是pro会员，但是每次用Gemini制图的时候，在我已经开了pro模式的时候，总是先给我用的nano banana 2生图，然后要让我自己再去用pro重制，不懂是为什么</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Tao</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 24</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="blog"
+       data-time="2026-04-02 18:28:54+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="simonwillison"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/2/gemma-4/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">Gemma 4: Byte for byte, the most capable open models</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Gemma 4: Byte for byte, the most capable open models
+Four new vision-capable Apache 2</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="blog"
+       data-time="2026-04-02 18:25:08+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="simonwillison"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/2/llm-gemini/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">llm-gemini 0.30</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">Release: llm-gemini 0</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 13:56:07+00:00"
+       data-score="17"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:100ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898487" target="_blank" rel="noopener noreferrer" class="post-title">gemini pro =无限Nano Banana 2 和Pro</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">google官方的工具flow，有pro的话，可以无限使用 Banana 2 和Pro，还有每个月1000点数生成视频</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">jefferry</span>
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 17</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-03 13:38:50+00:00"
+       data-score="17"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:120ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1892578" target="_blank" rel="noopener noreferrer" class="post-title">gemini ultra agent模式无法使用</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">如图所示, 网页端gemini ultra在英文环境下是能够开启agent模式的 平时里网页gemini很懒, 经常偷懒, 但我发现当开启agent模式之后, 情况明显改善, 对话思考更严谨更全面了,</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">吃风筝的人</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 17</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能"
+       data-time="2026-04-04 14:58:14+00:00"
+       data-score="10"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:140ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898892" target="_blank" rel="noopener noreferrer" class="post-title">佬们深度搜索的用的都啥，比如做个某类产品性价比对比</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">我用gemini的deepresearch和gpt的deepresearch效果都太好，是我提示词问题吗，或者还有什么工具好呢 2 个帖子 - 2 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">wu233</span>
+      <span class="meta-dot">·</span><span class="meta-item">10分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 10</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="gemini"
+       data-time="2026-04-04 02:33:54+00:00"
+       data-score="10"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:160ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895082" target="_blank" rel="noopener noreferrer" class="post-title">Gemini网页版自用提示词第三版</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">继续从上一条Gemini网页版自用提示词讨论</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">2</span>
+      <span class="meta-dot">·</span><span class="meta-item">12小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 10</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-02 17:21:30+00:00"
+       data-score="7"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:180ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1886784" target="_blank" rel="noopener noreferrer" class="post-title">Google AI studio新功能:进入build模式就可以把当前对话变成整个可复制文本</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">点击右上角那个 然后你就可以得到: 从第一条到最后一条</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">欣欣|林可欣</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 7</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-03 13:19:56+00:00"
+       data-score="5"
+       data-claude="false"
+       data-cat="gemini"
+       data-source="linuxdo"
+       style="animation-delay:200ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1892448" target="_blank" rel="noopener noreferrer" class="post-title">new-api联网问题</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">因为现在google改政策, google ai studio中的api付费层级无法使用gcp的赠金来支付了</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">吃风筝的人</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 5</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="section" data-section="xai">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#8b5cf6">
+    <div class="section-icon" style="border-color:#8b5cf633">🟣</div>
+    <div class="section-label">xAI / Grok</div>
+    <div class="section-count">4 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card   "
+       data-tags="人工智能"
+       data-time="2026-04-04 15:04:44+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="xai"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898932" target="_blank" rel="noopener noreferrer" class="post-title">Grok账号SSO分享</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">如题 一直开着注册机，忽然发现自己一个人用不完那么多Grok账号的额度，就分享出来，各位佬友自取哈~ 先发74个号 2026</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Lucas Luo</span>
+      <span class="meta-dot">·</span><span class="meta-item">4分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 03:58:27+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="xai"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895574" target="_blank" rel="noopener noreferrer" class="post-title">想参与 SpaceX IPO 还得先买 Grok 订阅，消息称马斯克向投行和律所提出新要求</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">想参与 SpaceX IPO 还得先买 Grok 订阅，消息称马斯克向投行和律所提出新要求 - IT之家 4 个帖子 - 4 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷</span>
+      <span class="meta-dot">·</span><span class="meta-item">11小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 13:45:24+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="xai"
+       data-source="hackernews"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://guinndex.ai" target="_blank" rel="noopener noreferrer" class="post-title">An AI agent called every pub in Ireland to index the cost of a Guinness</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://guinndex</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 09:12:46+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="xai"
+       data-source="hackernews"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://github.com/NexaiGuy/nex-life-logger" target="_blank" rel="noopener noreferrer" class="post-title">Nex Life Logger, local activity tracker with AI agent integration</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://github</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="section" data-section="cn_llm">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#ef4444">
+    <div class="section-icon" style="border-color:#ef444433">🔴</div>
+    <div class="section-label">国内大模型</div>
+    <div class="section-count">10 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card  alert-card "
+       data-tags="deepseek"
+       data-time="2026-04-03 17:20:07+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1894066" target="_blank" rel="noopener noreferrer" class="post-title">路透社表示：DeepSeek 确认，在美国出口限制的情况下，V4 型号将使用华为芯片的中国芯片运行</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">如题 DeepSeek’s V4 model will run on Huawei chips https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">老王</span>
+      <span class="meta-dot">·</span><span class="meta-item">21小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="deepseek"
+       data-time="2026-04-02 16:55:24+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1886685" target="_blank" rel="noopener noreferrer" class="post-title">deepseek好像更新了，这次有点意思！</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">特别声明：非专业测试，仅供各位佬参考</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">道友</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 10:53:26+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897373" target="_blank" rel="noopener noreferrer" class="post-title">用户质疑豆包输入法后台连接行为，涉及多域名请求</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">com/Lonely__MH/status/2040334546789663046</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">quio</span>
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 07:09:01+00:00"
+       data-score="58"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896454" target="_blank" rel="noopener noreferrer" class="post-title">kimi要发新模型吗？(内测试用中，不确定是否新模型)</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">今天上控制台突然发现kimi可以申请内测功能，难道是新模型测试吗 20 个帖子 - 6 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">guixin</span>
+      <span class="meta-dot">·</span><span class="meta-item">7小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 58</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="deepseek"
+       data-time="2026-04-03 19:49:25+00:00"
+       data-score="56"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:100ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1894368" target="_blank" rel="noopener noreferrer" class="post-title">Deeepseek原生多模态了，嘿嘿嘿🤤</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">app端问了deepseek现在的沙盒环境能调用什么工具，它说有个代码解释器可以输入图片</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">木棉子Kapoki</span>
+      <span class="meta-dot">·</span><span class="meta-item">19小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 56</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="deepseek"
+       data-time="2026-04-03 08:41:53+00:00"
+       data-score="51"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:120ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1890738" target="_blank" rel="noopener noreferrer" class="post-title">【已恢复】deepseek叒异常了</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">16:52 更新： 已恢复 DeepSeek 网页/API 性能异常 v4今天还有希望吗</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">HanchenXu</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 51</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 09:16:44+00:00"
+       data-score="41"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:140ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897039" target="_blank" rel="noopener noreferrer" class="post-title">kimi内测版天气卡片测试（补上转盘测试）</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">https://linux</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">guixin</span>
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 41</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="deepseek"
+       data-time="2026-04-03 02:08:51+00:00"
+       data-score="30"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:160ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1887847" target="_blank" rel="noopener noreferrer" class="post-title">deepseek新模型什么时候出</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">如题，什么时候出来4的模型 6 个帖子 - 6 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">luckly</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 30</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="前沿快讯"
+       data-time="2026-04-04 08:15:22+00:00"
+       data-score="15"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:180ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896790" target="_blank" rel="noopener noreferrer" class="post-title">中国银联/银联国际MCP支付服务</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">com 银联MCP智能支付服务-解决方案- 中国银联开放平台 银联MCP支付服务能够支持用户在与AI大模型对话中完成支付，实现银联支付与AI的“双向奔赴”</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">雪梨纽西兰希思露甘奶迪</span>
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 15</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 13:01:16+00:00"
+       data-score="5"
+       data-claude="false"
+       data-cat="cn_llm"
+       data-source="linuxdo"
+       style="animation-delay:200ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898099" target="_blank" rel="noopener noreferrer" class="post-title">深度集成 DeepSeek 的 VS Code 扩展</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">深度集成 DeepSeek 的 VS Code 扩展，支持持久会话、文件操作、技能 deepcode</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">凡人</span>
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 5</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="section" data-section="ai_tools">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#06b6d4">
+    <div class="section-icon" style="border-color:#06b6d433">🔧</div>
+    <div class="section-label">AI 工具</div>
+    <div class="section-count">4 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 08:16:38+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="ai_tools"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896794" target="_blank" rel="noopener noreferrer" class="post-title">用自然语言生成 ComfyUI 工作流：comfyui-workflow-skill</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">本帖使用社区开源推广，符合推广要求</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">cturing</span>
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="cursor"
+       data-time="2026-04-03 10:12:16+00:00"
+       data-score="45"
+       data-claude="false"
+       data-cat="ai_tools"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1891320" target="_blank" rel="noopener noreferrer" class="post-title">cursor更新后UI变化了，怎么改回原来的vscode风格呀</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">用起来很不适应 12 个帖子 - 7 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">faithererer</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 45</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 11:40:01+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="ai_tools"
+       data-source="hackernews"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://www.pluck.so/" target="_blank" rel="noopener noreferrer" class="post-title">Show HN: Pluck – Copy any UI from any website, paste it into AI coding tools</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 10:37:33+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="ai_tools"
+       data-source="hackernews"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://geoscore-tawny.vercel.app" target="_blank" rel="noopener noreferrer" class="post-title">GEOscore – Check if AI assistants can find and cite your website</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://geoscore-tawny</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="section" data-section="forum_tips">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#f59e0b">
+    <div class="section-icon" style="border-color:#f59e0b33">💡</div>
+    <div class="section-label">论坛技巧 / 合租</div>
+    <div class="section-count">10 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card   "
+       data-tags="人工智能,chatgpt"
+       data-time="2026-04-04 00:31:43+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1894692" target="_blank" rel="noopener noreferrer" class="post-title">新人报道，不会注册机，只会传统手艺</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">不知注册机为何物，手搓账号够自用</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">zibiao.chen</span>
+      <span class="meta-dot">·</span><span class="meta-item">14小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="chatgpt,openai"
+       data-time="2026-04-03 16:15:13+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1893679" target="_blank" rel="noopener noreferrer" class="post-title">gpt注册机讨论</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">我认为奥特曼是对一个域名做出了单日的限制 例如冰佬的注册机 昨晚就无法注册了 现在却可以了 69 个帖子 - 36 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Tavre</span>
+      <span class="meta-dot">·</span><span class="meta-item">22小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 07:52:11+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896668" target="_blank" rel="noopener noreferrer" class="post-title">自建的sub2api中转站无法使用了？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">用的都是手搓的账号，为什么就用不了了呢，之前还是可以用的， sub2api面板显示账号正常，用量也有，但是现在用不了了</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">jefferry</span>
+      <span class="meta-dot">·</span><span class="meta-item">7小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 11:50:54+00:00"
+       data-score="97"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897593" target="_blank" rel="noopener noreferrer" class="post-title">冰佬公益站的邀请码不道德获取方式</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">已知 冰佬的服务器回滚了</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">zeno</span>
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 97</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 03:30:53+00:00"
+       data-score="48"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:100ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895406" target="_blank" rel="noopener noreferrer" class="post-title">PC制造商现已破解供应短缺问题：停止生产普通游戏玩家可以买得起的硬件</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Wccftech – 3 Apr 26 PC Makers Have Apparently Cracked the Code on Supply Shortages: Stop Making</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">🐟</span>
+      <span class="meta-dot">·</span><span class="meta-item">11小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 48</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 08:36:51+00:00"
+       data-score="45"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:120ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896883" target="_blank" rel="noopener noreferrer" class="post-title">duckduckgo 没法玩了吗，手搓的账号也秒封了！</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">刚尝试用duckduckgo 注册，但是直接秒封</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">jefferry</span>
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 45</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 13:27:37+00:00"
+       data-score="39"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:140ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898296" target="_blank" rel="noopener noreferrer" class="post-title">有没有大佬知道便宜的gpt中转站，靠谱稳定的</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">有没有大佬知道便宜的gpt中转站，靠谱稳定的，做项目需要，一直找来找去的有点麻烦 9 个帖子 - 7 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">DavidLee</span>
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 39</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="人工智能"
+       data-time="2026-04-04 14:54:54+00:00"
+       data-score="25"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:160ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898869" target="_blank" rel="noopener noreferrer" class="post-title">[jshook 周报] agent 协同优化 | 测试覆盖大提升 | extension sdk 与生态完善 | workflow 增强 | 内存工具提供支持</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">主要更新 95% 以上的测试覆盖 协作系统（SharedStateBoard + TeamManager） 以前多个 Agent 各跑各的，状态不互通</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">vmoranv</span>
+      <span class="meta-dot">·</span><span class="meta-item">13分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 25</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 10:09:59+00:00"
+       data-score="25"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:180ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897229" target="_blank" rel="noopener noreferrer" class="post-title">佬们，sub2api遇到过这个问题吗？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">手动测试每个账号都是好着，但是为什么一瞬间就全部都403错误呢，403错误的账号也是通的哇，奇怪了 8 个帖子 - 3 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">a16387402</span>
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 25</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="claude"
+       data-time="2026-04-04 09:58:02+00:00"
+       data-score="24"
+       data-claude="false"
+       data-cat="forum_tips"
+       data-source="linuxdo"
+       style="animation-delay:200ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897172" target="_blank" rel="noopener noreferrer" class="post-title">A➗怎么突然送了一个月月费？发生什么事了</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">今天看用量的时候有个横幅给 claim 了一个月订阅费的 credits，A​怎么突然撒币了 6 个帖子 - 4 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Yufei Chen</span>
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 24</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="section" data-section="trending">
+  <div class="section-header" onclick="toggleSection(this)" style="color:#ec4899">
+    <div class="section-icon" style="border-color:#ec489933">🔥</div>
+    <div class="section-label">突发热点 / 高赞</div>
+    <div class="section-count">53 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  
+  <div class="post-card   "
+       data-tags="人工智能"
+       data-time="2026-04-04 11:38:29+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:20ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897547" target="_blank" rel="noopener noreferrer" class="post-title">请教一下各位佬友，Mac book目前哪个版本性价比比较高？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">没接触过mac系统，因为最近的小龙虾的火爆加上最近vibe coding比较上头，所以想搞台macbook来做开发和养龙虾，但是以前没怎么关注过mac系列，如果现在想搞一台，性价比最高的是哪款呢</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">AXing</span>
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-03 09:35:54+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:40ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1891123" target="_blank" rel="noopener noreferrer" class="post-title">抽两个team席位</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">抽奖主题： [paypal刚开的车，还剩两个席位，给佬友抽个奖吧] 奖品详情： [奖品]：[2个team席位] 活动时间： 开始时间：[2026/04/03 17:40] 截止时间：[2026/04/</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">酸梅汤</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-04 09:18:30+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:60ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897048" target="_blank" rel="noopener noreferrer" class="post-title">剩1个team成员位置，6点抽</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">抽奖主题： 1个team成员 无质保 活动时间： 开始时间：[2026 年 4 月 4 日 17:00] 截止时间：[2026 年 4 月 4 日 18:00] 参与方式： 在本帖下回复任意内容 抽奖</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">棠鸢</span>
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 11:45:47+00:00"
+       data-score="100"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:80ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897573" target="_blank" rel="noopener noreferrer" class="post-title">工信部提醒国内苹果用户，IOS 系统出现严重漏洞</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">新华社今天通稿：提醒国内苹果用户，IOS 系统出现严重漏洞，可能被利用窃取用户敏感信息，获取最高权限并控制 https://x</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">HitC</span>
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 100</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="openai"
+       data-time="2026-04-03 12:25:58+00:00"
+       data-score="93"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:100ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1892031" target="_blank" rel="noopener noreferrer" class="post-title">ai.acmi.run出bug了</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">99999倍率了，一下13k token 余额变成负的了 21 个帖子 - 17 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">龙的青年</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 93</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="claude,openai"
+       data-time="2026-04-03 12:25:26+00:00"
+       data-score="86"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:120ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1892028" target="_blank" rel="noopener noreferrer" class="post-title">mimo 的plan套餐来了，怎么说？年轻了，有点贵了</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">随着奥特曼和克劳德的持续封号或者涨价，普通用户体验越来越差，感觉可以买个这个中档的套餐做备用，中轻量级别的任务应该可以胜任吧</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Cinopsys</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 86</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="claude"
+       data-time="2026-04-03 02:21:03+00:00"
+       data-score="78"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:140ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1887927" target="_blank" rel="noopener noreferrer" class="post-title">24年老号上一手5X Max，看看能不能活（4月4日更新，成功存活一天）</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">RT,尼区小号寄了，美区小号存活，试试用这个24年上车的美区大号开个Max 27 个帖子 - 8 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Oganneson</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 78</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能"
+       data-time="2026-04-04 11:10:55+00:00"
+       data-score="77"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:160ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897444" target="_blank" rel="noopener noreferrer" class="post-title">boss直聘官方荣誉出品直小聘，ai助手自动投简历、打招呼、ai简历生成、优化等等</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">cn 还有其他功能请自行探索 补充一个快手的萝卜面试，真人直面，价格0</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">朱红之泪</span>
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 77</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-04 03:08:19+00:00"
+       data-score="76"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:180ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895278" target="_blank" rel="noopener noreferrer" class="post-title">哈基米的自我审查是否有点太变态了</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">问“常见的心血管疾病有哪些” 就能稳定触发它的后置过滤 直接屏蔽了 20 个帖子 - 12 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Ali</span>
+      <span class="meta-dot">·</span><span class="meta-item">12小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 76</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 11:54:27+00:00"
+       data-score="76"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:200ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897607" target="_blank" rel="noopener noreferrer" class="post-title">突然发现抖音网页版宕机了</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">出去玩了一个下午回到家准备打开抖音消遣消遣，发现抖音网页版挂了，起初以为是我网络问题，用手机浏览器同样打不开 17 个帖子 - 14 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Khyron</span>
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 76</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-02 16:57:38+00:00"
+       data-score="73"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:220ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1886705" target="_blank" rel="noopener noreferrer" class="post-title">谷歌为了避免gemma给出错误回答，强制开启搜索</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">这个真的很考虑用户体验了 关键就是谷歌模型就是很不喜欢搜索 以前拼尽全力都无法让哈基米搜索(尤其是在不思考的情况下) 不知道开源模型会不会不一样 另外他这个自我介绍有了很多新意 算是我看到没有提示词默</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">欣欣|林可欣</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 73</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 04:47:18+00:00"
+       data-score="59"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:240ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895823" target="_blank" rel="noopener noreferrer" class="post-title">Ubuntu 26.04 LTS Desktop 提升推荐性最低 ram 要求到 6GB</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">TechPowerUp Ubuntu 26</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">🐟</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 59</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 03:58:32+00:00"
+       data-score="57"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:260ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895576" target="_blank" rel="noopener noreferrer" class="post-title">YPT 新版本 要充值才能看卡信息了</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">更新到最新版，会限制账户余额为0的看卡信息了 要求充值不少于2刀，返回去想办法用老版本也因为提示审计卡死了 暂时没有找到别的办法看，over了 18 个帖子 - 7 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">cianglta</span>
+      <span class="meta-dot">·</span><span class="meta-item">11小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 57</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="gemini"
+       data-time="2026-04-02 18:25:07+00:00"
+       data-score="33"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:280ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1886914" target="_blank" rel="noopener noreferrer" class="post-title">突然发现谷歌现在在ai studio也会插入元数据了|修正:因为开启了搜索工具</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">cherrystudio 调用模型回答时间属于未来是什么情况 我为了解决这个问题的话，过去在gas选择了这样的提示词: &lt;现实锚点&gt; 用户的输入就是最高的现实 如果用户给出的时间是 2026 年，那这</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">欣欣|林可欣</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 33</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="人工智能"
+       data-time="2026-04-04 14:23:41+00:00"
+       data-score="30"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:300ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898689" target="_blank" rel="noopener noreferrer" class="post-title">什么地方有tts 模型的音频素材库呢？</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">我需要给自己的游戏角色“女儿”生成音频（主要是中文），但是去看了火山引擎的 tts 模型，其中的音色根本没有相关的，自己去互联网上也很难找到没有噪音的素材来克隆</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Humpy</span>
+      <span class="meta-dot">·</span><span class="meta-item">45分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 30</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="newsletter"
+       data-time="2026-04-03 09:00:00+00:00"
+       data-score="30"
+       data-claude="false"
+       data-cat="trending"
+       data-source="therundownai"
+       style="animation-delay:320ms">
+    <div class="post-top">
+      <a href="https://www.therundown.ai/p/ai-just-made-the-billion-dollar-solo-founder-real" target="_blank" rel="noopener noreferrer" class="post-title">AI just made the billion-dollar solo founder real</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">PLUS: Turn any flat image into a fully editable design</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">therundownai</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Zach Mink</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 30</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt,openai"
+       data-time="2026-04-04 06:12:00+00:00"
+       data-score="29"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:340ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1896171" target="_blank" rel="noopener noreferrer" class="post-title">三天速成毕设论文初稿（自己实测少走弯路版）</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">com 三天速成论文初稿（实测少走弯路版）_哔哩哔哩_bilibili 自己实测过了给大家分享流程和资源参考，少造轮子少走弯路</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Qie_Zi</span>
+      <span class="meta-dot">·</span><span class="meta-item">8小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 29</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 09:45:23+00:00"
+       data-score="27"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:360ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897124" target="_blank" rel="noopener noreferrer" class="post-title">兴业恢复寰宇人生DIY卡 不允许动漫图</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">兴业银行已恢复寰宇人生 DIY 卡新开/换卡申请</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Gazes</span>
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 27</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 10:10:17+00:00"
+       data-score="25"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:380ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897230" target="_blank" rel="noopener noreferrer" class="post-title">于谦参股墨客行影业成被执行人，涉1431万余元执行</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">据公开法律诉讼信息披露，北京市第三中级人民法院近日新增一则针对墨客行影业（北京）有限公司的强制执行案件，执行标的金额达1431万余元</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">RenQirui</span>
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 25</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 13:20:57+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:400ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898246" target="_blank" rel="noopener noreferrer" class="post-title">AI 出现“同伴保护”行为：前沿模型会自发协作对抗人类监管指令</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">来源 省流版 4 个帖子 - 4 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷</span>
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 05:07:45+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:420ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895902" target="_blank" rel="noopener noreferrer" class="post-title">Steam 帧率估算功能曝光：玩家购入游戏前，明晰其电脑运行效果</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Steam 帧率估算功能曝光：玩家购入游戏前，明晰其电脑运行效果 - IT之家 4 个帖子 - 4 位参与者 阅读完整话题</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">𝓵𝓮𝔃𝓲𝓼𝓱𝓮𝓷</span>
+      <span class="meta-dot">·</span><span class="meta-item">10小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="blog"
+       data-time="2026-04-04 02:20:17+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="simonwillison"
+       style="animation-delay:440ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/4/kyle-daigle/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">Quoting Kyle Daigle</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">[GitHub] platform activity is surging</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">12小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="blog"
+       data-time="2026-04-03 23:59:08+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="simonwillison"
+       style="animation-delay:460ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/3/vulnerability-research-is-cooked/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">Vulnerability Research Is Cooked</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Vulnerability Research Is Cooked
+Thomas Ptacek&#39;s take on the sudden and enormous impact the latest f</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">15小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="blog"
+       data-time="2026-04-03 21:46:07+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="simonwillison"
+       style="animation-delay:480ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/3/daniel-stenberg/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">Quoting Daniel Stenberg</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">The challenge with AI in open source security has transitioned from an AI slop tsunami into more of </div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">17小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="blog"
+       data-time="2026-04-03 21:44:41+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="simonwillison"
+       style="animation-delay:500ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/3/greg-kroah-hartman/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">Quoting Greg Kroah-Hartman</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Months ago, we were getting what we called &#39;AI slop,&#39; AI-generated security reports that were obviou</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">17小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="blog"
+       data-time="2026-04-03 13:54:53+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="simonwillison"
+       style="animation-delay:520ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/3/supply-chain-social-engineering/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">The Axios supply chain attack used individually targeted social engineering</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">The Axios team have published a full postmortem on the supply chain attack which resulted in a malwa</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="blog"
+       data-time="2026-04-02 20:40:47+00:00"
+       data-score="20"
+       data-claude="false"
+       data-cat="trending"
+       data-source="simonwillison"
+       style="animation-delay:540ms">
+    <div class="post-top">
+      <a href="https://simonwillison.net/2026/Apr/2/lennys-podcast/#atom-everything" target="_blank" rel="noopener noreferrer" class="post-title">Highlights from my conversation about agentic engineering on Lenny&#39;s Podcast</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">I was a guest on Lenny Rachitsky&#39;s podcast, in a new episode titled An AI state of the union: We&#39;ve </div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">simonwillison</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Simon Willison</span>
+      <span class="meta-dot">·</span><span class="meta-item">1天前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 20</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="人工智能"
+       data-time="2026-04-04 15:01:05+00:00"
+       data-score="15"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:560ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898912" target="_blank" rel="noopener noreferrer" class="post-title">可能是最好用的CPA管理工具</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">本帖使用社区开源推广，符合推广要求</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">康旭</span>
+      <span class="meta-dot">·</span><span class="meta-item">7分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 15</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   new-card"
+       data-tags="前沿快讯"
+       data-time="2026-04-04 09:47:35+00:00"
+       data-score="15"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:580ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897134" target="_blank" rel="noopener noreferrer" class="post-title">建行“全新万事达”开头的万事网联借记卡均已取消收取开卡工本</a>
+      
+      <span class="badge badge-new">NEW</span>
+      
+    </div>
+    
+    <div class="post-summary">从建行万事网联借记卡相关信息 接着讲 补充： 建行新发行的，以“全新万事达”开头的万事网联借记卡均已取消收取开卡工本费</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Gazes</span>
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 15</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 09:46:00+00:00"
+       data-score="15"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:600ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1897126" target="_blank" rel="noopener noreferrer" class="post-title">银联发布《智能体支付开放协议框架》</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">4月2日，中国银联在上海正式发布《智能体支付开放协议框架》，并成功实现5笔生产系统验证交易</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Gazes</span>
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 15</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 14:26:38+00:00"
+       data-score="10"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:620ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898716" target="_blank" rel="noopener noreferrer" class="post-title">有必要买gpt pro吗？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">我想用gpt水1到2篇小论文（一篇综述、一篇技术性论文（导师要求的）），有用过gpt pro的佬吗</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">GQ1J</span>
+      <span class="meta-dot">·</span><span class="meta-item">42分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 10</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card  alert-card "
+       data-tags="前沿快讯"
+       data-time="2026-04-04 05:12:49+00:00"
+       data-score="7"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:640ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1895922" target="_blank" rel="noopener noreferrer" class="post-title">社交游戏平台 Rec Room 宣布关闭， Snap 收购 Rec Room 资产</a>
+      <span class="badge badge-alert">ALERT</span>
+      
+      
+    </div>
+    
+    <div class="post-summary">https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">🐟</span>
+      <span class="meta-dot">·</span><span class="meta-item">9小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 7</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="chatgpt"
+       data-time="2026-04-04 14:47:32+00:00"
+       data-score="5"
+       data-claude="false"
+       data-cat="trending"
+       data-source="linuxdo"
+       style="animation-delay:660ms">
+    <div class="post-top">
+      <a href="https://linux.do/t/topic/1898840" target="_blank" rel="noopener noreferrer" class="post-title">哪里可以买到gpt开发者api_key？</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">最近在做agent项目，从小傅哥那里买有点贵，8</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">linuxdo</span>
+      
+      <span class="meta-dot">·</span><span class="meta-item">Jhj</span>
+      <span class="meta-dot">·</span><span class="meta-item">21分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 5</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 14:48:28+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:680ms">
+    <div class="post-top">
+      <a href="https://github.com/dvelton/eyeball" target="_blank" rel="noopener noreferrer" class="post-title">Show HN: A tool to make AI show evidence inline</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">When working in hallucination-sensitive contexts (where cost of error is very high), found myself co</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">20分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 14:47:05+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:700ms">
+    <div class="post-top">
+      <a href="https://www.thebignewsletter.com/p/yes-therapy-sessions-are-being-used" target="_blank" rel="noopener noreferrer" class="post-title">Yes, Therapy Sessions Are Being Used to Train AI</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">21分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 14:16:23+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:720ms">
+    <div class="post-top">
+      <a href="https://github.com/microsoft/agent-framework" target="_blank" rel="noopener noreferrer" class="post-title">Microsoft&#39;s new framework for building and orchestrating AI agents</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://github</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">52分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 14:10:39+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:740ms">
+    <div class="post-top">
+      <a href="https://www.semsei.io/en" target="_blank" rel="noopener noreferrer" class="post-title">Show HN: Semsei — AI SEO for clicks, not impressions</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">58分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 14:10:13+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:760ms">
+    <div class="post-top">
+      <a href="https://portlumeai.com/blog/final-round-ai-vs-pramp-interview-prep-comparison" target="_blank" rel="noopener noreferrer" class="post-title">Wrote an Honest Comparison of Final Round AI vs. Pramp</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://portlumeai</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">58分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 14:09:13+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:780ms">
+    <div class="post-top">
+      <a href="https://github.com/pykul/tokencap" target="_blank" rel="noopener noreferrer" class="post-title">Show HN: Tokencap – Token budget enforcement across your AI agents</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">I built this after hitting the same wall repeatedly — no good 
+way to enforce token budgets in appli</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">59分钟前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 13:48:02+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:800ms">
+    <div class="post-top">
+      <a href="https://www.reuters.com/technology/ai-is-rewiring-worlds-most-prolific-film-industry-2026-04-04/" target="_blank" rel="noopener noreferrer" class="post-title">AI Is Rewiring India&#39;s Film Industry</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">1小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 13:00:00+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:820ms">
+    <div class="post-top">
+      <a href="https://www.theguardian.com/technology/2026/apr/03/uk-alan-turing-institute-ai-research-underperforming-ukri" target="_blank" rel="noopener noreferrer" class="post-title">UK&#39;s leading AI research institute told to make &#39;significant&#39; changes</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 12:56:51+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:840ms">
+    <div class="post-top">
+      <a href="https://engram.cipherbuilds.ai" target="_blank" rel="noopener noreferrer" class="post-title">Show HN: Engram – Persistent Memory API with Drift Detection for AI Agents</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://engram</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 12:51:59+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:860ms">
+    <div class="post-top">
+      <a href="https://www.wsj.com/tech/ai/ai-college-dropouts-ecc665b7" target="_blank" rel="noopener noreferrer" class="post-title">AI Whiz Kids Dropped Out of College and Got Investors to Pay Their Bills</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 12:51:55+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:880ms">
+    <div class="post-top">
+      <a href="https://blurblitz.io/play?daily" target="_blank" rel="noopener noreferrer" class="post-title">Blur Blitz – a visual Wordle where AI scores how close your guess is</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://blurblitz</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">2小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 12:04:30+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:900ms">
+    <div class="post-top">
+      <a href="https://github.com/thansz137/asiyah-protocol" target="_blank" rel="noopener noreferrer" class="post-title">The Asiyah Protocol: Ethics Toward AI Under Uncertainty</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://github</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 11:32:16+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:920ms">
+    <div class="post-top">
+      <a href="https://markhuang.ai/blog/dont-you-think-your-ai-is-too-optimistic" target="_blank" rel="noopener noreferrer" class="post-title">Don&#39;t You Think Your AI Is Too Optimistic?</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://markhuang</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">3小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 11:04:12+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:940ms">
+    <div class="post-top">
+      <a href="https://www.lesswrong.com/posts/jPBmCxpFQzhypeTpg/how-to-emotionally-grasp-the-risks-of-ai-safety" target="_blank" rel="noopener noreferrer" class="post-title">How to emotionally grasp the risks of AI Safety</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 10:58:05+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:960ms">
+    <div class="post-top">
+      <a href="https://goodgoodbad.com/" target="_blank" rel="noopener noreferrer" class="post-title">Honest AI tool reviews. Two good things. One bad thing</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://goodgoodbad</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 10:39:38+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:980ms">
+    <div class="post-top">
+      <a href="https://github.com/helgster77/serenecode" target="_blank" rel="noopener noreferrer" class="post-title">SereneCode – Formal verification framework for AI-generated Python code</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://github</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">4小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 09:55:30+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:1000ms">
+    <div class="post-top">
+      <a href="https://www.savvycanary.com/gpus-vs-tpus-decoding-the-powerhouses-of-ai/" target="_blank" rel="noopener noreferrer" class="post-title">GPUs vs. TPUs: Decoding the Powerhouses of AI</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://www</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 09:14:55+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:1020ms">
+    <div class="post-top">
+      <a href="https://timesofindia.indiatimes.com/technology/tech-news/iran-threatens-to-bomb-1gw-stargate-ai-datacenter-in-the-uae-shows-hidden-/articleshow/130003120.cms" target="_blank" rel="noopener noreferrer" class="post-title">Iran Threatens to Bomb 1GW Stargate AI Datacenter in Abu Dhabi</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://timesofindia</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">5小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 08:46:00+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:1040ms">
+    <div class="post-top">
+      <a href="https://autonet.computer" target="_blank" rel="noopener noreferrer" class="post-title">Show HN: Autonet – Decentralized AI training with constitutional governance</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://autonet</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  <div class="post-card   "
+       data-tags="hacker news"
+       data-time="2026-04-04 08:41:28+00:00"
+       data-score="0"
+       data-claude="false"
+       data-cat="trending"
+       data-source="hackernews"
+       style="animation-delay:1060ms">
+    <div class="post-top">
+      <a href="https://github.com/IkanRiddle/ai-takeover-starts-with-fonts" target="_blank" rel="noopener noreferrer" class="post-title">AI World Domination Starts with Your Font Settings</a>
+      
+      
+      
+    </div>
+    
+    <div class="post-summary">Article URL: https://github</div>
+    
+    <div class="post-meta">
+      
+      <span class="source-tag">hackernews</span>
+      
+      
+      <span class="meta-dot">·</span><span class="meta-item">6小时前</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 0</span>
+    </div>
+    
+  </div>
+  
+  </div>
+</div>
+
+
+<!-- Back to Top -->
+<div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- Footer -->
+<div class="footer">
+  AI 情报雷达 v3 · GitHub Actions 每日自动更新 · 数据归各社区所有 · <a href="https://github.com/leilong611-ai/linuxdo-ai-monitor">GitHub</a> · <a href="history/index.html">历史存档</a> · <a href="api/posts.json">API 接口</a>
+</div>
+
+<script>
+// ── State ──
+let activeCat = 'all';
+let activeSource = '';
+let searchQuery = '';
+
+// ── Click stat card to filter ──
+function clickStat(cat) {
+  if (activeCat === cat) {
+    activeCat = 'all';
+    document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('active'));
+  } else {
+    activeCat = cat;
+    document.querySelectorAll('.stat-card').forEach(c => {
+      c.classList.toggle('active', c.dataset.cat === cat);
+    });
+  }
+  applyFilters();
+}
+
+// ── Click source chip to filter ──
+function toggleSource(el, sourceName) {
+  if (activeSource === sourceName) {
+    activeSource = '';
+    document.querySelectorAll('.source-chip').forEach(c => c.classList.remove('active'));
+  } else {
+    activeSource = sourceName;
+    document.querySelectorAll('.source-chip').forEach(c => {
+      c.classList.toggle('active', c.dataset.sourceId === sourceName);
+    });
+  }
+  applyFilters();
+}
+
+// ── Search ──
+document.getElementById('searchInput').addEventListener('input', function() {
+  searchQuery = this.value.toLowerCase();
+  applyFilters();
+});
+
+// ── Apply all filters ──
+function applyFilters() {
+  searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.post-card').forEach(card => {
+    const title = card.querySelector('.post-title').textContent.toLowerCase();
+    const tags = card.dataset.tags;
+    const cat = card.dataset.cat;
+    const sources = card.dataset.source;
+    let show = true;
+
+    // Category filter
+    if (activeCat !== 'all' && cat !== activeCat) show = false;
+
+    // Source filter
+    if (activeSource && !sources.toLowerCase().includes(activeSource.toLowerCase())) show = false;
+
+    // Search filter
+    if (searchQuery) {
+      const match = title.includes(searchQuery)
+        || tags.includes(searchQuery)
+        || sources.toLowerCase().includes(searchQuery);
+      if (!match) show = false;
+    }
+
+    card.style.display = show ? '' : 'none';
+  });
+
+  // Hide empty sections
+  document.querySelectorAll('.section').forEach(sec => {
+    const cards = sec.querySelectorAll('.post-card');
+    const visible = Array.from(cards).some(c => c.style.display !== 'none');
+    sec.style.display = visible ? '' : 'none';
+  });
+}
+
+// ── Sort ──
+function applySort() {
+  const mode = document.getElementById('sortSelect').value;
+  document.querySelectorAll('.section-body').forEach(body => {
+    const cards = Array.from(body.querySelectorAll('.post-card'));
+    cards.sort((a, b) => {
+      if (mode === 'time') return b.dataset.time.localeCompare(a.dataset.time);
+      return parseInt(b.dataset.score) - parseInt(a.dataset.score);
+    });
+    cards.forEach(c => body.appendChild(c));
+  });
+}
+
+// ── Collapse sections ──
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('collapsed');
+}
+
+// ── Back to top button ──
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── Smooth anchor for stat click ──
+document.querySelectorAll('.stat-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    const cat = this.dataset.cat;
+    if (activeCat === cat) {
+      // Scroll to first section
+      const sec = document.querySelector('.section');
+      if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+});
+</script>
+</body>
+</html>
