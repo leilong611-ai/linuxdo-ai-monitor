@@ -1,0 +1,47 @@
+{
+  "site": "https://linux.do",
+  "check_interval_hours": 4,
+  "max_posts_per_tag": 20,
+  "tags": [
+    "人工智能",
+    "Claude",
+    "ChatGPT",
+    "OpenAI",
+    "DeepSeek",
+    "Cursor",
+    "Copilot",
+    "Gemini",
+    "ollama",
+    "OpenWebUI",
+    "MCP",
+    "LLM",
+    "AIGC",
+    "HuggingFace",
+    "comfyUI",
+    "Midjourney"
+  ],
+  "search_queries": [
+    "AI 账号",
+    "Claude 订阅",
+    "Claude Code",
+    "AI 中转",
+    "ChatGPT Pro",
+    "API key"
+  ],
+  "push": {
+    "bark": {
+      "enabled": false,
+      "key": "",
+      "server": "https://api.day.app"
+    },
+    "feishu": {
+      "enabled": false,
+      "webhook_url": ""
+    }
+  },
+  "request": {
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "delay_seconds": 2,
+    "timeout_seconds": 15
+  }
+}
