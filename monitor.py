@@ -77,6 +77,14 @@ def main():
     for p in posts:
         p.summary = extract_summary(p.title, p.excerpt)
 
+    # AI 分析（如果设置了 API Key）
+    print(f"\n🤖 AI 分析中...")
+    try:
+        from ai_analyzer import analyze_posts
+        analyze_posts(posts)
+    except Exception as e:
+        print(f"  ⚠️ 跳过 AI 分析: {e}")
+
     # 构建简报
     briefing = build_briefing(posts, source_statuses)
 
@@ -92,7 +100,7 @@ def main():
             info = CATEGORY_KEYWORDS[cat_id]
             print(f"   {info['emoji']} {info['label']}: {count} 条")
 
-    # 渲染报告
+    # 渲染报告（含AI评分+存档）
     print(f"\n📄 生成报告...")
     render_report(briefing)
 
