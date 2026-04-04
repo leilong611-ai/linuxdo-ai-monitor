@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ report_title }}</title>
+<style>
+/* ── Reset & Variables ── */
+:root{
+  --bg:#0a0e17;--card:#131a2b;--card-hover:#1a2338;--border:#1e2d45;
+  --text:#e2e8f0;--text2:#8892a4;--text3:#5a6578;
+  --accent:#60a5fa;--accent2:#818cf8;
+  --glass:rgba(19,26,43,.7);
+  --claude:#f59e0b;--openai:#10b981;--gemini:#3b82f6;
+  --xai:#a78bfa;--cn_llm:#f87171;--ai_tools:#22d3ee;
+  --forum_tips:#fbbf24;--trending:#f472b6;
+  --alert:#ef4444;--new:#34d399;
+  --shadow:0 4px 24px rgba(0,0,0,.3);
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(ellipse at 20% 0%,rgba(96,165,250,.06) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(129,140,248,.05) 0%,transparent 60%);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC",sans-serif;
+  line-height:1.6;padding:0 20px 60px;max-width:980px;margin:0 auto;
+  min-height:100vh;
+}
+
+/* ── Header ── */
+.header{
+  padding:32px 0 24px;border-bottom:1px solid var(--border);
+  margin-bottom:20px;position:relative;
+}
+.header h1{
+  font-size:28px;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;margin-bottom:6px;letter-spacing:-.5px;
+}
+.header .subtitle{color:var(--text2);font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.header .subtitle .sep{color:var(--text3)}
+
+/* ── Source Status ── */
+.source-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.source-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:4px 12px 4px 8px;font-size:12px;cursor:pointer;
+  transition:all .2s;user-select:none;
+}
+.source-chip:hover{border-color:var(--accent);background:var(--card-hover)}
+.source-chip.active{border-color:var(--accent);background:rgba(96,165,250,.1)}
+.source-chip .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.source-chip .dot.ok{background:var(--new);box-shadow:0 0 6px rgba(52,211,153,.4)}
+.source-chip .dot.fail{background:var(--alert);box-shadow:0 0 6px rgba(239,68,68,.4)}
+.source-chip .name{color:var(--text2)}
+.source-chip .count{color:var(--accent);font-weight:600;min-width:14px;text-align:right}
+
+/* ── Stats Cards ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-bottom:20px}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;text-align:center;cursor:pointer;
+  transition:all .25s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--cat-color,var(--accent));opacity:0;transition:opacity .25s;
+}
+.stat-card:hover{transform:translateY(-2px);border-color:var(--cat-color,var(--accent));
+  box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.stat-card:hover::before{opacity:1}
+.stat-card.active{border-color:var(--cat-color,var(--accent));background:rgba(96,165,250,.05)}
+.stat-card.active::before{opacity:1}
+.stat-card .num{font-size:24px;font-weight:800;line-height:1.2;color:var(--cat-color,var(--accent))}
+.stat-card .label{font-size:11px;color:var(--text2);margin-top:2px;white-space:nowrap}
+
+/* ── Controls ── */
+.controls{
+  display:flex;gap:10px;margin-bottom:20px;align-items:center;
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,14,23,.85);backdrop-filter:blur(12px);
+  padding:12px 4px;margin-left:-4px;margin-right:-4px;
+  border-bottom:1px solid var(--border);
+}
+.search-wrap{flex:1;position:relative;min-width:160px}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);width:16px;height:16px}
+.search-wrap input{
+  width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:9px 12px 9px 32px;color:var(--text);font-size:14px;outline:none;
+  transition:border-color .2s;
+}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap input::placeholder{color:var(--text3)}
+select{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:9px 32px 9px 12px;color:var(--text);font-size:13px;outline:none;cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238892a4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  transition:border-color .2s;
+}
+select:focus{border-color:var(--accent)}
+
+/* ── Sections ── */
+.section{margin-bottom:28px}
+.section-header{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0 8px;cursor:pointer;
+  border-bottom:1px solid var(--border);margin-bottom:12px;
+}
+.section-header .section-icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;background:var(--card);border:1px solid var(--border);
+  flex-shrink:0;
+}
+.section-header .section-label{font-size:16px;font-weight:600;flex:1}
+.section-header .section-count{
+  font-size:12px;background:var(--card);padding:3px 10px;
+  border-radius:12px;color:var(--text2);border:1px solid var(--border);
+}
+.section-header .collapse-icon{
+  color:var(--text3);transition:transform .2s;font-size:14px;
+}
+.section.collapsed .collapse-icon{transform:rotate(-90deg)}
+.section.collapsed .section-body{display:none}
+
+/* ── Post Cards ── */
+.post-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:10px;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.post-card:hover{
+  border-color:rgba(96,165,250,.4);
+  background:var(--card-hover);
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+  transform:translateX(2px);
+}
+.post-card.claude-card{border-left:3px solid var(--claude)}
+.post-card.alert-card{border-left:3px solid var(--alert)}
+.post-card.new-card{border-left:3px solid var(--new)}
+
+/* Card Inner */
+.post-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px}
+.post-title{
+  color:var(--text);text-decoration:none;font-size:15px;font-weight:500;
+  line-height:1.45;flex:1;display:block;
+  transition:color .15s;
+}
+.post-title:hover{color:var(--accent)}
+.post-title:visited{color:var(--text2)}
+
+/* Badges */
+.badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;white-space:nowrap;letter-spacing:.3px;text-transform:uppercase}
+.badge-alert{background:rgba(239,68,68,.15);color:#fca5a5}
+.badge-new{background:rgba(52,211,153,.15);color:#6ee7b7}
+.badge-claude{background:rgba(245,158,11,.15);color:#fcd34d}
+
+.post-summary{
+  color:var(--text2);font-size:13px;margin:6px 0 8px;line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.post-meta{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;align-items:center}
+.source-tag{
+  background:rgba(96,165,250,.08);color:var(--accent);padding:2px 8px;
+  border-radius:4px;font-size:11px;font-weight:500;
+  border:1px solid rgba(96,165,250,.15);
+}
+.meta-dot{color:var(--text3);font-size:10px}
+.meta-item{color:var(--text3);white-space:nowrap}
+.meta-item:hover{color:var(--text2)}
+
+/* ── Back to Top ── */
+.back-top{
+  position:fixed;bottom:24px;right:24px;width:40px;height:40px;
+  border-radius:50%;background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;transform:translateY(10px);
+  transition:all .3s;z-index:99;color:var(--text2);font-size:18px;
+  box-shadow:var(--shadow);
+}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ── Empty State ── */
+.empty-state{
+  text-align:center;padding:40px 20px;color:var(--text3);
+  font-size:14px;
+}
+.empty-state .icon{font-size:32px;margin-bottom:8px}
+
+/* ── Footer ── */
+.footer{
+  margin-top:40px;padding:20px 0;border-top:1px solid var(--border);
+  color:var(--text3);font-size:12px;text-align:center;
+}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ── Animations ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.post-card{animation:fadeIn .3s ease both}
+.section:nth-child(1) .post-card{animation-delay:0ms}
+.section:nth-child(2) .post-card{animation-delay:30ms}
+.section:nth-child(3) .post-card{animation-delay:60ms}
+
+/* ── Mobile ── */
+@media(max-width:640px){
+  body{padding:0 12px 40px}
+  .header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(4,1fr);gap:6px}
+  .stat-card{padding:10px 8px}
+  .stat-card .num{font-size:18px}
+  .controls{flex-direction:column;gap:8px}
+  .search-wrap{width:100%}
+  .source-bar{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
+  .source-chip{flex-shrink:0}
+  .post-card{padding:12px 14px}
+  .post-meta{font-size:11px;gap:4px}
+  .back-top{bottom:16px;right:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>{{ report_title }}</h1>
+  <div class="subtitle">
+    <span>更新: {{ now_str }}</span>
+    <span class="sep">·</span>
+    <span>共 {{ total }} 条动态</span>
+    <span class="sep">·</span>
+    <span>{{ source_count }} 个数据源</span>
+  </div>
+</div>
+
+<!-- Source Chips (clickable to filter) -->
+<div class="source-bar" id="sourceBar">
+{% for s in source_statuses %}
+  <div class="source-chip" data-source-id="{{ s.name }}" onclick="toggleSource(this,'{{ s.name }}')">
+    <span class="dot {{ 'ok' if s.success else 'fail' }}"></span>
+    <span class="name">{{ s.name }}</span>
+    <span class="count">{{ s.count }}</span>
+  </div>
+{% endfor %}
+</div>
+
+<!-- Stats Cards (clickable to filter) -->
+<div class="stats" id="statsBar">
+{% for cat_id, cat_info in categories.items() %}
+{% set count = sections.get(cat_id, []) | length %}
+  <div class="stat-card {{ cat_id }}" style="--cat-color:{{ cat_info.color }}" data-cat="{{ cat_id }}" onclick="clickStat('{{ cat_id }}')">
+    <div class="num">{{ count }}</div>
+    <div class="label">{{ cat_info.emoji }} {{ cat_info.label }}</div>
+  </div>
+{% endfor %}
+</div>
+
+<!-- Controls Bar (sticky) -->
+<div class="controls">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="搜索标题、标签、来源..." oninput="applyFilters()">
+  </div>
+  <select id="sortSelect" onchange="applySort()">
+    <option value="time">按时间排序</option>
+    <option value="score">按热度排序</option>
+  </select>
+</div>
+
+<!-- Sections -->
+{% for cat_id, cat_info in categories.items() %}
+{% set cat_posts = sections.get(cat_id, []) %}
+<div class="section" data-section="{{ cat_id }}">
+  <div class="section-header" onclick="toggleSection(this)" style="color:{{ cat_info.color }}">
+    <div class="section-icon" style="border-color:{{ cat_info.color }}33">{{ cat_info.emoji }}</div>
+    <div class="section-label">{{ cat_info.label }}</div>
+    <div class="section-count">{{ cat_posts | length }} 条</div>
+    <div class="collapse-icon">▼</div>
+  </div>
+  <div class="section-body">
+  {% for p in cat_posts %}
+  <div class="post-card {{ 'claude-card' if p.is_claude else '' }} {{ 'alert-card' if p.is_alert else '' }} {{ 'new-card' if p.is_new and not p.is_alert else '' }}"
+       data-tags="{{ p.tags | join(',') | lower }}"
+       data-time="{{ p.published_at }}"
+       data-score="{{ p.engagement_score }}"
+       data-claude="{{ 'true' if p.is_claude else 'false' }}"
+       data-cat="{{ p.category }}"
+       data-source="{{ p.sources | join(',') }}"
+       style="animation-delay:{{ loop.index * 20 }}ms">
+    <div class="post-top">
+      <a href="{{ p.url }}" target="_blank" rel="noopener noreferrer" class="post-title">{{ p.title }}</a>
+      {% if p.is_alert %}<span class="badge badge-alert">ALERT</span>{% endif %}
+      {% if p.is_new and not p.is_alert %}<span class="badge badge-new">NEW</span>{% endif %}
+      {% if p.is_claude and p.category != 'claude' %}<span class="badge badge-claude">CLAUDE</span>{% endif %}
+    </div>
+    {% if p.summary %}
+    <div class="post-summary">{{ p.summary }}</div>
+    {% endif %}
+    <div class="post-meta">
+      {% for src in p.sources %}
+      <span class="source-tag">{{ src }}</span>
+      {% endfor %}
+      {% if p.author %}<span class="meta-dot">·</span><span class="meta-item">{{ p.author }}</span>{% endif %}
+      <span class="meta-dot">·</span><span class="meta-item">{{ p.time_ago }}</span>
+      <span class="meta-dot">·</span><span class="meta-item">热度 {{ p.engagement_score }}</span>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+<!-- Back to Top -->
+<div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- Footer -->
+<div class="footer">
+  {{ report_title }} v3 · GitHub Actions 每日自动更新 · 数据归各社区所有 · <a href="https://github.com/leilong611-ai/linuxdo-ai-monitor">GitHub</a>
+</div>
+
+<script>
+// ── State ──
+let activeCat = 'all';
+let activeSource = '';
+let searchQuery = '';
+
+// ── Click stat card to filter ──
+function clickStat(cat) {
+  if (activeCat === cat) {
+    activeCat = 'all';
+    document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('active'));
+  } else {
+    activeCat = cat;
+    document.querySelectorAll('.stat-card').forEach(c => {
+      c.classList.toggle('active', c.dataset.cat === cat);
+    });
+  }
+  applyFilters();
+}
+
+// ── Click source chip to filter ──
+function toggleSource(el, sourceName) {
+  if (activeSource === sourceName) {
+    activeSource = '';
+    document.querySelectorAll('.source-chip').forEach(c => c.classList.remove('active'));
+  } else {
+    activeSource = sourceName;
+    document.querySelectorAll('.source-chip').forEach(c => {
+      c.classList.toggle('active', c.dataset.sourceId === sourceName);
+    });
+  }
+  applyFilters();
+}
+
+// ── Search ──
+document.getElementById('searchInput').addEventListener('input', function() {
+  searchQuery = this.value.toLowerCase();
+  applyFilters();
+});
+
+// ── Apply all filters ──
+function applyFilters() {
+  searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.post-card').forEach(card => {
+    const title = card.querySelector('.post-title').textContent.toLowerCase();
+    const tags = card.dataset.tags;
+    const cat = card.dataset.cat;
+    const sources = card.dataset.source;
+    let show = true;
+
+    // Category filter
+    if (activeCat !== 'all' && cat !== activeCat) show = false;
+
+    // Source filter
+    if (activeSource && !sources.toLowerCase().includes(activeSource.toLowerCase())) show = false;
+
+    // Search filter
+    if (searchQuery) {
+      const match = title.includes(searchQuery)
+        || tags.includes(searchQuery)
+        || sources.toLowerCase().includes(searchQuery);
+      if (!match) show = false;
+    }
+
+    card.style.display = show ? '' : 'none';
+  });
+
+  // Hide empty sections
+  document.querySelectorAll('.section').forEach(sec => {
+    const cards = sec.querySelectorAll('.post-card');
+    const visible = Array.from(cards).some(c => c.style.display !== 'none');
+    sec.style.display = visible ? '' : 'none';
+  });
+}
+
+// ── Sort ──
+function applySort() {
+  const mode = document.getElementById('sortSelect').value;
+  document.querySelectorAll('.section-body').forEach(body => {
+    const cards = Array.from(body.querySelectorAll('.post-card'));
+    cards.sort((a, b) => {
+      if (mode === 'time') return b.dataset.time.localeCompare(a.dataset.time);
+      return parseInt(b.dataset.score) - parseInt(a.dataset.score);
+    });
+    cards.forEach(c => body.appendChild(c));
+  });
+}
+
+// ── Collapse sections ──
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('collapsed');
+}
+
+// ── Back to top button ──
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── Smooth anchor for stat click ──
+document.querySelectorAll('.stat-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    const cat = this.dataset.cat;
+    if (activeCat === cat) {
+      // Scroll to first section
+      const sec = document.querySelector('.section');
+      if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+});
+</script>
+</body>
+</html>

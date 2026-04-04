@@ -1,32 +1,189 @@
 {
-  "site": "https://linux.do",
-  "check_interval_hours": 4,
-  "max_posts_per_tag": 20,
-  "tags": [
-    "人工智能",
-    "Claude",
-    "ChatGPT",
-    "OpenAI",
-    "DeepSeek",
-    "Cursor",
-    "Copilot",
-    "Gemini",
-    "ollama",
-    "OpenWebUI",
-    "MCP",
-    "LLM",
-    "AIGC",
-    "HuggingFace",
-    "comfyUI",
-    "Midjourney"
-  ],
-  "search_queries": [
-    "AI 账号",
-    "Claude 订阅",
-    "Claude Code",
-    "AI 中转",
-    "ChatGPT Pro",
-    "API key"
+  "version": 3,
+  "report": {
+    "title": "AI 情报雷达",
+    "max_posts_per_section": 20,
+    "dedup_title_threshold": 0.75
+  },
+  "sources": [
+    {
+      "id": "linuxdo",
+      "name": "Linux.do",
+      "enabled": true,
+      "type": "discourse_rss",
+      "site": "https://linux.do",
+      "tags": [
+        "人工智能",
+        "Claude",
+        "ChatGPT",
+        "OpenAI",
+        "DeepSeek",
+        "Cursor",
+        "Copilot",
+        "Gemini",
+        "ollama",
+        "OpenWebUI",
+        "MCP",
+        "LLM",
+        "AIGC",
+        "HuggingFace",
+        "comfyUI",
+        "Midjourney"
+      ],
+      "search_queries": [
+        "AI 账号",
+        "Claude 订阅",
+        "Claude Code",
+        "AI 中转",
+        "ChatGPT Pro",
+        "API key"
+      ],
+      "extra_categories": [
+        "前沿快讯"
+      ],
+      "max_items": 20
+    },
+    {
+      "id": "hackernews",
+      "name": "Hacker News",
+      "enabled": true,
+      "type": "rss",
+      "url": "https://hnrss.org/newest?q=AI&count=30",
+      "filter_keywords": [
+        "AI",
+        "LLM",
+        "GPT",
+        "Claude",
+        "openai",
+        "anthropic",
+        "model",
+        "machine learning",
+        "deep learning",
+        "neural"
+      ],
+      "max_items": 30
+    },
+    {
+      "id": "reddit_chatgpt",
+      "name": "Reddit r/ChatGPT",
+      "enabled": true,
+      "type": "reddit_rss",
+      "url": "https://www.reddit.com/r/ChatGPT/.rss",
+      "subreddit": "ChatGPT",
+      "max_items": 25
+    },
+    {
+      "id": "reddit_claudeai",
+      "name": "Reddit r/ClaudeAI",
+      "enabled": true,
+      "type": "reddit_rss",
+      "url": "https://www.reddit.com/r/ClaudeAI/.rss",
+      "subreddit": "ClaudeAI",
+      "max_items": 25
+    },
+    {
+      "id": "reddit_openai",
+      "name": "Reddit r/OpenAI",
+      "enabled": true,
+      "type": "reddit_rss",
+      "url": "https://www.reddit.com/r/Openai/.rss",
+      "subreddit": "OpenAI",
+      "max_items": 25
+    },
+    {
+      "id": "reddit_localllama",
+      "name": "Reddit r/LocalLLaMA",
+      "enabled": true,
+      "type": "reddit_rss",
+      "url": "https://www.reddit.com/r/LocalLLaMA/.rss",
+      "subreddit": "LocalLLaMA",
+      "max_items": 25
+    },
+    {
+      "id": "reddit_singularity",
+      "name": "Reddit r/singularity",
+      "enabled": true,
+      "type": "reddit_rss",
+      "url": "https://www.reddit.com/r/singularity/.rss",
+      "subreddit": "singularity",
+      "max_items": 20
+    },
+    {
+      "id": "v2ex",
+      "name": "V2EX",
+      "enabled": true,
+      "type": "json_api",
+      "url": "https://www.v2ex.com/api/topics/hot.json",
+      "filter_keywords": [
+        "AI",
+        "人工智能",
+        "Claude",
+        "ChatGPT",
+        "GPT",
+        "大模型",
+        "LLM",
+        "deepseek"
+      ],
+      "max_items": 15
+    },
+    {
+      "id": "bensbites",
+      "name": "Ben's Bites",
+      "enabled": true,
+      "type": "rss",
+      "url": "https://www.bensbites.com/feed",
+      "max_items": 10
+    },
+    {
+      "id": "therundownai",
+      "name": "The Rundown AI",
+      "enabled": true,
+      "type": "beehiiv",
+      "url": "https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml",
+      "max_items": 10
+    },
+    {
+      "id": "simonwillison",
+      "name": "Simon Willison",
+      "enabled": true,
+      "type": "atom",
+      "url": "https://simonwillison.net/atom/everything/",
+      "filter_keywords": [
+        "AI",
+        "LLM",
+        "Claude",
+        "GPT",
+        "model",
+        "machine learning",
+        "openai",
+        "anthropic"
+      ],
+      "max_items": 10
+    },
+    {
+      "id": "arxiv_csai",
+      "name": "arXiv cs.AI",
+      "enabled": true,
+      "type": "rss",
+      "url": "https://arxiv.org/rss/cs.AI",
+      "max_items": 20
+    },
+    {
+      "id": "huggingface",
+      "name": "HuggingFace",
+      "enabled": true,
+      "type": "huggingface",
+      "url": "https://huggingface.co/blog/feed.xml",
+      "max_items": 10
+    },
+    {
+      "id": "juejin",
+      "name": "掘金 AI",
+      "enabled": true,
+      "type": "rss",
+      "url": "https://rsshub.app/juejin/tag/AI",
+      "max_items": 15
+    }
   ],
   "push": {
     "bark": {

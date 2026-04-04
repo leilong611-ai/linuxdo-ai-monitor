@@ -1,4 +1,4 @@
-name: Linux.do AI Monitor
+name: AI Intelligence Radar V3
 
 on:
   schedule:
@@ -32,25 +32,7 @@ jobs:
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
-        run: |
-          # 如果有 GitHub Secrets，动态注入到 config.json
-          python -c "
-          import json
-          with open('config.json', 'r') as f:
-              c = json.load(f)
-          import os
-          bk = os.environ.get('BARK_KEY', '')
-          fw = os.environ.get('FEISHU_WEBHOOK', '')
-          if bk:
-              c['push']['bark']['enabled'] = True
-              c['push']['bark']['key'] = bk
-          if fw:
-              c['push']['feishu']['enabled'] = True
-              c['push']['feishu']['webhook_url'] = fw
-          with open('config.json', 'w') as f:
-              json.dump(c, f, indent=2, ensure_ascii=False)
-          "
-          python monitor.py
+        run: python monitor.py
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -61,4 +43,4 @@ jobs:
           force_orphan: true
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'docs: update AI monitor report ${{ github.run_number }}'
+          commit_message: 'docs: update AI radar report #${{ github.run_number }}'
