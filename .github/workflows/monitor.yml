@@ -2,9 +2,8 @@ name: Linux.do AI Monitor
 
 on:
   schedule:
-    # 每 4 小时运行一次 (UTC 时间: 1,5,9,13,17,21 点)
-    # 对应北京时间: 9,13,17,21,1,5 点
-    - cron: '7 1,5,9,13,17,21 * * *'
+    # 每天北京时间 9:07 运行一次
+    - cron: '7 1 * * *'
   workflow_dispatch: # 支持手动触发
 
 permissions:
