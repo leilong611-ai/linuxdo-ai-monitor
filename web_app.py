@@ -2,6 +2,8 @@
 """AI 情报雷达 V4 - 交互式 Web 应用"""
 
 import json
+import os
+import sys
 import subprocess
 from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template, request, jsonify
@@ -109,17 +111,15 @@ def api_add_comment():
         if keywords:
             update_user_profile(keywords, stance)
 
-    # 触发 AI 回应
-    ai_reply_text = ""
+    # 触发 AI 回应（后台线程，不阻塞响应）
     if user_comment:
-        ai_reply_text = _generate_ai_reply(post_uid, user_comment, stance)
-        if ai_reply_text:
-            save_ai_reply(post_uid, comment_id, ai_reply_text)
+        import threading
+        t = threading.Thread(target=_async_ai_reply, args=(post_uid, comment_id, user_comment, stance), daemon=True)
+        t.start()
 
     return jsonify({
         "ok": True,
         "comment_id": comment_id,
-        "ai_reply": ai_reply_text,
     })
 
 
@@ -135,60 +135,64 @@ def api_profile():
     })
 
 
-def _generate_ai_reply(post_uid: str, user_comment: str, stance: str) -> str:
-    """调用 GLM-5.1 生成 AI 回应"""
-    conn = get_conn()
-    row = conn.execute("SELECT title, excerpt FROM posts WHERE uid = ?", (post_uid,)).fetchone()
-    conn.close()
-    if not row:
-        return ""
-
-    title = row["title"]
-    excerpt = row["excerpt"] or ""
-
+def _async_ai_reply(post_uid: str, comment_id: int, user_comment: str, stance: str):
+    """后台线程：生成 AI 回应"""
     try:
         import anthropic
-        import os
+        stance_map = {"agree": "赞同", "disagree": "反对", "neutral": "中立"}
+        stance_text = stance_map.get(stance, "中立")
+
+        conn = get_conn()
+        row = conn.execute("SELECT title, excerpt FROM posts WHERE uid = ?", (post_uid,)).fetchone()
+        conn.close()
+        if not row:
+            return
+
+        title = row["title"]
+        excerpt = row["excerpt"] or ""
+        prompt = f"你是AI情报分析师。用户对新闻「{title}」摘要「{excerpt[:100]}」发表了{stance_text}立场观点：「{user_comment}」。请简短回应（50-100字），直接输出回应文字。"
 
         api_key = os.environ.get("ANTHROPIC_API_KEY", "")
         if not api_key:
             try:
-                result = subprocess.run(
+                r = subprocess.run(
                     ["security", "find-generic-password", "-s", "openclaw/ANTHROPIC_API_KEY", "-w"],
                     capture_output=True, text=True, timeout=5
                 )
-                if result.returncode == 0:
-                    api_key = result.stdout.strip()
+                if r.returncode == 0:
+                    api_key = r.stdout.strip()
             except Exception:
                 pass
 
         if not api_key:
-            return ""
+            print("  AI 回应跳过: 无 API Key", flush=True)
+            return
 
         client = anthropic.Anthropic(api_key=api_key, base_url="https://open.bigmodel.cn/api/anthropic")
-
-        stance_map = {"agree": "赞同", "disagree": "反对", "neutral": "中立"}
-        stance_text = stance_map.get(stance, "中立")
-
-        prompt = f"""你是AI情报分析师。用户对以下新闻发表了观点，请简短回应（50-100字中文）。
-
-新闻：{title}
-摘要：{excerpt[:100]}
-用户立场：{stance_text}
-用户观点：{user_comment}
-
-请给出专业但不刻板的回应，可以补充信息、提出不同视角、或肯定用户的判断。直接输出回应文字，不要加引号或前缀。"""
-
-        message = client.messages.create(
+        msg = client.messages.create(
             model="glm-5.1",
             max_tokens=300,
             messages=[{"role": "user", "content": prompt}],
+            timeout=30,
         )
-        return message.content[0].text.strip()
-
+        reply = msg.content[0].text.strip()
+        if reply:
+            save_ai_reply(post_uid, comment_id, reply)
+            print(f"  AI 回应已保存: {post_uid} ({len(reply)}字)", flush=True)
     except Exception as e:
-        print(f"  ⚠️ AI 回应失败: {e}")
-        return ""
+        import traceback
+        traceback.print_exc()
+        print(f"  AI 回应异常: {e}", flush=True)
+
+
+@app.route("/api/reply/<uid>/<int:comment_id>")
+def api_check_reply(uid, comment_id):
+    """轮询 AI 回应是否就绪"""
+    replies = get_ai_replies(uid)
+    for r in replies:
+        if r.get("comment_id") == comment_id:
+            return jsonify({"ok": True, "ready": True, "reply": r.get("reply_text", "")})
+    return jsonify({"ok": True, "ready": False, "reply": ""})
 
 
 if __name__ == "__main__":

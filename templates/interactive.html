@@ -5,1001 +5,176 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ report_title }}</title>
 <style>
-/* ── Reset & Variables ── */
-:root{
-  --bg:#0a0e17;--card:#131a2b;--card-hover:#1a2338;--border:#1e2d45;
-  --text:#e2e8f0;--text2:#8892a4;--text3:#5a6578;
-  --accent:#60a5fa;--accent2:#818cf8;
-  --glass:rgba(19,26,43,.7);
-  --claude:#f59e0b;--openai:#10b981;--gemini:#3b82f6;
-  --xai:#a78bfa;--cn_llm:#f87171;--ai_tools:#22d3ee;
-  --forum_tips:#fbbf24;--trending:#f472b6;
-  --alert:#ef4444;--new:#34d399;
-  --purple:#a78bfa;--user-blue:#60a5fa;
-  --shadow:0 4px 24px rgba(0,0,0,.3);
-  --radius:12px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  background-image:radial-gradient(ellipse at 20% 0%,rgba(96,165,250,.06) 0%,transparent 60%),
-    radial-gradient(ellipse at 80% 100%,rgba(129,140,248,.05) 0%,transparent 60%);
-  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC",sans-serif;
-  line-height:1.6;padding:0 20px 60px;max-width:980px;margin:0 auto;
-  min-height:100vh;
-}
-
-/* ── Header ── */
-.header{
-  padding:28px 0 20px;border-bottom:1px solid var(--border);
-  margin-bottom:16px;
-}
-.header h1{
-  font-size:26px;font-weight:700;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;margin-bottom:6px;letter-spacing:-.5px;
-}
-.header .subtitle{color:var(--text2);font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.header .subtitle .sep{color:var(--text3)}
-
-/* ── Mode Tabs ── */
-.mode-tabs{
-  display:flex;gap:0;margin-bottom:16px;
-  background:var(--card);border-radius:10px;border:1px solid var(--border);
-  overflow:hidden;
-}
-.mode-tab{
-  flex:1;padding:10px 20px;text-align:center;cursor:pointer;
-  font-size:14px;font-weight:500;color:var(--text2);
-  transition:all .25s;position:relative;user-select:none;
-}
-.mode-tab:first-child{border-right:1px solid var(--border)}
-.mode-tab:hover{color:var(--text);background:rgba(96,165,250,.05)}
-.mode-tab.active{
-  color:#fff;font-weight:600;
-  background:linear-gradient(135deg,rgba(96,165,250,.2),rgba(129,140,248,.15));
-}
-.mode-tab.active::after{
-  content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;
-}
-.mode-tab .tab-icon{margin-right:6px}
-
-/* ── User Profile Bar ── */
-.profile-bar{
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  padding:12px 16px;margin-bottom:16px;
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-}
-.profile-bar .profile-label{
-  font-size:12px;color:var(--text3);font-weight:600;margin-right:4px;white-space:nowrap;
-}
-.profile-keyword{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:3px 10px;border-radius:6px;font-size:12px;
-  background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.15);
-  color:var(--accent);transition:all .2s;
-}
-.profile-keyword:hover{background:rgba(96,165,250,.15)}
-.profile-keyword .weight-bar{
-  display:inline-block;height:4px;border-radius:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-}
-.profile-keyword .bias-dot{
-  width:6px;height:6px;border-radius:50%;flex-shrink:0;
-}
-.bias-positive{background:#34d399}
-.bias-negative{background:#f87171}
-.bias-neutral{background:#94a3b8}
-
-/* ── Stats Cards ── */
-.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-bottom:20px}
-.stat-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px 16px;text-align:center;cursor:pointer;
-  transition:all .25s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;
-}
-.stat-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--cat-color,var(--accent));opacity:0;transition:opacity .25s;
-}
-.stat-card:hover{transform:translateY(-2px);border-color:var(--cat-color,var(--accent));
-  box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.stat-card:hover::before{opacity:1}
-.stat-card.active{border-color:var(--cat-color,var(--accent));background:rgba(96,165,250,.05)}
-.stat-card.active::before{opacity:1}
-.stat-card .num{font-size:24px;font-weight:800;line-height:1.2;color:var(--cat-color,var(--accent))}
-.stat-card .label{font-size:11px;color:var(--text2);margin-top:2px;white-space:nowrap}
-
-/* ── Controls ── */
-.controls{
-  display:flex;gap:10px;margin-bottom:20px;align-items:center;
-  position:sticky;top:0;z-index:100;
-  background:rgba(10,14,23,.85);backdrop-filter:blur(12px);
-  padding:12px 4px;margin-left:-4px;margin-right:-4px;
-  border-bottom:1px solid var(--border);
-}
-.search-wrap{flex:1;position:relative;min-width:160px}
-.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);width:16px;height:16px}
-.search-wrap input{
-  width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;
-  padding:9px 12px 9px 32px;color:var(--text);font-size:14px;outline:none;
-  transition:border-color .2s;
-}
-.search-wrap input:focus{border-color:var(--accent)}
-.search-wrap input::placeholder{color:var(--text3)}
-select{
-  background:var(--card);border:1px solid var(--border);border-radius:8px;
-  padding:9px 32px 9px 12px;color:var(--text);font-size:13px;outline:none;cursor:pointer;
-  appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238892a4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 10px center;
-  transition:border-color .2s;
-}
-select:focus{border-color:var(--accent)}
-
-/* ── Sections ── */
-.section{margin-bottom:28px}
-.section-header{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 0 8px;cursor:pointer;
-  border-bottom:1px solid var(--border);margin-bottom:12px;
-}
-.section-header .section-icon{
-  width:32px;height:32px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;background:var(--card);border:1px solid var(--border);
-  flex-shrink:0;
-}
-.section-header .section-label{font-size:16px;font-weight:600;flex:1}
-.section-header .section-count{
-  font-size:12px;background:var(--card);padding:3px 10px;
-  border-radius:12px;color:var(--text2);border:1px solid var(--border);
-}
-.section-header .collapse-icon{
-  color:var(--text3);transition:transform .2s;font-size:14px;
-}
-.section.collapsed .collapse-icon{transform:rotate(-90deg)}
-.section.collapsed .section-body{display:none}
-
-/* ── Post Cards ── */
-.post-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px 18px;margin-bottom:10px;
-  transition:all .25s cubic-bezier(.4,0,.2,1);
-  position:relative;
-}
-.post-card:hover{
-  border-color:rgba(96,165,250,.4);
-  background:var(--card-hover);
-  box-shadow:0 4px 16px rgba(0,0,0,.2);
-  transform:translateX(2px);
-}
-.post-card.claude-card{border-left:3px solid var(--claude)}
-.post-card.alert-card{border-left:3px solid var(--alert)}
-.post-card.new-card{border-left:3px solid var(--new)}
-
-/* Card Inner */
-.post-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px}
-.post-title{
-  color:var(--text);text-decoration:none;font-size:15px;font-weight:500;
-  line-height:1.45;flex:1;display:block;transition:color .15s;
-}
-.post-title:hover{color:var(--accent)}
-.post-title:visited{color:var(--text2)}
-
-/* Badges */
-.badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;white-space:nowrap;letter-spacing:.3px;text-transform:uppercase}
-.badge-alert{background:rgba(239,68,68,.15);color:#fca5a5}
-.badge-new{background:rgba(52,211,153,.15);color:#6ee7b7}
-.badge-claude{background:rgba(245,158,11,.15);color:#fcd34d}
-.badge-commented{
-  background:rgba(96,165,250,.12);color:#93c5fd;font-size:10px;
-  padding:2px 8px;border-radius:4px;font-weight:500;
-  display:inline-flex;align-items:center;gap:3px;
-}
-
-/* Score Badge */
-.score-badge{
-  position:absolute;top:12px;right:14px;
-  font-size:11px;font-weight:700;color:var(--accent2);
-  background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.2);
-  padding:2px 8px;border-radius:6px;
-}
-
-/* AI Insight */
-.ai-insight{
-  margin-top:8px;padding:8px 12px;border-radius:8px;
-  background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12);
-}
-.ai-stars{display:flex;align-items:center;gap:2px;margin-bottom:3px;flex-wrap:wrap}
-.ai-star{font-size:12px}
-.ai-star.filled{color:#fbbf24}
-.ai-star.empty{color:var(--text3)}
-.ai-comment{font-size:12px;color:#c4b5fd;line-height:1.4;font-style:italic}
-.ai-label{font-size:10px;color:var(--text3);margin-right:6px;font-style:normal;font-weight:600}
-.ai-sentiment{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px}
-.ai-sentiment.positive{background:rgba(52,211,153,.15);color:#6ee7b7}
-.ai-sentiment.negative{background:rgba(239,68,68,.15);color:#fca5a5}
-.ai-sentiment.neutral{background:rgba(148,163,184,.1);color:#94a3b8}
-.ai-action{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px}
-.ai-action.act{background:rgba(245,158,11,.15);color:#fcd34d}
-.ai-action.watch{background:rgba(96,165,250,.12);color:#93c5fd}
-.ai-deep-toggle{
-  font-size:11px;color:var(--accent);cursor:pointer;margin-top:6px;
-  display:inline-flex;align-items:center;gap:4px;
-  opacity:.8;transition:opacity .2s;user-select:none;
-}
-.ai-deep-toggle:hover{opacity:1}
-.ai-deep-toggle .arrow{transition:transform .2s;display:inline-block;font-size:10px}
-.ai-deep-toggle.expanded .arrow{transform:rotate(90deg)}
-.ai-deep-content{
-  display:none;margin-top:6px;padding:8px 10px;border-radius:6px;
-  background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.1);
-  font-size:12px;color:#a5b4fc;line-height:1.55;
-}
-.ai-deep-content.visible{display:block}
-.ai-impact-tag{
-  display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;
-  background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.15);
-  color:#f9a8d4;margin-top:6px;line-height:1.4;
-}
-.ai-impact-tag::before{content:"📊 ";font-style:normal}
-
-.post-summary{
-  color:var(--text2);font-size:13px;margin:6px 0 8px;line-height:1.5;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-}
-.post-meta{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;align-items:center}
-.source-tag{
-  background:rgba(96,165,250,.08);color:var(--accent);padding:2px 8px;
-  border-radius:4px;font-size:11px;font-weight:500;
-  border:1px solid rgba(96,165,250,.15);
-}
-.meta-dot{color:var(--text3);font-size:10px}
-.meta-item{color:var(--text3);white-space:nowrap}
-.meta-item:hover{color:var(--text2)}
-
-/* ── Comment Button ── */
-.comment-btn-wrap{display:flex;justify-content:flex-end;margin-top:8px}
-.comment-btn{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:6px 14px;border-radius:8px;
-  background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);
-  color:var(--accent);font-size:12px;font-weight:500;
-  cursor:pointer;transition:all .2s;user-select:none;
-}
-.comment-btn:hover{
-  background:rgba(96,165,250,.15);border-color:var(--accent);
-  transform:translateY(-1px);
-}
-.comment-btn svg{width:14px;height:14px}
-
-/* ── Dialogue Bubbles (inside card) ── */
-.dialogue{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-.bubble{
-  max-width:85%;padding:8px 12px;border-radius:10px;
-  font-size:12px;line-height:1.5;position:relative;
-  animation:bubbleIn .3s ease both;
-}
-.bubble-ai{
-  align-self:flex-start;
-  background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);
-  color:#c4b5fd;border-bottom-left-radius:3px;
-}
-.bubble-user{
-  align-self:flex-end;
-  background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);
-  color:#93c5fd;border-bottom-right-radius:3px;
-}
-.bubble-label{
-  font-size:10px;font-weight:600;margin-bottom:3px;opacity:.7;
-}
-@keyframes bubbleIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── Slide-in Panel ── */
-.panel-overlay{
-  position:fixed;top:0;left:0;right:0;bottom:0;
-  background:rgba(0,0,0,.5);z-index:200;
-  opacity:0;pointer-events:none;transition:opacity .3s;
-}
-.panel-overlay.open{opacity:1;pointer-events:auto}
-
-.comment-panel{
-  position:fixed;top:0;right:0;bottom:0;width:370px;max-width:100vw;
-  background:var(--bg);border-left:1px solid var(--border);
-  z-index:201;transform:translateX(100%);
-  transition:transform .35s cubic-bezier(.4,0,.2,1);
-  display:flex;flex-direction:column;
-  box-shadow:-8px 0 32px rgba(0,0,0,.4);
-}
-.comment-panel.open{transform:translateX(0)}
-
-.panel-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 18px;border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.panel-header .panel-title{
-  font-size:14px;font-weight:600;color:var(--text);
-  flex:1;margin-right:12px;line-height:1.4;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-}
-.panel-close{
-  width:32px;height:32px;border-radius:8px;
-  background:var(--card);border:1px solid var(--border);
-  color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .2s;font-size:18px;flex-shrink:0;
-}
-.panel-close:hover{background:var(--alert);color:#fff;border-color:var(--alert)}
-
-.panel-body{flex:1;overflow-y:auto;padding:18px}
-
-/* Star Rating */
-.rating-section{margin-bottom:16px}
-.rating-label{font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500}
-.star-rating{display:flex;gap:4px}
-.star-btn{
-  width:32px;height:32px;border:1px solid var(--border);border-radius:6px;
-  background:var(--card);cursor:pointer;font-size:18px;color:var(--text3);
-  transition:all .15s;display:flex;align-items:center;justify-content:center;
-}
-.star-btn:hover{border-color:var(--accent);color:#fbbf24}
-.star-btn.active{color:#fbbf24;background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3)}
-
-/* Stance Selector */
-.stance-section{margin-bottom:16px}
-.stance-label{font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500}
-.stance-group{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
-.stance-btn{
-  flex:1;padding:8px 12px;text-align:center;
-  background:var(--card);color:var(--text2);font-size:13px;font-weight:500;
-  cursor:pointer;transition:all .2s;border:none;
-}
-.stance-btn:not(:last-child){border-right:1px solid var(--border)}
-.stance-btn:hover{background:var(--card-hover);color:var(--text)}
-.stance-btn.active-agree{background:rgba(52,211,153,.15);color:#6ee7b7;font-weight:600}
-.stance-btn.active-neutral{background:rgba(148,163,184,.1);color:#94a3b8;font-weight:600}
-.stance-btn.active-disagree{background:rgba(239,68,68,.15);color:#fca5a5;font-weight:600}
-
-/* Textarea */
-.comment-section{margin-bottom:16px}
-.comment-section label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block;font-weight:500}
-.comment-textarea{
-  width:100%;min-height:100px;background:var(--card);border:1px solid var(--border);
-  border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;
-  line-height:1.5;resize:vertical;outline:none;transition:border-color .2s;
-  font-family:inherit;
-}
-.comment-textarea:focus{border-color:var(--accent)}
-.comment-textarea::placeholder{color:var(--text3)}
-
-/* Tags Input */
-.tags-section{margin-bottom:20px}
-.tags-section label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block;font-weight:500}
-.tags-input{
-  width:100%;background:var(--card);border:1px solid var(--border);
-  border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;
-  outline:none;transition:border-color .2s;font-family:inherit;
-}
-.tags-input:focus{border-color:var(--accent)}
-.tags-input::placeholder{color:var(--text3)}
-
-/* Submit */
-.submit-btn{
-  width:100%;padding:10px 16px;border-radius:8px;border:none;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff;font-size:14px;font-weight:600;cursor:pointer;
-  transition:all .2s;
-}
-.submit-btn:hover{opacity:.9;transform:translateY(-1px)}
-.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
-/* AI Reply in Panel */
-.panel-reply{
-  margin-top:16px;padding:12px;border-radius:10px;
-  background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.15);
-  animation:bubbleIn .4s ease both;
-}
-.panel-reply .reply-label{
-  font-size:10px;font-weight:600;color:var(--purple);margin-bottom:6px;
-  text-transform:uppercase;letter-spacing:.5px;
-}
-.panel-reply .reply-text{font-size:13px;color:#c4b5fd;line-height:1.6}
-
-/* ── Back to Top ── */
-.back-top{
-  position:fixed;bottom:24px;right:24px;width:40px;height:40px;
-  border-radius:50%;background:var(--card);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;opacity:0;transform:translateY(10px);
-  transition:all .3s;z-index:99;color:var(--text2);font-size:18px;
-  box-shadow:var(--shadow);
-}
-.back-top.visible{opacity:1;transform:translateY(0)}
-.back-top:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-
-/* ── Empty State ── */
-.empty-state{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px}
-.empty-state .icon{font-size:32px;margin-bottom:8px}
-
-/* ── Footer ── */
-.footer{
-  margin-top:40px;padding:20px 0;border-top:1px solid var(--border);
-  color:var(--text3);font-size:12px;text-align:center;
-}
-.footer a{color:var(--accent);text-decoration:none}
-.footer a:hover{text-decoration:underline}
-
-/* ── Animations ── */
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.post-card{animation:fadeIn .3s ease both}
-
-/* ── Toast Notification ── */
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
-  background:var(--card);border:1px solid var(--border);
-  padding:10px 20px;border-radius:10px;font-size:13px;
-  color:var(--text);z-index:300;opacity:0;pointer-events:none;
-  box-shadow:var(--shadow);transition:all .3s cubic-bezier(.4,0,.2,1);
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.success{border-color:var(--new)}
-.toast.error{border-color:var(--alert)}
-
-/* ── Mobile ── */
-@media(max-width:640px){
-  body{padding:0 12px 40px}
-  .header h1{font-size:22px}
-  .stats{grid-template-columns:repeat(4,1fr);gap:6px}
-  .stat-card{padding:10px 8px}
-  .stat-card .num{font-size:18px}
-  .controls{flex-direction:column;gap:8px}
-  .search-wrap{width:100%}
-  .post-card{padding:12px 14px}
-  .post-meta{font-size:11px;gap:4px}
-  .back-top{bottom:16px;right:16px}
-  .comment-panel{width:100vw}
-  .profile-bar{padding:10px 12px}
-  .score-badge{top:10px;right:10px;font-size:10px;padding:1px 6px}
-}
+:root{--bg:#000;--bg2:#1c1c1e;--bgi:#2c2c2e;--card:rgba(28,28,30,.8);--cardh:rgba(38,38,40,.9);--brd:rgba(255,255,255,.08);--brdh:rgba(255,255,255,.16);--t:#f5f5f7;--t2:#a1a1a6;--t3:#6e6e73;--ac:#0a84ff;--ac2:#5e5ce6;--cl:#ff9f0a;--oi:#30d158;--gm:#0a84ff;--xi:#bf5af2;--cn:#ff453a;--at:#64d2ff;--ft:#ffd60a;--tr:#ff375f;--al:#ff453a;--nw:#30d158;--pp:#bf5af2;--font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue","PingFang SC",sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--t);font-family:var(--font);line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
+.amb{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 50% 40% at 20% -5%,rgba(10,132,255,.12),transparent),radial-gradient(ellipse 40% 35% at 80% 105%,rgba(94,92,230,.08),transparent)}
+.w{max-width:880px;margin:0 auto;padding:0 20px 100px}
+.hd{padding:40px 0 28px}.hd h1{font-size:32px;font-weight:700;letter-spacing:-.5px;margin-bottom:10px}.hd .su{color:var(--t3);font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.hd .lv{color:var(--nw);font-weight:500;display:inline-flex;align-items:center;gap:5px}.hd .lv::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--nw);animation:bk 2s ease infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.3}}.hd .dt{color:var(--t3);font-size:8px}
+.sg{display:flex;margin-bottom:24px;background:var(--bg2);border-radius:10px;padding:2px}
+.sgt{flex:1;padding:8px 0;text-align:center;cursor:pointer;font-size:14px;font-weight:500;color:var(--t3);border-radius:8px;transition:all .25s;user-select:none}
+.sgt:hover{color:var(--t2)}.sgt.on{color:var(--t);font-weight:600;background:rgba(255,255,255,.1);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.pf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 16px;margin-bottom:24px;background:var(--bg2);border-radius:16px;border:1px solid var(--brd)}
+.pf .lb{font-size:12px;color:var(--t3);font-weight:600;margin-right:4px;white-space:nowrap}
+.ch{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;background:rgba(10,132,255,.08);color:var(--ac);border:1px solid rgba(10,132,255,.12)}
+.ch .br{display:inline-block;height:3px;border-radius:2px;background:var(--ac)}
+.ch .dd{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.ddp{background:#30d158}.ddn{background:#ff453a}.ddu{background:#6e6e73}
+.sts{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-bottom:24px}
+.st{background:var(--bg2);border:1px solid var(--brd);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.st::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:var(--c,var(--ac));border-radius:2px;transform:scaleX(0);transition:transform .25s}
+.st:hover{transform:scale(1.03);border-color:var(--brdh)}.st:hover::after,.st.on::after{transform:scaleX(1)}
+.st.on{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.05)}
+.st .n{font-size:28px;font-weight:700;line-height:1;color:var(--c,var(--t));font-variant-numeric:tabular-nums}
+.st .l{font-size:11px;color:var(--t3);margin-top:4px;white-space:nowrap}
+.ct{display:flex;gap:10px;margin-bottom:24px;align-items:center;position:sticky;top:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);padding:12px 20px;margin-left:-20px;margin-right:-20px;border-bottom:1px solid var(--brd)}
+.sch{flex:1;position:relative;min-width:0}.sch svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--t3);pointer-events:none}
+.sch input{width:100%;background:var(--bgi);border:none;border-radius:8px;padding:9px 12px 9px 32px;color:var(--t);font-size:14px;outline:none;transition:box-shadow .2s;font-family:var(--font)}
+.sch input:focus{box-shadow:0 0 0 3px rgba(10,132,255,.3)}.sch input::placeholder{color:var(--t3)}
+.pk{background:var(--bgi);border:none;border-radius:8px;padding:9px 32px 9px 12px;color:var(--t);font-size:13px;outline:none;cursor:pointer;appearance:none;font-family:var(--font);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236e6e73' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:box-shadow .2s}
+.pk:focus{box-shadow:0 0 0 3px rgba(10,132,255,.3)}
+.sc{margin-bottom:36px}.sh{display:flex;align-items:center;gap:10px;padding:12px 0 8px;cursor:pointer}
+.sh:hover .sl{opacity:.8}.si{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;background:var(--bg2);border:1px solid var(--brd);flex-shrink:0;transition:all .2s}
+.sh:hover .si{border-color:var(--brdh)}.sl{font-size:17px;font-weight:600;flex:1;transition:opacity .2s}
+.snm{font-size:12px;background:var(--bg2);padding:4px 12px;border-radius:20px;color:var(--t3);font-weight:500}
+.sar{color:var(--t3);transition:transform .25s;font-size:11px}.sc.collapsed .sar{transform:rotate(-90deg)}.sc.collapsed .sb{display:none}
+.cd{background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:18px 20px;margin-bottom:10px;transition:all .3s;position:relative;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:fi .4s ease both}
+.cd:hover{background:var(--cardh);border-color:var(--brdh);transform:translateY(-1px);box-shadow:0 2px 20px rgba(0,0,0,.5)}
+.cd.cl{border-left:3px solid var(--cl)}.cd.al{border-left:3px solid var(--al)}.cd.nw{border-left:3px solid var(--nw)}
+.ctt{display:flex;align-items:flex-start;gap:8px}
+.ctt a{color:var(--t);text-decoration:none;font-size:15px;font-weight:600;line-height:1.45;flex:1;display:block;transition:color .15s}.ctt a:hover{color:var(--ac)}
+.tgs{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tg{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.tga{background:rgba(255,69,58,.15);color:#ff6961}.tgn{background:rgba(48,209,88,.12);color:#5ae068}.tgc{background:rgba(255,159,10,.12);color:#ffb340}
+.tgm{background:rgba(10,132,255,.1);color:#409cff;font-weight:600;display:inline-flex;align-items:center;gap:3px}
+.sc2{position:absolute;top:18px;right:20px;font-size:11px;font-weight:700;color:var(--ac2);background:rgba(94,92,230,.08);border:1px solid rgba(94,92,230,.12);padding:3px 10px;border-radius:8px}
+.csm{color:var(--t2);font-size:13px;margin:8px 0 10px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cmt{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;align-items:center}
+.stg{background:rgba(10,132,255,.06);color:var(--ac);padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;border:1px solid rgba(10,132,255,.08)}
+.md{color:var(--t3);font-size:6px;line-height:1}.mi{color:var(--t3);white-space:nowrap}
+.aib{margin-top:12px;padding:12px 14px;border-radius:10px;background:rgba(191,90,242,.04);border:1px solid rgba(191,90,242,.08)}
+.air{display:flex;align-items:center;gap:2px;flex-wrap:wrap}
+.ail{font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--pp);background:rgba(191,90,242,.1);padding:2px 6px;border-radius:4px;margin-right:6px}
+.srr{font-size:13px}.sry{color:#ffd60a}.srn{color:var(--t3)}
+.snp{font-size:10px;padding:2px 7px;border-radius:5px;font-weight:600;margin-left:4px}
+.snpp{background:rgba(48,209,88,.1);color:#5ae068}.snng{background:rgba(255,69,58,.1);color:#ff6961}.snnu{background:rgba(110,110,115,.1);color:#a1a1a6}
+.att{font-size:10px;padding:2px 7px;border-radius:5px;font-weight:600;margin-left:4px}
+.ata{background:rgba(255,159,10,.1);color:#ffb340}.atw{background:rgba(10,132,255,.1);color:#409cff}
+.ait{font-size:13px;color:#d1b3ff;line-height:1.5;margin-top:6px;font-style:italic}
+.dtg{font-size:12px;color:var(--ac);cursor:pointer;margin-top:8px;display:inline-flex;align-items:center;gap:4px;font-weight:500;opacity:.7;transition:opacity .2s;user-select:none}
+.dtg:hover{opacity:1}.dtg .ar{transition:transform .25s;display:inline-block;font-size:9px}.dtg.open .ar{transform:rotate(90deg)}
+.dtb{display:none;margin-top:8px;padding:10px 12px;border-radius:8px;background:rgba(94,92,230,.04);border:1px solid rgba(94,92,230,.06);font-size:13px;color:#b8a9e0;line-height:1.6}.dtb.show{display:block}
+.imp{display:inline-block;font-size:11px;padding:3px 10px;border-radius:6px;background:rgba(255,55,95,.06);border:1px solid rgba(255,55,95,.1);color:#ff6b8a;margin-top:8px;font-weight:500}
+.cbp{display:flex;justify-content:flex-end;margin-top:12px}
+.cbb{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:transparent;border:1px solid var(--brd);color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;user-select:none;font-family:var(--font)}
+.cbb:hover{background:rgba(10,132,255,.08);border-color:var(--ac);color:var(--ac)}.cbb svg{width:14px;height:14px}
+.dlg{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.bl{max-width:82%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.5;animation:pp .3s ease both}
+.bla{align-self:flex-start;background:rgba(191,90,242,.06);border:1px solid rgba(191,90,242,.1);color:#d1b3ff;border-bottom-left-radius:4px}
+.blu{align-self:flex-end;background:rgba(10,132,255,.06);border:1px solid rgba(10,132,255,.1);color:#7ec8ff;border-bottom-right-radius:4px}
+.blw{font-size:10px;font-weight:600;opacity:.5;margin-bottom:3px;text-transform:uppercase;letter-spacing:.3px}
+@keyframes pp{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}.ov.show{opacity:1;pointer-events:auto}
+.pn{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:100vw;background:var(--bg);border-left:1px solid var(--brd);z-index:201;transform:translateX(100%);transition:transform .4s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.6)}.pn.show{transform:translateX(0)}
+.pnh{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--brd);flex-shrink:0}
+.pnt{font-size:14px;font-weight:600;flex:1;margin-right:12px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pnc{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.06);border:none;color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:14px;flex-shrink:0}
+.pnc:hover{background:rgba(255,69,58,.15);color:#ff6961}
+.pns{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+.fld{margin-bottom:20px}.flb{font-size:12px;color:var(--t3);margin-bottom:8px;font-weight:600;letter-spacing:.3px}
+.srs{display:flex;gap:6px}
+.srb{width:40px;height:40px;border:none;border-radius:8px;background:rgba(255,255,255,.04);cursor:pointer;font-size:20px;color:var(--t3);transition:all .15s;display:flex;align-items:center;justify-content:center}
+.srb:hover{background:rgba(255,214,10,.08);color:#ffd60a;transform:scale(1.12)}.srb.on{color:#ffd60a;background:rgba(255,214,10,.1);box-shadow:0 0 12px rgba(255,214,10,.12)}
+.stw{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid var(--brd)}
+.stt{flex:1;padding:10px;text-align:center;background:transparent;color:var(--t3);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:var(--font)}
+.stt:not(:last-child){border-right:1px solid var(--brd)}.stt:hover{background:rgba(255,255,255,.03);color:var(--t2)}
+.stt.sya{background:rgba(48,209,88,.1);color:#30d158;font-weight:700}.stt.syn{background:rgba(110,110,115,.08);color:#a1a1a6;font-weight:700}.stt.syd{background:rgba(255,69,58,.1);color:#ff453a;font-weight:700}
+.tx{width:100%;background:var(--bgi);border:none;border-radius:8px;padding:12px 14px;color:var(--t);font-size:14px;line-height:1.6;resize:vertical;outline:none;font-family:var(--font);transition:box-shadow .2s}
+.tx:focus{box-shadow:0 0 0 3px rgba(10,132,255,.25)}.tx::placeholder{color:var(--t3)}.txm{min-height:100px}
+.sbt{width:100%;padding:12px;border:none;border-radius:8px;background:var(--ac);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.sbt:hover{filter:brightness(1.1);transform:translateY(-1px)}.sbt:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.arsp{margin-top:20px;padding:14px;border-radius:10px;background:rgba(191,90,242,.05);border:1px solid rgba(191,90,242,.08);animation:pp .35s ease both}
+.arsp .rl{font-size:10px;font-weight:700;color:var(--pp);margin-bottom:6px;letter-spacing:.5px}.arsp .rt{font-size:14px;color:#d1b3ff;line-height:1.65}
+.ldg{display:flex;gap:4px;padding:8px 0}.ldg span{width:6px;height:6px;border-radius:50%;background:var(--pp);opacity:.3;animation:dp 1.4s ease infinite}
+.ldg span:nth-child(2){animation-delay:.2s}.ldg span:nth-child(3){animation-delay:.4s}
+@keyframes dp{0%,80%,100%{opacity:.3;transform:scale(1)}40%{opacity:1;transform:scale(1.2)}}
+.btt{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:50%;background:var(--bg2);border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(8px);transition:all .3s;z-index:99;color:var(--t3);font-size:16px}
+.btt.vis{opacity:1;transform:translateY(0)}.btt:hover{background:var(--ac);color:#fff;border-color:var(--ac)}
+.tst{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--brd);padding:10px 22px;border-radius:14px;font-size:14px;font-weight:500;color:var(--t);z-index:300;opacity:0;pointer-events:none;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .35s cubic-bezier(.32,.72,0,1)}
+.tst.show{opacity:1;transform:translateX(-50%) translateY(0)}.tst.ok{border-color:var(--nw)}.tst.err{border-color:var(--al)}
+.ft{margin-top:48px;padding:24px 0;border-top:1px solid var(--brd);color:var(--t3);font-size:12px;text-align:center}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.w{padding:0 14px 80px}.hd h1{font-size:26px}.hd{padding:28px 0 20px}.sts{grid-template-columns:repeat(4,1fr);gap:6px}.st{padding:10px 6px}.st .n{font-size:22px}.ct{flex-direction:column;gap:8px;margin-left:-14px;margin-right:-14px;padding:10px 14px}.sch{width:100%}.cd{padding:14px 16px}.sc2{position:relative;top:auto;right:auto;display:inline-block;margin-top:6px}.pn{width:100vw}.btt{bottom:16px;right:16px}.pf{padding:10px 12px}}
 </style>
 </head>
 <body>
-
-<!-- Header -->
-<div class="header">
-  <h1>{{ report_title }}</h1>
-  <div class="subtitle">
-    <span>更新: {{ now_str }}</span>
-    <span class="sep">·</span>
-    <span>共 {{ total }} 条动态</span>
-    <span class="sep">·</span>
-    <span>已分析 {{ stats.get('analyzed_posts', stats.get('total_posts', 0)) }} / {{ stats.get('total_posts', total) }} 篇</span>
-  </div>
-</div>
-
-<!-- Mode Tabs -->
-<div class="mode-tabs">
-  <div class="mode-tab {{ 'active' if mode == 'for_you' else '' }}" onclick="switchMode('for_you')">
-    <span class="tab-icon">&#127919;</span>我的视角
-  </div>
-  <div class="mode-tab {{ 'active' if mode == 'mainstream' else '' }}" onclick="switchMode('mainstream')">
-    <span class="tab-icon">&#128225;</span>大众视角
-  </div>
-</div>
-
-<!-- User Profile Bar -->
+<div class="amb"></div>
+<div class="w">
+<div class="hd"><h1>{{ report_title }}</h1><div class="su"><span class="lv">LIVE</span><span class="dt">&#8226;</span><span>{{ now_str }}</span><span class="dt">&#8226;</span><span>{{ total }} 条动态</span><span class="dt">&#8226;</span><span>AI 已分析 {{ stats.get('analyzed_posts', stats.get('total_posts', 0)) }} / {{ stats.get('total_posts', total) }}</span></div></div>
+<div class="sg"><div class="sgt {{ 'on' if mode == 'for_you' else '' }}" onclick="switchMode('for_you')">&#127919; 我的视角</div><div class="sgt {{ 'on' if mode == 'mainstream' else '' }}" onclick="switchMode('mainstream')">&#128225; 大众视角</div></div>
 {% if profile %}
-<div class="profile-bar">
-  <span class="profile-label">&#128100; 你的画像</span>
-  {% for kw in profile[:12] %}
-  <span class="profile-keyword">
-    {% if kw.get('sentiment_bias') %}
-    <span class="bias-dot bias-{{ kw.sentiment_bias }}"></span>
-    {% endif %}
-    {{ kw.keyword }}
-    <span class="weight-bar" style="width:{{ (kw.weight | int) * 3 + 8 }}px"></span>
-  </span>
-  {% endfor %}
-</div>
+<div class="pf"><span class="lb">&#128100; 兴趣画像</span>{% for kw in profile[:12] %}<span class="ch">{% if kw.get('sentiment_bias') %}<span class="dd {{ 'ddp' if kw.sentiment_bias == 'positive' else ('ddn' if kw.sentiment_bias == 'negative' else 'ddu') }}"></span>{% endif %}{{ kw.keyword }}<span class="br" style="width:{{ (kw.weight | int) * 2 + 6 }}px"></span></span>{% endfor %}</div>
 {% endif %}
-
-<!-- Stats Cards -->
-<div class="stats" id="statsBar">
-{% for cat_id in category_order %}
-{% set cat_info = categories.get(cat_id, {}) %}
-{% set cat_posts = sections.get(cat_id, []) %}
-  <div class="stat-card" style="--cat-color:{{ cat_info.get('color', '#60a5fa') }}" data-cat="{{ cat_id }}" onclick="clickStat('{{ cat_id }}')">
-    <div class="num">{{ cat_posts | length }}</div>
-    <div class="label">{{ cat_info.get('emoji', '') }} {{ cat_info.get('label', cat_id) }}</div>
-  </div>
-{% endfor %}
-</div>
-
-<!-- Controls Bar -->
-<div class="controls">
-  <div class="search-wrap">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="searchInput" placeholder="搜索标题、标签、来源..." oninput="applyFilters()">
-  </div>
-  <select id="sortSelect" onchange="applySort()">
-    <option value="time">按时间排序</option>
-    <option value="score">按热度排序</option>
-  </select>
-</div>
-
-<!-- Sections -->
-{% for cat_id in category_order %}
-{% set cat_info = categories.get(cat_id, {}) %}
-{% set cat_posts = sections.get(cat_id, []) %}
-{% if cat_posts %}
-<div class="section" data-section="{{ cat_id }}">
-  <div class="section-header" onclick="toggleSection(this)" style="color:{{ cat_info.get('color', '#60a5fa') }}">
-    <div class="section-icon" style="border-color:{{ cat_info.get('color', '#60a5fa') }}33">{{ cat_info.get('emoji', '') }}</div>
-    <div class="section-label">{{ cat_info.get('label', cat_id) }}</div>
-    <div class="section-count">{{ cat_posts | length }} 条</div>
-    <div class="collapse-icon">&#9660;</div>
-  </div>
-  <div class="section-body">
-  {% for p in cat_posts %}
-  <div class="post-card {{ 'claude-card' if p.get('is_claude') else '' }} {{ 'alert-card' if p.get('is_alert') else '' }} {{ 'new-card' if p.get('is_new') and not p.get('is_alert') else '' }}"
-       id="card-{{ p.uid }}"
-       data-tags="{{ (p.tags | join(',') if p.tags is iterable and p.tags is not string else p.tags | default('')) | lower }}"
-       data-time="{{ p.published_at | default('') }}"
-       data-score="{{ p.engagement_score | default(0) }}"
-       data-claude="{{ 'true' if p.get('is_claude') else 'false' }}"
-       data-cat="{{ p.category | default('') }}"
-       data-source="{{ p.sources | default('') }}"
-       style="animation-delay:{{ loop.index * 20 }}ms">
-
-    {% if p.get('final_score') %}
-    <div class="score-badge">{{ p.final_score }}</div>
-    {% endif %}
-
-    <div class="post-top">
-      <a href="{{ p.url }}" target="_blank" rel="noopener noreferrer" class="post-title">{{ p.title }}</a>
-      {% if p.get('is_alert') %}<span class="badge badge-alert">ALERT</span>{% endif %}
-      {% if p.get('is_new') and not p.get('is_alert') %}<span class="badge badge-new">NEW</span>{% endif %}
-      {% if p.get('is_claude') and p.category != 'claude' %}<span class="badge badge-claude">CLAUDE</span>{% endif %}
-      {% if p.get('user_comment_count', 0) | int > 0 %}
-      <span class="badge badge-commented">&#9998; 已评 &#9733;{{ p.get('avg_user_rating', 0) | int }}</span>
-      {% endif %}
-    </div>
-
-    {% if p.summary %}
-    <div class="post-summary">{{ p.summary }}</div>
-    {% endif %}
-
-    <div class="post-meta">
-      {% if p.get('source_name') %}
-      <span class="source-tag">{{ p.source_name }}</span>
-      {% elif p.sources %}
-      {% for src in p.sources %}
-      <span class="source-tag">{{ src }}</span>
-      {% endfor %}
-      {% endif %}
-      {% if p.get('author') %}<span class="meta-dot">&#183;</span><span class="meta-item">{{ p.author }}</span>{% endif %}
-      <span class="meta-dot">&#183;</span><span class="meta-item">{{ p.published_at }}</span>
-      {% if p.get('engagement_score') %}<span class="meta-dot">&#183;</span><span class="meta-item">热度 {{ p.engagement_score }}</span>{% endif %}
-    </div>
-
-    {% if p.get('ai_rating') %}
-    <div class="ai-insight">
-      <div class="ai-stars">
-        <span class="ai-label">AI</span>
-        {% for i in range(5) %}
-        <span class="ai-star {{ 'filled' if i < p.ai_rating else 'empty' }}">&#9733;</span>
-        {% endfor %}
-        {% if p.get('ai_sentiment') %}
-        <span class="ai-sentiment {{ p.ai_sentiment }}">{{ '&#21033;&#22909;' if p.ai_sentiment == 'positive' else ('&#39118;&#38500;' if p.ai_sentiment == 'negative' else '&#20013;&#24615;') }}</span>
-        {% endif %}
-        {% if p.get('ai_action') and p.ai_action != 'skip' %}
-        <span class="ai-action {{ p.ai_action }}">{{ '&#31435;&#21363;&#34892;&#21160;' if p.ai_action == 'act' else '&#25345;&#32493;&#20851;&#27880;' }}</span>
-        {% endif %}
-      </div>
-      {% if p.get('ai_comment') %}
-      <div class="ai-comment">{{ p.ai_comment }}</div>
-      {% endif %}
-      {% if p.get('deep_comment') %}
-      <div class="ai-deep-toggle" onclick="toggleDeep(this)">
-        <span class="arrow">&#9654;</span> 深度观点
-      </div>
-      <div class="ai-deep-content">{{ p.deep_comment }}</div>
-      {% endif %}
-      {% if p.get('industry_impact') %}
-      <div class="ai-impact-tag">{{ p.industry_impact }}</div>
-      {% endif %}
-    </div>
-    {% endif %}
-
-    <!-- Dialogue: existing user/AI comments -->
-    <div class="dialogue" id="dialogue-{{ p.uid }}"></div>
-
-    <!-- Add Comment Button -->
-    <div class="comment-btn-wrap">
-      <button class="comment-btn" onclick="openPanel('{{ p.uid }}', {{ p.title | tojson }})">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        添加观点
-      </button>
-    </div>
-  </div>
-  {% endfor %}
-  </div>
-</div>
+<div class="sts">{% for cat_id in category_order %}{% set ci = categories.get(cat_id, {}) %}{% set cp = sections.get(cat_id, []) %}<div class="st" style="--c:{{ ci.get('color', '#0a84ff') }}" data-cat="{{ cat_id }}" onclick="clickStat('{{ cat_id }}')"><div class="n">{{ cp | length }}</div><div class="l">{{ ci.get('emoji', '') }} {{ ci.get('label', cat_id) }}</div></div>{% endfor %}</div>
+<div class="ct"><div class="sch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="searchInput" placeholder="搜索标题、标签、来源..." oninput="applyFilters()"></div><select class="pk" id="sortSelect" onchange="applySort()"><option value="time">按时间</option><option value="score">按热度</option></select></div>
+{% for cat_id in category_order %}{% set ci = categories.get(cat_id, {}) %}{% set cp = sections.get(cat_id, []) %}{% if cp %}
+<div class="sc" data-section="{{ cat_id }}"><div class="sh" onclick="toggleSection(this)"><div class="si" style="border-color:{{ ci.get('color', '#0a84ff') }}22">{{ ci.get('emoji', '') }}</div><div class="sl" style="color:{{ ci.get('color', '#0a84ff') }}">{{ ci.get('label', cat_id) }}</div><div class="snm">{{ cp | length }}</div><div class="sar">&#9660;</div></div><div class="sb">
+{% for p in cp %}
+<div class="cd {{ 'cl' if p.get('is_claude') else '' }} {{ 'al' if p.get('is_alert') else '' }} {{ 'nw' if p.get('is_new') and not p.get('is_alert') else '' }}" id="card-{{ p.uid }}" data-tags="{{ (p.tags | join(',') if p.tags is iterable and p.tags is not string else p.tags | default('')) | lower }}" data-time="{{ p.published_at | default('') }}" data-score="{{ p.engagement_score | default(0) }}" data-cat="{{ p.category | default('') }}" data-source="{{ p.sources | default('') }}" data-uid="{{ p.uid }}" data-title="{{ p.title | e }}" style="animation-delay:{{ loop.index * 30 }}ms">
+{% if p.get('final_score') %}<div class="sc2">{{ p.final_score }}</div>{% endif %}
+<div class="ctt"><a href="{{ p.url }}" target="_blank" rel="noopener noreferrer">{{ p.title }}</a></div>
+<div class="tgs">{% if p.get('is_alert') %}<span class="tg tga">ALERT</span>{% endif %}{% if p.get('is_new') and not p.get('is_alert') %}<span class="tg tgn">NEW</span>{% endif %}{% if p.get('is_claude') and p.category != 'claude' %}<span class="tg tgc">CLAUDE</span>{% endif %}{% if p.get('user_comment_count', 0) | int > 0 %}<span class="tg tgm">&#9998; 已评 &#9733;{{ p.get('avg_user_rating', 0) | int }}</span>{% endif %}</div>
+{% if p.summary %}<div class="csm">{{ p.summary }}</div>{% endif %}
+<div class="cmt">{% if p.get('source_name') %}<span class="stg">{{ p.source_name }}</span>{% elif p.sources %}{% for src in p.sources %}<span class="stg">{{ src }}</span>{% endfor %}{% endif %}{% if p.get('author') %}<span class="md">&#8226;</span><span class="mi">{{ p.author }}</span>{% endif %}<span class="md">&#8226;</span><span class="mi">{{ p.published_at }}</span>{% if p.get('engagement_score') %}<span class="md">&#8226;</span><span class="mi">热度 {{ p.engagement_score }}</span>{% endif %}</div>
+{% if p.get('ai_rating') %}
+<div class="aib"><div class="air"><span class="ail">AI</span>{% for i in range(5) %}<span class="srr {{ 'sry' if i < p.ai_rating else 'srn' }}">&#9733;</span>{% endfor %}{% if p.get('ai_sentiment') %}<span class="snp {{ 'snpp' if p.ai_sentiment == 'positive' else ('snng' if p.ai_sentiment == 'negative' else 'snnu') }}">{{ '&#21033;&#22909;' if p.ai_sentiment == 'positive' else ('&#39118;&#38500;' if p.ai_sentiment == 'negative' else '&#20013;&#24615;') }}</span>{% endif %}{% if p.get('ai_action') and p.ai_action != 'skip' %}<span class="att {{ 'ata' if p.ai_action == 'act' else 'atw' }}">{{ '&#31435;&#21363;&#34892;&#21160;' if p.ai_action == 'act' else '&#25345;&#32493;&#20851;&#27880;' }}</span>{% endif %}</div>{% if p.get('ai_comment') %}<div class="ait">{{ p.ai_comment }}</div>{% endif %}{% if p.get('deep_comment') %}<div class="dtg" onclick="toggleDeep(this)"><span class="ar">&#9654;</span> 深度观点</div><div class="dtb">{{ p.deep_comment }}</div>{% endif %}{% if p.get('industry_impact') %}<div class="imp">{{ p.industry_impact }}</div>{% endif %}</div>
 {% endif %}
-{% endfor %}
-
-<!-- Back to Top -->
-<div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</div>
-
-<!-- Toast Notification -->
-<div class="toast" id="toast"></div>
-
-<!-- Panel Overlay -->
-<div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
-
-<!-- Comment Slide-in Panel -->
-<div class="comment-panel" id="commentPanel">
-  <div class="panel-header">
-    <div class="panel-title" id="panelTitle"></div>
-    <button class="panel-close" onclick="closePanel()">&#10005;</button>
-  </div>
-  <div class="panel-body">
-    <!-- Star Rating -->
-    <div class="rating-section">
-      <div class="rating-label">评分</div>
-      <div class="star-rating" id="starRating">
-        <button class="star-btn" data-star="1" onclick="setRating(1)">&#9733;</button>
-        <button class="star-btn" data-star="2" onclick="setRating(2)">&#9733;</button>
-        <button class="star-btn" data-star="3" onclick="setRating(3)">&#9733;</button>
-        <button class="star-btn" data-star="4" onclick="setRating(4)">&#9733;</button>
-        <button class="star-btn" data-star="5" onclick="setRating(5)">&#9733;</button>
-      </div>
-    </div>
-
-    <!-- Stance Selector -->
-    <div class="stance-section">
-      <div class="stance-label">立场</div>
-      <div class="stance-group">
-        <button class="stance-btn" data-stance="agree" onclick="setStance('agree')">赞同</button>
-        <button class="stance-btn" data-stance="neutral" onclick="setStance('neutral')">中立</button>
-        <button class="stance-btn" data-stance="disagree" onclick="setStance('disagree')">反对</button>
-      </div>
-    </div>
-
-    <!-- Comment Textarea -->
-    <div class="comment-section">
-      <label>观点</label>
-      <textarea class="comment-textarea" id="commentText" placeholder="写下你的观点、判断..."></textarea>
-    </div>
-
-    <!-- Tags Input -->
-    <div class="tags-section">
-      <label>标签</label>
-      <input type="text" class="tags-input" id="tagsInput" placeholder="标签，逗号分隔">
-    </div>
-
-    <!-- Submit -->
-    <button class="submit-btn" id="submitBtn" onclick="submitComment()">提交观点</button>
-
-    <!-- AI Reply Area -->
-    <div id="aiReplyArea"></div>
-  </div>
+<div class="dlg" id="dlg-{{ p.uid }}"></div>
+<div class="cbp"><button class="cbb" onclick="openPanel(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>添加观点</button></div>
 </div>
-
-<!-- Footer -->
-<div class="footer">
-  {{ report_title }} v4 · 交互式情报中心 · 数据归各社区所有
+{% endfor %}</div></div>
+{% endif %}{% endfor %}
 </div>
-
+<div class="btt" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</div>
+<div class="tst" id="toast"></div>
+<div class="ov" id="overlay" onclick="closePanel()"></div>
+<div class="pn" id="panel">
+<div class="pnh"><div class="pnt" id="panelTitle"></div><button class="pnc" onclick="closePanel()">&#10005;</button></div>
+<div class="pns">
+<div class="fld"><div class="flb">评分</div><div class="srs" id="starRating"><button class="srb" data-star="1" onclick="setRating(1)">&#9733;</button><button class="srb" data-star="2" onclick="setRating(2)">&#9733;</button><button class="srb" data-star="3" onclick="setRating(3)">&#9733;</button><button class="srb" data-star="4" onclick="setRating(4)">&#9733;</button><button class="srb" data-star="5" onclick="setRating(5)">&#9733;</button></div></div>
+<div class="fld"><div class="flb">立场</div><div class="stw"><button class="stt" data-stance="agree" onclick="setStance('agree')">赞同</button><button class="stt" data-stance="neutral" onclick="setStance('neutral')">中立</button><button class="stt" data-stance="disagree" onclick="setStance('disagree')">反对</button></div></div>
+<div class="fld"><div class="flb">观点</div><textarea class="tx txm" id="commentText" placeholder="写下你的观点..."></textarea></div>
+<div class="fld"><div class="flb">标签</div><input type="text" class="tx" id="tagsInput" placeholder="标签，逗号分隔"></div>
+<button class="sbt" id="submitBtn" onclick="submitComment()">提交观点</button>
+<div id="aiReplyArea"></div>
+</div></div>
+<div class="w"><div class="ft">{{ report_title }} v4 · 交互式情报中心</div></div>
 <script>
-// ── State ──
-var activeCat = 'all';
-var panelUid = '';
-var panelRating = 0;
-var panelStance = '';
-
-// ── Mode Switching ──
-function switchMode(mode) {
-  var url = new URL(window.location);
-  url.searchParams.set('mode', mode);
-  window.location.href = url.toString();
-}
-
-// ── Category Filter ──
-function clickStat(cat) {
-  if (activeCat === cat) {
-    activeCat = 'all';
-    document.querySelectorAll('.stat-card').forEach(function(c) { c.classList.remove('active'); });
-  } else {
-    activeCat = cat;
-    document.querySelectorAll('.stat-card').forEach(function(c) {
-      c.classList.toggle('active', c.dataset.cat === cat);
-    });
-  }
-  applyFilters();
-  if (activeCat !== 'all') {
-    var sec = document.querySelector('.section[data-section="' + cat + '"]');
-    if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-}
-
-// ── Filters ──
-function applyFilters() {
-  var searchQuery = document.getElementById('searchInput').value.toLowerCase();
-  document.querySelectorAll('.post-card').forEach(function(card) {
-    var title = card.querySelector('.post-title').textContent.toLowerCase();
-    var tags = card.dataset.tags;
-    var cat = card.dataset.cat;
-    var sources = card.dataset.source;
-    var show = true;
-
-    if (activeCat !== 'all' && cat !== activeCat) show = false;
-    if (searchQuery) {
-      var match = title.includes(searchQuery) || tags.includes(searchQuery) || sources.toLowerCase().includes(searchQuery);
-      if (!match) show = false;
-    }
-
-    card.style.display = show ? '' : 'none';
-  });
-
-  document.querySelectorAll('.section').forEach(function(sec) {
-    var cards = sec.querySelectorAll('.post-card');
-    var visible = false;
-    for (var i = 0; i < cards.length; i++) {
-      if (cards[i].style.display !== 'none') { visible = true; break; }
-    }
-    sec.style.display = visible ? '' : 'none';
-  });
-}
-
-// ── Sort ──
-function applySort() {
-  var mode = document.getElementById('sortSelect').value;
-  document.querySelectorAll('.section-body').forEach(function(body) {
-    var cards = Array.from(body.querySelectorAll('.post-card'));
-    cards.sort(function(a, b) {
-      if (mode === 'time') return (b.dataset.time || '').localeCompare(a.dataset.time || '');
-      return parseInt(b.dataset.score || 0) - parseInt(a.dataset.score || 0);
-    });
-    cards.forEach(function(c) { body.appendChild(c); });
-  });
-}
-
-// ── Collapse ──
-function toggleSection(header) {
-  header.closest('.section').classList.toggle('collapsed');
-}
-
-// ── Deep Comment ──
-function toggleDeep(el) {
-  el.classList.toggle('expanded');
-  var content = el.nextElementSibling;
-  if (content) content.classList.toggle('visible');
-}
-
-// ── Back to Top ──
-window.addEventListener('scroll', function() {
-  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
-});
-
-// ── Panel Open/Close ──
-function openPanel(uid, title) {
-  panelUid = uid;
-  panelRating = 0;
-  panelStance = '';
-  document.getElementById('panelTitle').textContent = title;
-  document.getElementById('commentText').value = '';
-  document.getElementById('tagsInput').value = '';
-  document.getElementById('aiReplyArea').innerHTML = '';
-  setRating(0);
-  clearStance();
-  document.getElementById('panelOverlay').classList.add('open');
-  document.getElementById('commentPanel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  // Load existing comments
-  loadDialogue(uid);
-}
-
-function closePanel() {
-  document.getElementById('panelOverlay').classList.remove('open');
-  document.getElementById('commentPanel').classList.remove('open');
-  document.body.style.overflow = '';
-  panelUid = '';
-}
-
-// ── Star Rating ──
-function setRating(n) {
-  panelRating = n;
-  document.querySelectorAll('.star-btn').forEach(function(btn) {
-    var star = parseInt(btn.dataset.star);
-    btn.classList.toggle('active', star <= n);
-  });
-}
-
-// ── Stance ──
-function setStance(s) {
-  panelStance = s;
-  document.querySelectorAll('.stance-btn').forEach(function(btn) {
-    btn.classList.remove('active-agree', 'active-neutral', 'active-disagree');
-    if (btn.dataset.stance === s) {
-      btn.classList.add('active-' + s);
-    }
-  });
-}
-
-function clearStance() {
-  panelStance = '';
-  document.querySelectorAll('.stance-btn').forEach(function(btn) {
-    btn.classList.remove('active-agree', 'active-neutral', 'active-disagree');
-  });
-}
-
-// ── Submit Comment ──
-function submitComment() {
-  if (!panelUid) return;
-  if (panelRating === 0) { showToast('请先评分', 'error'); return; }
-  if (!panelStance) { showToast('请选择立场', 'error'); return; }
-
-  var btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = '提交中...';
-
-  var data = {
-    post_uid: panelUid,
-    user_rating: panelRating,
-    user_comment: document.getElementById('commentText').value.trim(),
-    user_tags: document.getElementById('tagsInput').value.trim(),
-    stance: panelStance
-  };
-
-  fetch('/api/comments', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  })
-  .then(function(res) { return res.json(); })
-  .then(function(result) {
-    btn.disabled = false;
-    btn.textContent = '提交观点';
-    if (result.ok) {
-      showToast('观点已提交', 'success');
-
-      // Show AI reply if available
-      if (result.ai_reply) {
-        var replyArea = document.getElementById('aiReplyArea');
-        replyArea.innerHTML = '<div class="panel-reply">' +
-          '<div class="reply-label">AI 回应</div>' +
-          '<div class="reply-text">' + escapeHtml(result.ai_reply) + '</div>' +
-          '</div>';
-
-        // Also add to inline dialogue
-        var dialogue = document.getElementById('dialogue-' + panelUid);
-        if (dialogue) {
-          dialogue.innerHTML += buildBubble('user', data.user_comment || '(' + panelStance + ')');
-          dialogue.innerHTML += buildBubble('ai', result.ai_reply);
-        }
-      }
-
-      // Update badge on card
-      updateCardBadge(panelUid, panelRating);
-
-      // Clear form
-      document.getElementById('commentText').value = '';
-      document.getElementById('tagsInput').value = '';
-      setRating(0);
-      clearStance();
-    } else {
-      showToast(result.error || '提交失败', 'error');
-    }
-  })
-  .catch(function(err) {
-    btn.disabled = false;
-    btn.textContent = '提交观点';
-    showToast('网络错误', 'error');
-    console.error(err);
-  });
-}
-
-// ── Load Dialogue for a Post ──
-function loadDialogue(uid) {
-  fetch('/api/comments/' + encodeURIComponent(uid))
-    .then(function(res) { return res.json(); })
-    .then(function(result) {
-      if (!result.ok) return;
-      var dialogue = document.getElementById('dialogue-' + uid);
-      if (!dialogue) return;
-
-      var html = '';
-      var comments = result.comments || [];
-      var replies = result.replies || [];
-
-      // Interleave: comments first, then pair each with its reply
-      var maxLen = Math.max(comments.length, replies.length);
-      for (var i = 0; i < comments.length; i++) {
-        var c = comments[i];
-        html += buildBubble('user', (c.comment || '') + (c.stance ? ' [' + c.stance + ']' : ''));
-        // Find matching reply
-        for (var j = 0; j < replies.length; j++) {
-          if (replies[j].comment_id === c.id) {
-            html += buildBubble('ai', replies[j].reply_text);
-            break;
-          }
-        }
-      }
-
-      dialogue.innerHTML = html;
-    })
-    .catch(function(err) { console.error('Load dialogue error:', err); });
-}
-
-// ── Build Chat Bubble HTML ──
-function buildBubble(type, text) {
-  var cls = type === 'ai' ? 'bubble-ai' : 'bubble-user';
-  var label = type === 'ai' ? 'AI' : '你';
-  return '<div class="bubble ' + cls + '">' +
-    '<div class="bubble-label">' + label + '</div>' +
-    '<div>' + escapeHtml(text) + '</div>' +
-    '</div>';
-}
-
-// ── Update Card Badge After Comment ──
-function updateCardBadge(uid, rating) {
-  var card = document.getElementById('card-' + uid);
-  if (!card) return;
-  var top = card.querySelector('.post-top');
-  if (!top) return;
-
-  // Check if badge already exists
-  var existing = top.querySelector('.badge-commented');
-  if (existing) {
-    // Update count
-    var match = existing.textContent.match(/\d+/);
-    var count = match ? parseInt(match[0]) : 0;
-    existing.innerHTML = '&#9998; 已评 &#9733;' + rating;
-  } else {
-    var badge = document.createElement('span');
-    badge.className = 'badge badge-commented';
-    badge.innerHTML = '&#9998; 已评 &#9733;' + rating;
-    top.appendChild(badge);
-  }
-}
-
-// ── Toast ──
-function showToast(msg, type) {
-  var toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.className = 'toast ' + (type || '') + ' show';
-  setTimeout(function() {
-    toast.className = 'toast';
-  }, 2500);
-}
-
-// ── HTML Escape ──
-function escapeHtml(str) {
-  if (!str) return '';
-  var div = document.createElement('div');
-  div.appendChild(document.createTextNode(str));
-  return div.innerHTML;
-}
-
-// ── Close panel on Escape key ──
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closePanel();
-});
-
-// ── Load dialogues for cards with existing comments ──
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.badge-commented').forEach(function(badge) {
-    var card = badge.closest('.post-card');
-    if (!card) return;
-    var uid = card.id.replace('card-', '');
-    if (uid) loadDialogue(uid);
-  });
-});
+var activeCat='all',panelUid='',panelRating=0,panelStance='';
+function switchMode(m){var u=new URL(location);u.searchParams.set('mode',m);location.href=u.toString()}
+function clickStat(c){if(activeCat===c){activeCat='all';document.querySelectorAll('.st').forEach(function(s){s.classList.remove('on')})}else{activeCat=c;document.querySelectorAll('.st').forEach(function(s){s.classList.toggle('on',s.dataset.cat===c)})}applyFilters();if(activeCat!=='all'){var s=document.querySelector('.sc[data-section="'+c+'"]');if(s)s.scrollIntoView({behavior:'smooth',block:'start'})}}
+function applyFilters(){var q=document.getElementById('searchInput').value.toLowerCase();document.querySelectorAll('.cd').forEach(function(c){var t=c.querySelector('.ctt a').textContent.toLowerCase(),tags=c.dataset.tags,cat=c.dataset.cat,src=c.dataset.source,show=true;if(activeCat!=='all'&&cat!==activeCat)show=false;if(q&&!(t.includes(q)||tags.includes(q)||src.toLowerCase().includes(q)))show=false;c.style.display=show?'':'none'});document.querySelectorAll('.sc').forEach(function(s){var cs=s.querySelectorAll('.cd'),v=false;for(var i=0;i<cs.length;i++){if(cs[i].style.display!=='none'){v=true;break}}s.style.display=v?'':'none'})}
+function applySort(){var m=document.getElementById('sortSelect').value;document.querySelectorAll('.sb').forEach(function(b){var cs=Array.from(b.querySelectorAll('.cd'));cs.sort(function(a,b2){if(m==='time')return(b2.dataset.time||'').localeCompare(a.dataset.time||'');return parseInt(b2.dataset.score||0)-parseInt(a.dataset.score||0)});cs.forEach(function(c){b.appendChild(c)})})}
+function toggleSection(h){h.closest('.sc').classList.toggle('collapsed')}
+function toggleDeep(el){el.classList.toggle('open');var n=el.nextElementSibling;if(n)n.classList.toggle('show')}
+window.addEventListener('scroll',function(){document.getElementById('backTop').classList.toggle('vis',scrollY>400)});
+function openPanel(btn){var card=btn.closest('.cd');if(!card)return;var uid=card.dataset.uid,title=card.dataset.title;if(!uid)return;panelUid=uid;panelRating=0;panelStance='';document.getElementById('panelTitle').textContent=title;document.getElementById('commentText').value='';document.getElementById('tagsInput').value='';document.getElementById('aiReplyArea').innerHTML='';setRating(0);clearStance();document.getElementById('overlay').classList.add('show');document.getElementById('panel').classList.add('show');document.body.style.overflow='hidden';loadDialogue(uid)}
+function closePanel(){document.getElementById('overlay').classList.remove('show');document.getElementById('panel').classList.remove('show');document.body.style.overflow='';panelUid=''}
+function setRating(n){panelRating=n;document.querySelectorAll('.srb[data-star]').forEach(function(b){b.classList.toggle('on',parseInt(b.dataset.star)<=n)})}
+function setStance(s){panelStance=s;document.querySelectorAll('.stt').forEach(function(b){b.className='stt';if(b.dataset.stance===s)b.classList.add(s==='agree'?'sya':s==='neutral'?'syn':'syd')})}
+function clearStance(){panelStance='';document.querySelectorAll('.stt').forEach(function(b){b.className='stt'})}
+function submitComment(){if(!panelUid)return;if(panelRating===0){showToast('请先评分','err');return}if(!panelStance){showToast('请选择立场','err');return}var btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='提交中...';var data={post_uid:panelUid,user_rating:panelRating,user_comment:document.getElementById('commentText').value.trim(),user_tags:document.getElementById('tagsInput').value.trim(),stance:panelStance};var ra=document.getElementById('aiReplyArea');if(data.user_comment)ra.innerHTML='<div class="ldg"><span></span><span></span><span></span></div>';fetch('/api/comments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(function(r){return r.json()}).then(function(result){btn.disabled=false;btn.textContent='提交观点';if(result.ok){showToast('观点已提交','ok');updateBadge(panelUid,panelRating);var dlg=document.getElementById('dlg-'+panelUid);if(dlg)dlg.innerHTML+=bbl('user',data.user_comment||'('+panelStance+')');if(data.user_comment&&result.comment_id){pollReply(panelUid,result.comment_id,function(reply){ra.innerHTML='<div class="arsp"><div class="rl">AI 回应</div><div class="rt">'+esc(reply)+'</div></div>';if(dlg)dlg.innerHTML+=bbl('ai',reply)},function(){ra.innerHTML=''})}else{ra.innerHTML=''}document.getElementById('commentText').value='';document.getElementById('tagsInput').value='';setRating(0);clearStance()}else{showToast(result.error||'提交失败','err')}}).catch(function(e){btn.disabled=false;btn.textContent='提交观点';showToast('网络错误','err');console.error(e)})}
+function pollReply(uid,cid,onOk,onFail){var start=Date.now();function check(){if(Date.now()-start>30000){onFail();return}fetch('/api/reply/'+encodeURIComponent(uid)+'/'+cid).then(function(r){return r.json()}).then(function(d){if(d.ready&&d.reply)onOk(d.reply);else setTimeout(check,2000)}).catch(function(){setTimeout(check,2000)})}setTimeout(check,2000)}
+function loadDialogue(uid){fetch('/api/comments/'+encodeURIComponent(uid)).then(function(r){return r.json()}).then(function(d){if(!d.ok)return;var el=document.getElementById('dlg-'+uid);if(!el)return;var h='',cs=d.comments||[],rs=d.replies||[];for(var i=0;i<cs.length;i++){var c=cs[i];h+=bbl('user',(c.user_comment||'')+(c.stance?' ['+c.stance+']':''));for(var j=0;j<rs.length;j++){if(rs[j].comment_id===c.id){h+=bbl('ai',rs[j].reply_text);break}}}el.innerHTML=h}).catch(function(e){console.error(e)})}
+function bbl(type,text){return '<div class="bl '+(type==='ai'?'bla':'blu')+'"><div class="blw">'+(type==='ai'?'AI':'你')+'</div><div>'+esc(text)+'</div></div>'}
+function updateBadge(uid,rating){var card=document.getElementById('card-'+uid);if(!card)return;var ex=card.querySelector('.tgm');if(ex){ex.innerHTML='&#9998; 已评 &#9733;'+rating}else{var tags=card.querySelector('.tgs');if(tags){var b=document.createElement('span');b.className='tg tgm';b.innerHTML='&#9998; 已评 &#9733;'+rating;tags.appendChild(b)}}}
+function showToast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='tst '+(type||'')+' show';setTimeout(function(){t.className='tst'},2500)}
+function esc(s){if(!s)return'';var d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePanel()});
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.tgm').forEach(function(b){var card=b.closest('.cd');if(!card)return;var uid=card.dataset.uid;if(uid)loadDialogue(uid)})});
 </script>
 </body>
 </html>
