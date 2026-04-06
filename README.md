@@ -56,7 +56,7 @@ linuxdo-ai-monitor/
 
 ```bash
 # 方式一：终端直接运行（推荐，AI 回应正常）
-cd ~/Documents/linuxdo-ai-monitor
+cd ~/Documents/AI-Data/linuxdo-ai-monitor
 python3 web_app.py
 # 打开 http://localhost:5001
 
@@ -67,14 +67,14 @@ python3 web_app.py
 ### 外网访问（可选）
 
 ```bash
-bash ~/Documents/linuxdo-ai-monitor/scripts/start-tunnel.sh
+bash ~/Documents/AI-Data/linuxdo-ai-monitor/scripts/start-tunnel.sh
 # 输出 https://xxx.trycloudflare.com 临时地址
 ```
 
 ### 手动抓取数据
 
 ```bash
-cd ~/Documents/linuxdo-ai-monitor
+cd ~/Documents/AI-Data/linuxdo-ai-monitor
 python3 monitor.py
 ```
 
