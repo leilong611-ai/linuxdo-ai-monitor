@@ -68,6 +68,38 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_posts_category ON posts(category);
         CREATE INDEX IF NOT EXISTS idx_posts_published ON posts(published_at);
         CREATE INDEX IF NOT EXISTS idx_ai_sentiment ON ai_comments(sentiment);
+
+        CREATE TABLE IF NOT EXISTS user_comments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            post_uid TEXT NOT NULL,
+            user_rating INTEGER DEFAULT 0,
+            user_comment TEXT,
+            user_tags TEXT DEFAULT '',
+            stance TEXT DEFAULT 'neutral',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_uid) REFERENCES posts(uid)
+        );
+
+        CREATE TABLE IF NOT EXISTS user_profile (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            keyword TEXT NOT NULL UNIQUE,
+            weight REAL DEFAULT 1.0,
+            sentiment_bias TEXT DEFAULT 'neutral',
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS ai_replies (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            post_uid TEXT NOT NULL,
+            user_comment_id INTEGER,
+            ai_reply TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (post_uid) REFERENCES posts(uid),
+            FOREIGN KEY (user_comment_id) REFERENCES user_comments(id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_user_comments_post ON user_comments(post_uid);
+        CREATE INDEX IF NOT EXISTS idx_user_profile_keyword ON user_profile(keyword);
     """)
     conn.commit()
     conn.close()
@@ -244,3 +276,159 @@ def enrich_posts_from_db(posts: list):
             p.ai_action = c.get("action", "skip")
             p.deep_comment = c.get("deep_comment", "")
             p.industry_impact = c.get("industry_impact", "")
+
+
+# ── 用户评论 CRUD ──
+
+def save_user_comment(post_uid: str, user_rating: int = 0, user_comment: str = "",
+                      user_tags: str = "", stance: str = "neutral") -> int:
+    """保存用户评论，返回 id"""
+    conn = get_conn()
+    now = datetime.now(TZ_CN).isoformat()
+    cursor = conn.execute("""
+        INSERT INTO user_comments (post_uid, user_rating, user_comment, user_tags, stance, created_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (post_uid, user_rating, user_comment, user_tags, stance, now))
+    conn.commit()
+    comment_id = cursor.lastrowid
+    conn.close()
+    return comment_id
+
+
+def get_user_comments(post_uid: str) -> list:
+    """获取某帖子的所有用户评论"""
+    conn = get_conn()
+    rows = conn.execute(
+        "SELECT * FROM user_comments WHERE post_uid = ? ORDER BY created_at DESC",
+        (post_uid,)
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_all_user_comments(days: int = 30) -> list:
+    """获取最近 N 天所有用户评论"""
+    conn = get_conn()
+    cutoff = (datetime.now(TZ_CN) - timedelta(days=days)).isoformat()
+    rows = conn.execute("""
+        SELECT uc.*, p.title, p.category, p.tags as post_tags
+        FROM user_comments uc JOIN posts p ON uc.post_uid = p.uid
+        WHERE uc.created_at >= ? ORDER BY uc.created_at DESC
+    """, (cutoff,)).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+# ── 用户画像 ──
+
+def update_user_profile(keywords: list, stance: str = "neutral"):
+    """更新用户兴趣画像（关键词权重累加）"""
+    conn = get_conn()
+    now = datetime.now(TZ_CN).isoformat()
+    for kw in keywords:
+        kw = kw.strip().lower()
+        if not kw or len(kw) < 2:
+            continue
+        conn.execute("""
+            INSERT INTO user_profile (keyword, weight, sentiment_bias, updated_at)
+            VALUES (?, 1.0, ?, ?)
+            ON CONFLICT(keyword) DO UPDATE SET
+                weight = weight + 0.5,
+                sentiment_bias = ?,
+                updated_at = ?
+        """, (kw, stance, now, stance, now))
+    conn.commit()
+    conn.close()
+
+
+def get_user_profile(limit: int = 50) -> list:
+    """获取用户兴趣画像（按权重排序）"""
+    conn = get_conn()
+    rows = conn.execute(
+        "SELECT * FROM user_profile ORDER BY weight DESC LIMIT ?",
+        (limit,)
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+# ── AI 回应 ──
+
+def save_ai_reply(post_uid: str, user_comment_id: int, ai_reply: str) -> int:
+    """保存 AI 对用户观点的回应"""
+    conn = get_conn()
+    now = datetime.now(TZ_CN).isoformat()
+    cursor = conn.execute("""
+        INSERT INTO ai_replies (post_uid, user_comment_id, ai_reply, created_at)
+        VALUES (?, ?, ?, ?)
+    """, (post_uid, user_comment_id, ai_reply, now))
+    conn.commit()
+    reply_id = cursor.lastrowid
+    conn.close()
+    return reply_id
+
+
+def get_ai_replies(post_uid: str) -> list:
+    """获取某帖子的 AI 回应"""
+    conn = get_conn()
+    rows = conn.execute(
+        "SELECT * FROM ai_replies WHERE post_uid = ? ORDER BY created_at",
+        (post_uid,)
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+# ── 交互式查询（for web_app）──
+
+def get_posts_with_interactions(days: int = 7, mode: str = "for_you") -> list:
+    """获取帖子列表含 AI 评论 + 用户评论 + 综合评分"""
+    conn = get_conn()
+    cutoff = (datetime.now(TZ_CN) - timedelta(days=days)).isoformat()
+
+    if mode == "for_you":
+        # 我的视角：有用户评论的优先，然后按综合评分
+        rows = conn.execute("""
+            SELECT p.*,
+                a.rating as ai_rating, a.sentiment as ai_sentiment,
+                a.action as ai_action, a.brief_comment as ai_comment,
+                a.deep_comment, a.industry_impact,
+                (SELECT AVG(uc.user_rating) FROM user_comments uc WHERE uc.post_uid = p.uid) as avg_user_rating,
+                (SELECT COUNT(*) FROM user_comments uc WHERE uc.post_uid = p.uid) as user_comment_count
+            FROM posts p
+            LEFT JOIN ai_comments a ON p.uid = a.post_uid
+            WHERE p.published_at >= ?
+            ORDER BY user_comment_count DESC, p.engagement_score DESC
+        """, (cutoff,)).fetchall()
+    else:
+        # 大众视角：纯热度排序
+        rows = conn.execute("""
+            SELECT p.*,
+                a.rating as ai_rating, a.sentiment as ai_sentiment,
+                a.action as ai_action, a.brief_comment as ai_comment,
+                a.deep_comment, a.industry_impact,
+                (SELECT AVG(uc.user_rating) FROM user_comments uc WHERE uc.post_uid = p.uid) as avg_user_rating,
+                (SELECT COUNT(*) FROM user_comments uc WHERE uc.post_uid = p.uid) as user_comment_count
+            FROM posts p
+            LEFT JOIN ai_comments a ON p.uid = a.post_uid
+            WHERE p.published_at >= ?
+            ORDER BY p.engagement_score DESC
+        """, (cutoff,)).fetchall()
+
+    conn.close()
+    results = []
+    for r in rows:
+        d = dict(r)
+        # 综合评分计算
+        ai_r = d.get("ai_rating") or 0
+        eng = d.get("engagement_score") or 0
+        user_r = d.get("avg_user_rating") or 0
+        has_user = d.get("user_comment_count", 0) > 0
+
+        if has_user and user_r > 0:
+            d["final_score"] = round(user_r * 10 + ai_r * 6 + eng * 0.2, 1)
+        else:
+            d["final_score"] = round(ai_r * 12 + eng * 0.4, 1)
+
+        results.append(d)
+    return results

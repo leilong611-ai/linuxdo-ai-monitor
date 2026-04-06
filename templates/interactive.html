@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ report_title }}</title>
+<style>
+/* ── Reset & Variables ── */
+:root{
+  --bg:#0a0e17;--card:#131a2b;--card-hover:#1a2338;--border:#1e2d45;
+  --text:#e2e8f0;--text2:#8892a4;--text3:#5a6578;
+  --accent:#60a5fa;--accent2:#818cf8;
+  --glass:rgba(19,26,43,.7);
+  --claude:#f59e0b;--openai:#10b981;--gemini:#3b82f6;
+  --xai:#a78bfa;--cn_llm:#f87171;--ai_tools:#22d3ee;
+  --forum_tips:#fbbf24;--trending:#f472b6;
+  --alert:#ef4444;--new:#34d399;
+  --purple:#a78bfa;--user-blue:#60a5fa;
+  --shadow:0 4px 24px rgba(0,0,0,.3);
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:radial-gradient(ellipse at 20% 0%,rgba(96,165,250,.06) 0%,transparent 60%),
+    radial-gradient(ellipse at 80% 100%,rgba(129,140,248,.05) 0%,transparent 60%);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC","PingFang SC",sans-serif;
+  line-height:1.6;padding:0 20px 60px;max-width:980px;margin:0 auto;
+  min-height:100vh;
+}
+
+/* ── Header ── */
+.header{
+  padding:28px 0 20px;border-bottom:1px solid var(--border);
+  margin-bottom:16px;
+}
+.header h1{
+  font-size:26px;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;margin-bottom:6px;letter-spacing:-.5px;
+}
+.header .subtitle{color:var(--text2);font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.header .subtitle .sep{color:var(--text3)}
+
+/* ── Mode Tabs ── */
+.mode-tabs{
+  display:flex;gap:0;margin-bottom:16px;
+  background:var(--card);border-radius:10px;border:1px solid var(--border);
+  overflow:hidden;
+}
+.mode-tab{
+  flex:1;padding:10px 20px;text-align:center;cursor:pointer;
+  font-size:14px;font-weight:500;color:var(--text2);
+  transition:all .25s;position:relative;user-select:none;
+}
+.mode-tab:first-child{border-right:1px solid var(--border)}
+.mode-tab:hover{color:var(--text);background:rgba(96,165,250,.05)}
+.mode-tab.active{
+  color:#fff;font-weight:600;
+  background:linear-gradient(135deg,rgba(96,165,250,.2),rgba(129,140,248,.15));
+}
+.mode-tab.active::after{
+  content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;
+}
+.mode-tab .tab-icon{margin-right:6px}
+
+/* ── User Profile Bar ── */
+.profile-bar{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:12px 16px;margin-bottom:16px;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+}
+.profile-bar .profile-label{
+  font-size:12px;color:var(--text3);font-weight:600;margin-right:4px;white-space:nowrap;
+}
+.profile-keyword{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:6px;font-size:12px;
+  background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.15);
+  color:var(--accent);transition:all .2s;
+}
+.profile-keyword:hover{background:rgba(96,165,250,.15)}
+.profile-keyword .weight-bar{
+  display:inline-block;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+}
+.profile-keyword .bias-dot{
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+.bias-positive{background:#34d399}
+.bias-negative{background:#f87171}
+.bias-neutral{background:#94a3b8}
+
+/* ── Stats Cards ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-bottom:20px}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;text-align:center;cursor:pointer;
+  transition:all .25s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--cat-color,var(--accent));opacity:0;transition:opacity .25s;
+}
+.stat-card:hover{transform:translateY(-2px);border-color:var(--cat-color,var(--accent));
+  box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.stat-card:hover::before{opacity:1}
+.stat-card.active{border-color:var(--cat-color,var(--accent));background:rgba(96,165,250,.05)}
+.stat-card.active::before{opacity:1}
+.stat-card .num{font-size:24px;font-weight:800;line-height:1.2;color:var(--cat-color,var(--accent))}
+.stat-card .label{font-size:11px;color:var(--text2);margin-top:2px;white-space:nowrap}
+
+/* ── Controls ── */
+.controls{
+  display:flex;gap:10px;margin-bottom:20px;align-items:center;
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,14,23,.85);backdrop-filter:blur(12px);
+  padding:12px 4px;margin-left:-4px;margin-right:-4px;
+  border-bottom:1px solid var(--border);
+}
+.search-wrap{flex:1;position:relative;min-width:160px}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);width:16px;height:16px}
+.search-wrap input{
+  width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:9px 12px 9px 32px;color:var(--text);font-size:14px;outline:none;
+  transition:border-color .2s;
+}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap input::placeholder{color:var(--text3)}
+select{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:9px 32px 9px 12px;color:var(--text);font-size:13px;outline:none;cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238892a4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  transition:border-color .2s;
+}
+select:focus{border-color:var(--accent)}
+
+/* ── Sections ── */
+.section{margin-bottom:28px}
+.section-header{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0 8px;cursor:pointer;
+  border-bottom:1px solid var(--border);margin-bottom:12px;
+}
+.section-header .section-icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;background:var(--card);border:1px solid var(--border);
+  flex-shrink:0;
+}
+.section-header .section-label{font-size:16px;font-weight:600;flex:1}
+.section-header .section-count{
+  font-size:12px;background:var(--card);padding:3px 10px;
+  border-radius:12px;color:var(--text2);border:1px solid var(--border);
+}
+.section-header .collapse-icon{
+  color:var(--text3);transition:transform .2s;font-size:14px;
+}
+.section.collapsed .collapse-icon{transform:rotate(-90deg)}
+.section.collapsed .section-body{display:none}
+
+/* ── Post Cards ── */
+.post-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:10px;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.post-card:hover{
+  border-color:rgba(96,165,250,.4);
+  background:var(--card-hover);
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+  transform:translateX(2px);
+}
+.post-card.claude-card{border-left:3px solid var(--claude)}
+.post-card.alert-card{border-left:3px solid var(--alert)}
+.post-card.new-card{border-left:3px solid var(--new)}
+
+/* Card Inner */
+.post-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px}
+.post-title{
+  color:var(--text);text-decoration:none;font-size:15px;font-weight:500;
+  line-height:1.45;flex:1;display:block;transition:color .15s;
+}
+.post-title:hover{color:var(--accent)}
+.post-title:visited{color:var(--text2)}
+
+/* Badges */
+.badge{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600;white-space:nowrap;letter-spacing:.3px;text-transform:uppercase}
+.badge-alert{background:rgba(239,68,68,.15);color:#fca5a5}
+.badge-new{background:rgba(52,211,153,.15);color:#6ee7b7}
+.badge-claude{background:rgba(245,158,11,.15);color:#fcd34d}
+.badge-commented{
+  background:rgba(96,165,250,.12);color:#93c5fd;font-size:10px;
+  padding:2px 8px;border-radius:4px;font-weight:500;
+  display:inline-flex;align-items:center;gap:3px;
+}
+
+/* Score Badge */
+.score-badge{
+  position:absolute;top:12px;right:14px;
+  font-size:11px;font-weight:700;color:var(--accent2);
+  background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.2);
+  padding:2px 8px;border-radius:6px;
+}
+
+/* AI Insight */
+.ai-insight{
+  margin-top:8px;padding:8px 12px;border-radius:8px;
+  background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12);
+}
+.ai-stars{display:flex;align-items:center;gap:2px;margin-bottom:3px;flex-wrap:wrap}
+.ai-star{font-size:12px}
+.ai-star.filled{color:#fbbf24}
+.ai-star.empty{color:var(--text3)}
+.ai-comment{font-size:12px;color:#c4b5fd;line-height:1.4;font-style:italic}
+.ai-label{font-size:10px;color:var(--text3);margin-right:6px;font-style:normal;font-weight:600}
+.ai-sentiment{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px}
+.ai-sentiment.positive{background:rgba(52,211,153,.15);color:#6ee7b7}
+.ai-sentiment.negative{background:rgba(239,68,68,.15);color:#fca5a5}
+.ai-sentiment.neutral{background:rgba(148,163,184,.1);color:#94a3b8}
+.ai-action{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px}
+.ai-action.act{background:rgba(245,158,11,.15);color:#fcd34d}
+.ai-action.watch{background:rgba(96,165,250,.12);color:#93c5fd}
+.ai-deep-toggle{
+  font-size:11px;color:var(--accent);cursor:pointer;margin-top:6px;
+  display:inline-flex;align-items:center;gap:4px;
+  opacity:.8;transition:opacity .2s;user-select:none;
+}
+.ai-deep-toggle:hover{opacity:1}
+.ai-deep-toggle .arrow{transition:transform .2s;display:inline-block;font-size:10px}
+.ai-deep-toggle.expanded .arrow{transform:rotate(90deg)}
+.ai-deep-content{
+  display:none;margin-top:6px;padding:8px 10px;border-radius:6px;
+  background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.1);
+  font-size:12px;color:#a5b4fc;line-height:1.55;
+}
+.ai-deep-content.visible{display:block}
+.ai-impact-tag{
+  display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;
+  background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.15);
+  color:#f9a8d4;margin-top:6px;line-height:1.4;
+}
+.ai-impact-tag::before{content:"📊 ";font-style:normal}
+
+.post-summary{
+  color:var(--text2);font-size:13px;margin:6px 0 8px;line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.post-meta{display:flex;gap:6px;flex-wrap:wrap;font-size:12px;align-items:center}
+.source-tag{
+  background:rgba(96,165,250,.08);color:var(--accent);padding:2px 8px;
+  border-radius:4px;font-size:11px;font-weight:500;
+  border:1px solid rgba(96,165,250,.15);
+}
+.meta-dot{color:var(--text3);font-size:10px}
+.meta-item{color:var(--text3);white-space:nowrap}
+.meta-item:hover{color:var(--text2)}
+
+/* ── Comment Button ── */
+.comment-btn-wrap{display:flex;justify-content:flex-end;margin-top:8px}
+.comment-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:8px;
+  background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);
+  color:var(--accent);font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .2s;user-select:none;
+}
+.comment-btn:hover{
+  background:rgba(96,165,250,.15);border-color:var(--accent);
+  transform:translateY(-1px);
+}
+.comment-btn svg{width:14px;height:14px}
+
+/* ── Dialogue Bubbles (inside card) ── */
+.dialogue{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.bubble{
+  max-width:85%;padding:8px 12px;border-radius:10px;
+  font-size:12px;line-height:1.5;position:relative;
+  animation:bubbleIn .3s ease both;
+}
+.bubble-ai{
+  align-self:flex-start;
+  background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);
+  color:#c4b5fd;border-bottom-left-radius:3px;
+}
+.bubble-user{
+  align-self:flex-end;
+  background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);
+  color:#93c5fd;border-bottom-right-radius:3px;
+}
+.bubble-label{
+  font-size:10px;font-weight:600;margin-bottom:3px;opacity:.7;
+}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Slide-in Panel ── */
+.panel-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.5);z-index:200;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.panel-overlay.open{opacity:1;pointer-events:auto}
+
+.comment-panel{
+  position:fixed;top:0;right:0;bottom:0;width:370px;max-width:100vw;
+  background:var(--bg);border-left:1px solid var(--border);
+  z-index:201;transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-8px 0 32px rgba(0,0,0,.4);
+}
+.comment-panel.open{transform:translateX(0)}
+
+.panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.panel-header .panel-title{
+  font-size:14px;font-weight:600;color:var(--text);
+  flex:1;margin-right:12px;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.panel-close{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;font-size:18px;flex-shrink:0;
+}
+.panel-close:hover{background:var(--alert);color:#fff;border-color:var(--alert)}
+
+.panel-body{flex:1;overflow-y:auto;padding:18px}
+
+/* Star Rating */
+.rating-section{margin-bottom:16px}
+.rating-label{font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500}
+.star-rating{display:flex;gap:4px}
+.star-btn{
+  width:32px;height:32px;border:1px solid var(--border);border-radius:6px;
+  background:var(--card);cursor:pointer;font-size:18px;color:var(--text3);
+  transition:all .15s;display:flex;align-items:center;justify-content:center;
+}
+.star-btn:hover{border-color:var(--accent);color:#fbbf24}
+.star-btn.active{color:#fbbf24;background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3)}
+
+/* Stance Selector */
+.stance-section{margin-bottom:16px}
+.stance-label{font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500}
+.stance-group{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.stance-btn{
+  flex:1;padding:8px 12px;text-align:center;
+  background:var(--card);color:var(--text2);font-size:13px;font-weight:500;
+  cursor:pointer;transition:all .2s;border:none;
+}
+.stance-btn:not(:last-child){border-right:1px solid var(--border)}
+.stance-btn:hover{background:var(--card-hover);color:var(--text)}
+.stance-btn.active-agree{background:rgba(52,211,153,.15);color:#6ee7b7;font-weight:600}
+.stance-btn.active-neutral{background:rgba(148,163,184,.1);color:#94a3b8;font-weight:600}
+.stance-btn.active-disagree{background:rgba(239,68,68,.15);color:#fca5a5;font-weight:600}
+
+/* Textarea */
+.comment-section{margin-bottom:16px}
+.comment-section label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block;font-weight:500}
+.comment-textarea{
+  width:100%;min-height:100px;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;
+  line-height:1.5;resize:vertical;outline:none;transition:border-color .2s;
+  font-family:inherit;
+}
+.comment-textarea:focus{border-color:var(--accent)}
+.comment-textarea::placeholder{color:var(--text3)}
+
+/* Tags Input */
+.tags-section{margin-bottom:20px}
+.tags-section label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block;font-weight:500}
+.tags-input{
+  width:100%;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;
+  outline:none;transition:border-color .2s;font-family:inherit;
+}
+.tags-input:focus{border-color:var(--accent)}
+.tags-input::placeholder{color:var(--text3)}
+
+/* Submit */
+.submit-btn{
+  width:100%;padding:10px 16px;border-radius:8px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-size:14px;font-weight:600;cursor:pointer;
+  transition:all .2s;
+}
+.submit-btn:hover{opacity:.9;transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* AI Reply in Panel */
+.panel-reply{
+  margin-top:16px;padding:12px;border-radius:10px;
+  background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.15);
+  animation:bubbleIn .4s ease both;
+}
+.panel-reply .reply-label{
+  font-size:10px;font-weight:600;color:var(--purple);margin-bottom:6px;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.panel-reply .reply-text{font-size:13px;color:#c4b5fd;line-height:1.6}
+
+/* ── Back to Top ── */
+.back-top{
+  position:fixed;bottom:24px;right:24px;width:40px;height:40px;
+  border-radius:50%;background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;transform:translateY(10px);
+  transition:all .3s;z-index:99;color:var(--text2);font-size:18px;
+  box-shadow:var(--shadow);
+}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ── Empty State ── */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px}
+.empty-state .icon{font-size:32px;margin-bottom:8px}
+
+/* ── Footer ── */
+.footer{
+  margin-top:40px;padding:20px 0;border-top:1px solid var(--border);
+  color:var(--text3);font-size:12px;text-align:center;
+}
+.footer a{color:var(--accent);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ── Animations ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.post-card{animation:fadeIn .3s ease both}
+
+/* ── Toast Notification ── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--card);border:1px solid var(--border);
+  padding:10px 20px;border-radius:10px;font-size:13px;
+  color:var(--text);z-index:300;opacity:0;pointer-events:none;
+  box-shadow:var(--shadow);transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:var(--new)}
+.toast.error{border-color:var(--alert)}
+
+/* ── Mobile ── */
+@media(max-width:640px){
+  body{padding:0 12px 40px}
+  .header h1{font-size:22px}
+  .stats{grid-template-columns:repeat(4,1fr);gap:6px}
+  .stat-card{padding:10px 8px}
+  .stat-card .num{font-size:18px}
+  .controls{flex-direction:column;gap:8px}
+  .search-wrap{width:100%}
+  .post-card{padding:12px 14px}
+  .post-meta{font-size:11px;gap:4px}
+  .back-top{bottom:16px;right:16px}
+  .comment-panel{width:100vw}
+  .profile-bar{padding:10px 12px}
+  .score-badge{top:10px;right:10px;font-size:10px;padding:1px 6px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>{{ report_title }}</h1>
+  <div class="subtitle">
+    <span>更新: {{ now_str }}</span>
+    <span class="sep">·</span>
+    <span>共 {{ total }} 条动态</span>
+    <span class="sep">·</span>
+    <span>已分析 {{ stats.get('analyzed_posts', stats.get('total_posts', 0)) }} / {{ stats.get('total_posts', total) }} 篇</span>
+  </div>
+</div>
+
+<!-- Mode Tabs -->
+<div class="mode-tabs">
+  <div class="mode-tab {{ 'active' if mode == 'for_you' else '' }}" onclick="switchMode('for_you')">
+    <span class="tab-icon">&#127919;</span>我的视角
+  </div>
+  <div class="mode-tab {{ 'active' if mode == 'mainstream' else '' }}" onclick="switchMode('mainstream')">
+    <span class="tab-icon">&#128225;</span>大众视角
+  </div>
+</div>
+
+<!-- User Profile Bar -->
+{% if profile %}
+<div class="profile-bar">
+  <span class="profile-label">&#128100; 你的画像</span>
+  {% for kw in profile[:12] %}
+  <span class="profile-keyword">
+    {% if kw.get('sentiment_bias') %}
+    <span class="bias-dot bias-{{ kw.sentiment_bias }}"></span>
+    {% endif %}
+    {{ kw.keyword }}
+    <span class="weight-bar" style="width:{{ (kw.weight | int) * 3 + 8 }}px"></span>
+  </span>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Stats Cards -->
+<div class="stats" id="statsBar">
+{% for cat_id in category_order %}
+{% set cat_info = categories.get(cat_id, {}) %}
+{% set cat_posts = sections.get(cat_id, []) %}
+  <div class="stat-card" style="--cat-color:{{ cat_info.get('color', '#60a5fa') }}" data-cat="{{ cat_id }}" onclick="clickStat('{{ cat_id }}')">
+    <div class="num">{{ cat_posts | length }}</div>
+    <div class="label">{{ cat_info.get('emoji', '') }} {{ cat_info.get('label', cat_id) }}</div>
+  </div>
+{% endfor %}
+</div>
+
+<!-- Controls Bar -->
+<div class="controls">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="搜索标题、标签、来源..." oninput="applyFilters()">
+  </div>
+  <select id="sortSelect" onchange="applySort()">
+    <option value="time">按时间排序</option>
+    <option value="score">按热度排序</option>
+  </select>
+</div>
+
+<!-- Sections -->
+{% for cat_id in category_order %}
+{% set cat_info = categories.get(cat_id, {}) %}
+{% set cat_posts = sections.get(cat_id, []) %}
+{% if cat_posts %}
+<div class="section" data-section="{{ cat_id }}">
+  <div class="section-header" onclick="toggleSection(this)" style="color:{{ cat_info.get('color', '#60a5fa') }}">
+    <div class="section-icon" style="border-color:{{ cat_info.get('color', '#60a5fa') }}33">{{ cat_info.get('emoji', '') }}</div>
+    <div class="section-label">{{ cat_info.get('label', cat_id) }}</div>
+    <div class="section-count">{{ cat_posts | length }} 条</div>
+    <div class="collapse-icon">&#9660;</div>
+  </div>
+  <div class="section-body">
+  {% for p in cat_posts %}
+  <div class="post-card {{ 'claude-card' if p.get('is_claude') else '' }} {{ 'alert-card' if p.get('is_alert') else '' }} {{ 'new-card' if p.get('is_new') and not p.get('is_alert') else '' }}"
+       id="card-{{ p.uid }}"
+       data-tags="{{ (p.tags | join(',') if p.tags is iterable and p.tags is not string else p.tags | default('')) | lower }}"
+       data-time="{{ p.published_at | default('') }}"
+       data-score="{{ p.engagement_score | default(0) }}"
+       data-claude="{{ 'true' if p.get('is_claude') else 'false' }}"
+       data-cat="{{ p.category | default('') }}"
+       data-source="{{ p.sources | default('') }}"
+       style="animation-delay:{{ loop.index * 20 }}ms">
+
+    {% if p.get('final_score') %}
+    <div class="score-badge">{{ p.final_score }}</div>
+    {% endif %}
+
+    <div class="post-top">
+      <a href="{{ p.url }}" target="_blank" rel="noopener noreferrer" class="post-title">{{ p.title }}</a>
+      {% if p.get('is_alert') %}<span class="badge badge-alert">ALERT</span>{% endif %}
+      {% if p.get('is_new') and not p.get('is_alert') %}<span class="badge badge-new">NEW</span>{% endif %}
+      {% if p.get('is_claude') and p.category != 'claude' %}<span class="badge badge-claude">CLAUDE</span>{% endif %}
+      {% if p.get('user_comment_count', 0) | int > 0 %}
+      <span class="badge badge-commented">&#9998; 已评 &#9733;{{ p.get('avg_user_rating', 0) | int }}</span>
+      {% endif %}
+    </div>
+
+    {% if p.summary %}
+    <div class="post-summary">{{ p.summary }}</div>
+    {% endif %}
+
+    <div class="post-meta">
+      {% if p.get('source_name') %}
+      <span class="source-tag">{{ p.source_name }}</span>
+      {% elif p.sources %}
+      {% for src in p.sources %}
+      <span class="source-tag">{{ src }}</span>
+      {% endfor %}
+      {% endif %}
+      {% if p.get('author') %}<span class="meta-dot">&#183;</span><span class="meta-item">{{ p.author }}</span>{% endif %}
+      <span class="meta-dot">&#183;</span><span class="meta-item">{{ p.published_at }}</span>
+      {% if p.get('engagement_score') %}<span class="meta-dot">&#183;</span><span class="meta-item">热度 {{ p.engagement_score }}</span>{% endif %}
+    </div>
+
+    {% if p.get('ai_rating') %}
+    <div class="ai-insight">
+      <div class="ai-stars">
+        <span class="ai-label">AI</span>
+        {% for i in range(5) %}
+        <span class="ai-star {{ 'filled' if i < p.ai_rating else 'empty' }}">&#9733;</span>
+        {% endfor %}
+        {% if p.get('ai_sentiment') %}
+        <span class="ai-sentiment {{ p.ai_sentiment }}">{{ '&#21033;&#22909;' if p.ai_sentiment == 'positive' else ('&#39118;&#38500;' if p.ai_sentiment == 'negative' else '&#20013;&#24615;') }}</span>
+        {% endif %}
+        {% if p.get('ai_action') and p.ai_action != 'skip' %}
+        <span class="ai-action {{ p.ai_action }}">{{ '&#31435;&#21363;&#34892;&#21160;' if p.ai_action == 'act' else '&#25345;&#32493;&#20851;&#27880;' }}</span>
+        {% endif %}
+      </div>
+      {% if p.get('ai_comment') %}
+      <div class="ai-comment">{{ p.ai_comment }}</div>
+      {% endif %}
+      {% if p.get('deep_comment') %}
+      <div class="ai-deep-toggle" onclick="toggleDeep(this)">
+        <span class="arrow">&#9654;</span> 深度观点
+      </div>
+      <div class="ai-deep-content">{{ p.deep_comment }}</div>
+      {% endif %}
+      {% if p.get('industry_impact') %}
+      <div class="ai-impact-tag">{{ p.industry_impact }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Dialogue: existing user/AI comments -->
+    <div class="dialogue" id="dialogue-{{ p.uid }}"></div>
+
+    <!-- Add Comment Button -->
+    <div class="comment-btn-wrap">
+      <button class="comment-btn" onclick="openPanel('{{ p.uid }}', {{ p.title | tojson }})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        添加观点
+      </button>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+
+<!-- Back to Top -->
+<div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<!-- Panel Overlay -->
+<div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+
+<!-- Comment Slide-in Panel -->
+<div class="comment-panel" id="commentPanel">
+  <div class="panel-header">
+    <div class="panel-title" id="panelTitle"></div>
+    <button class="panel-close" onclick="closePanel()">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <!-- Star Rating -->
+    <div class="rating-section">
+      <div class="rating-label">评分</div>
+      <div class="star-rating" id="starRating">
+        <button class="star-btn" data-star="1" onclick="setRating(1)">&#9733;</button>
+        <button class="star-btn" data-star="2" onclick="setRating(2)">&#9733;</button>
+        <button class="star-btn" data-star="3" onclick="setRating(3)">&#9733;</button>
+        <button class="star-btn" data-star="4" onclick="setRating(4)">&#9733;</button>
+        <button class="star-btn" data-star="5" onclick="setRating(5)">&#9733;</button>
+      </div>
+    </div>
+
+    <!-- Stance Selector -->
+    <div class="stance-section">
+      <div class="stance-label">立场</div>
+      <div class="stance-group">
+        <button class="stance-btn" data-stance="agree" onclick="setStance('agree')">赞同</button>
+        <button class="stance-btn" data-stance="neutral" onclick="setStance('neutral')">中立</button>
+        <button class="stance-btn" data-stance="disagree" onclick="setStance('disagree')">反对</button>
+      </div>
+    </div>
+
+    <!-- Comment Textarea -->
+    <div class="comment-section">
+      <label>观点</label>
+      <textarea class="comment-textarea" id="commentText" placeholder="写下你的观点、判断..."></textarea>
+    </div>
+
+    <!-- Tags Input -->
+    <div class="tags-section">
+      <label>标签</label>
+      <input type="text" class="tags-input" id="tagsInput" placeholder="标签，逗号分隔">
+    </div>
+
+    <!-- Submit -->
+    <button class="submit-btn" id="submitBtn" onclick="submitComment()">提交观点</button>
+
+    <!-- AI Reply Area -->
+    <div id="aiReplyArea"></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  {{ report_title }} v4 · 交互式情报中心 · 数据归各社区所有
+</div>
+
+<script>
+// ── State ──
+var activeCat = 'all';
+var panelUid = '';
+var panelRating = 0;
+var panelStance = '';
+
+// ── Mode Switching ──
+function switchMode(mode) {
+  var url = new URL(window.location);
+  url.searchParams.set('mode', mode);
+  window.location.href = url.toString();
+}
+
+// ── Category Filter ──
+function clickStat(cat) {
+  if (activeCat === cat) {
+    activeCat = 'all';
+    document.querySelectorAll('.stat-card').forEach(function(c) { c.classList.remove('active'); });
+  } else {
+    activeCat = cat;
+    document.querySelectorAll('.stat-card').forEach(function(c) {
+      c.classList.toggle('active', c.dataset.cat === cat);
+    });
+  }
+  applyFilters();
+  if (activeCat !== 'all') {
+    var sec = document.querySelector('.section[data-section="' + cat + '"]');
+    if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+// ── Filters ──
+function applyFilters() {
+  var searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.post-card').forEach(function(card) {
+    var title = card.querySelector('.post-title').textContent.toLowerCase();
+    var tags = card.dataset.tags;
+    var cat = card.dataset.cat;
+    var sources = card.dataset.source;
+    var show = true;
+
+    if (activeCat !== 'all' && cat !== activeCat) show = false;
+    if (searchQuery) {
+      var match = title.includes(searchQuery) || tags.includes(searchQuery) || sources.toLowerCase().includes(searchQuery);
+      if (!match) show = false;
+    }
+
+    card.style.display = show ? '' : 'none';
+  });
+
+  document.querySelectorAll('.section').forEach(function(sec) {
+    var cards = sec.querySelectorAll('.post-card');
+    var visible = false;
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].style.display !== 'none') { visible = true; break; }
+    }
+    sec.style.display = visible ? '' : 'none';
+  });
+}
+
+// ── Sort ──
+function applySort() {
+  var mode = document.getElementById('sortSelect').value;
+  document.querySelectorAll('.section-body').forEach(function(body) {
+    var cards = Array.from(body.querySelectorAll('.post-card'));
+    cards.sort(function(a, b) {
+      if (mode === 'time') return (b.dataset.time || '').localeCompare(a.dataset.time || '');
+      return parseInt(b.dataset.score || 0) - parseInt(a.dataset.score || 0);
+    });
+    cards.forEach(function(c) { body.appendChild(c); });
+  });
+}
+
+// ── Collapse ──
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('collapsed');
+}
+
+// ── Deep Comment ──
+function toggleDeep(el) {
+  el.classList.toggle('expanded');
+  var content = el.nextElementSibling;
+  if (content) content.classList.toggle('visible');
+}
+
+// ── Back to Top ──
+window.addEventListener('scroll', function() {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── Panel Open/Close ──
+function openPanel(uid, title) {
+  panelUid = uid;
+  panelRating = 0;
+  panelStance = '';
+  document.getElementById('panelTitle').textContent = title;
+  document.getElementById('commentText').value = '';
+  document.getElementById('tagsInput').value = '';
+  document.getElementById('aiReplyArea').innerHTML = '';
+  setRating(0);
+  clearStance();
+  document.getElementById('panelOverlay').classList.add('open');
+  document.getElementById('commentPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Load existing comments
+  loadDialogue(uid);
+}
+
+function closePanel() {
+  document.getElementById('panelOverlay').classList.remove('open');
+  document.getElementById('commentPanel').classList.remove('open');
+  document.body.style.overflow = '';
+  panelUid = '';
+}
+
+// ── Star Rating ──
+function setRating(n) {
+  panelRating = n;
+  document.querySelectorAll('.star-btn').forEach(function(btn) {
+    var star = parseInt(btn.dataset.star);
+    btn.classList.toggle('active', star <= n);
+  });
+}
+
+// ── Stance ──
+function setStance(s) {
+  panelStance = s;
+  document.querySelectorAll('.stance-btn').forEach(function(btn) {
+    btn.classList.remove('active-agree', 'active-neutral', 'active-disagree');
+    if (btn.dataset.stance === s) {
+      btn.classList.add('active-' + s);
+    }
+  });
+}
+
+function clearStance() {
+  panelStance = '';
+  document.querySelectorAll('.stance-btn').forEach(function(btn) {
+    btn.classList.remove('active-agree', 'active-neutral', 'active-disagree');
+  });
+}
+
+// ── Submit Comment ──
+function submitComment() {
+  if (!panelUid) return;
+  if (panelRating === 0) { showToast('请先评分', 'error'); return; }
+  if (!panelStance) { showToast('请选择立场', 'error'); return; }
+
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '提交中...';
+
+  var data = {
+    post_uid: panelUid,
+    user_rating: panelRating,
+    user_comment: document.getElementById('commentText').value.trim(),
+    user_tags: document.getElementById('tagsInput').value.trim(),
+    stance: panelStance
+  };
+
+  fetch('/api/comments', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(result) {
+    btn.disabled = false;
+    btn.textContent = '提交观点';
+    if (result.ok) {
+      showToast('观点已提交', 'success');
+
+      // Show AI reply if available
+      if (result.ai_reply) {
+        var replyArea = document.getElementById('aiReplyArea');
+        replyArea.innerHTML = '<div class="panel-reply">' +
+          '<div class="reply-label">AI 回应</div>' +
+          '<div class="reply-text">' + escapeHtml(result.ai_reply) + '</div>' +
+          '</div>';
+
+        // Also add to inline dialogue
+        var dialogue = document.getElementById('dialogue-' + panelUid);
+        if (dialogue) {
+          dialogue.innerHTML += buildBubble('user', data.user_comment || '(' + panelStance + ')');
+          dialogue.innerHTML += buildBubble('ai', result.ai_reply);
+        }
+      }
+
+      // Update badge on card
+      updateCardBadge(panelUid, panelRating);
+
+      // Clear form
+      document.getElementById('commentText').value = '';
+      document.getElementById('tagsInput').value = '';
+      setRating(0);
+      clearStance();
+    } else {
+      showToast(result.error || '提交失败', 'error');
+    }
+  })
+  .catch(function(err) {
+    btn.disabled = false;
+    btn.textContent = '提交观点';
+    showToast('网络错误', 'error');
+    console.error(err);
+  });
+}
+
+// ── Load Dialogue for a Post ──
+function loadDialogue(uid) {
+  fetch('/api/comments/' + encodeURIComponent(uid))
+    .then(function(res) { return res.json(); })
+    .then(function(result) {
+      if (!result.ok) return;
+      var dialogue = document.getElementById('dialogue-' + uid);
+      if (!dialogue) return;
+
+      var html = '';
+      var comments = result.comments || [];
+      var replies = result.replies || [];
+
+      // Interleave: comments first, then pair each with its reply
+      var maxLen = Math.max(comments.length, replies.length);
+      for (var i = 0; i < comments.length; i++) {
+        var c = comments[i];
+        html += buildBubble('user', (c.comment || '') + (c.stance ? ' [' + c.stance + ']' : ''));
+        // Find matching reply
+        for (var j = 0; j < replies.length; j++) {
+          if (replies[j].comment_id === c.id) {
+            html += buildBubble('ai', replies[j].reply_text);
+            break;
+          }
+        }
+      }
+
+      dialogue.innerHTML = html;
+    })
+    .catch(function(err) { console.error('Load dialogue error:', err); });
+}
+
+// ── Build Chat Bubble HTML ──
+function buildBubble(type, text) {
+  var cls = type === 'ai' ? 'bubble-ai' : 'bubble-user';
+  var label = type === 'ai' ? 'AI' : '你';
+  return '<div class="bubble ' + cls + '">' +
+    '<div class="bubble-label">' + label + '</div>' +
+    '<div>' + escapeHtml(text) + '</div>' +
+    '</div>';
+}
+
+// ── Update Card Badge After Comment ──
+function updateCardBadge(uid, rating) {
+  var card = document.getElementById('card-' + uid);
+  if (!card) return;
+  var top = card.querySelector('.post-top');
+  if (!top) return;
+
+  // Check if badge already exists
+  var existing = top.querySelector('.badge-commented');
+  if (existing) {
+    // Update count
+    var match = existing.textContent.match(/\d+/);
+    var count = match ? parseInt(match[0]) : 0;
+    existing.innerHTML = '&#9998; 已评 &#9733;' + rating;
+  } else {
+    var badge = document.createElement('span');
+    badge.className = 'badge badge-commented';
+    badge.innerHTML = '&#9998; 已评 &#9733;' + rating;
+    top.appendChild(badge);
+  }
+}
+
+// ── Toast ──
+function showToast(msg, type) {
+  var toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast ' + (type || '') + ' show';
+  setTimeout(function() {
+    toast.className = 'toast';
+  }, 2500);
+}
+
+// ── HTML Escape ──
+function escapeHtml(str) {
+  if (!str) return '';
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+// ── Close panel on Escape key ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePanel();
+});
+
+// ── Load dialogues for cards with existing comments ──
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.badge-commented').forEach(function(badge) {
+    var card = badge.closest('.post-card');
+    if (!card) return;
+    var uid = card.id.replace('card-', '');
+    if (uid) loadDialogue(uid);
+  });
+});
+</script>
+</body>
+</html>
