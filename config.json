@@ -179,9 +179,18 @@
     {
       "id": "juejin",
       "name": "掘金 AI",
-      "enabled": true,
+      "enabled": false,
       "type": "rss",
       "url": "https://rsshub.app/juejin/tag/AI",
+      "max_items": 15
+    },
+    {
+      "id": "36kr_ai",
+      "name": "36kr AI",
+      "enabled": true,
+      "type": "rss",
+      "url": "https://36kr.com/feed",
+      "filter_keywords": ["AI", "人工智能", "大模型", "GPT", "Claude", "deepseek"],
       "max_items": 15
     }
   ],

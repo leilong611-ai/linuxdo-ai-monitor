@@ -80,9 +80,12 @@ def render_report(briefing):
     for cat_posts in sections.values():
         for p in cat_posts:
             p.time_ago = time_ago(p.published_at)
-            ai = ai_data.get(p.uid, {})
-            p.ai_rating = ai.get("rating")
-            p.ai_comment = ai.get("comment", "")
+            # 仅当 Post 没有自己的 AI 分析时才从旧数据回填
+            if not getattr(p, 'ai_rating', None):
+                ai = ai_data.get(p.uid, {})
+                if ai.get("rating"):
+                    p.ai_rating = ai.get("rating")
+                    p.ai_comment = ai.get("comment", "")
 
     context = {
         "report_title": "AI 情报雷达",
@@ -148,7 +151,17 @@ def archive_daily(briefing):
         "posts": [],
     }
     for p in briefing.all_posts:
+        # Prefer Post object's own AI analysis, fall back to existing_ai
         ai = existing_ai.get(p.uid, {})
+        if hasattr(p, 'ai_rating') and p.ai_rating:
+            ai = {
+                "ai_rating": p.ai_rating,
+                "ai_comment": getattr(p, 'ai_comment', ''),
+                "ai_sentiment": getattr(p, 'ai_sentiment', 'neutral'),
+                "ai_action": getattr(p, 'ai_action', 'skip'),
+                "deep_comment": getattr(p, 'deep_comment', ''),
+                "industry_impact": getattr(p, 'industry_impact', ''),
+            }
         api_data["posts"].append({
             "uid": p.uid,
             "title": p.title,
@@ -165,6 +178,10 @@ def archive_daily(briefing):
             "published_at": p.published_at.isoformat() if p.published_at else "",
             "ai_rating": ai.get("ai_rating"),
             "ai_comment": ai.get("ai_comment", ""),
+            "ai_sentiment": ai.get("ai_sentiment", "neutral"),
+            "ai_action": ai.get("ai_action", "skip"),
+            "deep_comment": ai.get("deep_comment", ""),
+            "industry_impact": ai.get("industry_impact", ""),
         })
     with open(api_path, "w", encoding="utf-8") as f:
         json.dump(api_data, f, ensure_ascii=False, indent=2, default=str)

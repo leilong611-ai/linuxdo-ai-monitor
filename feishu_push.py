@@ -61,7 +61,16 @@ def push_daily_briefing(briefing):
             ta = time_ago(p.published_at)
             alert_flag = " ⚠️" if p.is_alert else ""
             new_flag = " 🆕" if p.is_new else ""
-            lines.append(f"- [{p.title}]({p.url}) `{src_str}` `{ta}` ⭐{p.engagement_score}{alert_flag}{new_flag}")
+
+            # AI 评分标签
+            ai_tag = ""
+            if hasattr(p, 'ai_rating') and p.ai_rating:
+                stars = "★" * p.ai_rating + "☆" * (5 - p.ai_rating)
+                ai_tag = f" `{stars}`"
+                if hasattr(p, 'ai_comment') and p.ai_comment:
+                    ai_tag += f" _{p.ai_comment}_"
+
+            lines.append(f"- [{p.title}]({p.url}) `{src_str}` `{ta}` ⭐{p.engagement_score}{ai_tag}{alert_flag}{new_flag}")
 
         lines.append("")
 

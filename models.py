@@ -38,6 +38,14 @@ class Post:
     tags: list = field(default_factory=list)
     language: str = "zh"            # zh | en | mixed
 
+    # AI 分析（正式字段）
+    ai_rating: int = 0              # 1-5 星
+    ai_sentiment: str = ""          # positive/neutral/negative
+    ai_comment: str = ""            # 15-30 字短评
+    ai_action: str = ""             # act/watch/skip
+    deep_comment: str = ""          # 100-200 字深度观点
+    industry_impact: str = ""       # 50-100 字行业影响
+
     def to_dict(self):
         return {
             "uid": self.uid,
@@ -57,6 +65,12 @@ class Post:
             "author": self.author,
             "tags": self.tags,
             "language": self.language,
+            "ai_rating": self.ai_rating,
+            "ai_sentiment": self.ai_sentiment,
+            "ai_comment": self.ai_comment,
+            "ai_action": self.ai_action,
+            "deep_comment": self.deep_comment,
+            "industry_impact": self.industry_impact,
         }
 
 

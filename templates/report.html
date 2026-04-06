@@ -179,6 +179,27 @@ select:focus{border-color:var(--accent)}
 .ai-action{font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600;margin-left:4px}
 .ai-action.act{background:rgba(245,158,11,.15);color:#fcd34d}
 .ai-action.watch{background:rgba(96,165,250,.12);color:#93c5fd}
+/* Deep Comment */
+.ai-deep-toggle{
+  font-size:11px;color:var(--accent);cursor:pointer;margin-top:6px;
+  display:inline-flex;align-items:center;gap:4px;
+  opacity:.8;transition:opacity .2s;user-select:none;
+}
+.ai-deep-toggle:hover{opacity:1}
+.ai-deep-toggle .arrow{transition:transform .2s;display:inline-block;font-size:10px}
+.ai-deep-toggle.expanded .arrow{transform:rotate(90deg)}
+.ai-deep-content{
+  display:none;margin-top:6px;padding:8px 10px;border-radius:6px;
+  background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.1);
+  font-size:12px;color:#a5b4fc;line-height:1.55;
+}
+.ai-deep-content.visible{display:block}
+.ai-impact-tag{
+  display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;
+  background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.15);
+  color:#f9a8d4;margin-top:6px;line-height:1.4;
+}
+.ai-impact-tag::before{content:"📊 ";font-style:normal}
 
 .post-summary{
   color:var(--text2);font-size:13px;margin:6px 0 8px;line-height:1.5;
@@ -347,6 +368,15 @@ select:focus{border-color:var(--accent)}
       {% if p.ai_comment %}
       <div class="ai-comment">{{ p.ai_comment }}</div>
       {% endif %}
+      {% if p.deep_comment %}
+      <div class="ai-deep-toggle" onclick="toggleDeep(this)">
+        <span class="arrow">▶</span> 深度观点
+      </div>
+      <div class="ai-deep-content">{{ p.deep_comment }}</div>
+      {% endif %}
+      {% if p.industry_impact %}
+      <div class="ai-impact-tag">{{ p.industry_impact }}</div>
+      {% endif %}
     </div>
     {% endif %}
   </div>
@@ -454,6 +484,20 @@ function applySort() {
 // ── Collapse sections ──
 function toggleSection(header) {
   header.closest('.section').classList.toggle('collapsed');
+}
+
+// ── Toggle deep comment expand ──
+function toggleDeep(el) {
+  el.classList.toggle('expanded');
+  var content = el.nextElementSibling;
+  if (content) content.classList.toggle('visible');
+}
+
+// ── Toggle deep comment ──
+function toggleDeep(el) {
+  const content = el.nextElementSibling;
+  el.classList.toggle('expanded');
+  content.classList.toggle('visible');
 }
 
 // ── Back to top button ──

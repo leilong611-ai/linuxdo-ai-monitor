@@ -4,7 +4,6 @@ AI 情报雷达 V3 - 多源监控入口
 """
 
 import sys
-import time
 
 # 导入所有数据源模块（触发注册）
 import sources.linuxdo
@@ -20,17 +19,21 @@ import sources.juejin
 
 from config import load_config
 from sources import get_enabled_sources
-from classifier import classify_all, build_sections
+from classifier import classify_all, CATEGORY_KEYWORDS
 from dedup import deduplicate
 from summary import extract_summary
 from report import build_briefing, render_report
 from models import SourceStatus
+from database import init_db, upsert_posts, enrich_posts_from_db, get_db_stats
 
 
 def main():
     print("=" * 50)
     print("  AI 情报雷达 V3")
     print("=" * 50)
+
+    # 初始化数据库
+    init_db()
 
     config = load_config()
 
@@ -77,6 +80,10 @@ def main():
     for p in posts:
         p.summary = extract_summary(p.title, p.excerpt)
 
+    # 写入数据库（增量更新）
+    db_count = upsert_posts(posts)
+    print(f"   💾 数据库: {db_count} 条写入")
+
     # AI 分析（如果设置了 API Key）
     print(f"\n🤖 AI 分析中...")
     try:
@@ -85,11 +92,13 @@ def main():
     except Exception as e:
         print(f"  ⚠️ 跳过 AI 分析: {e}")
 
+    # 从数据库回填 AI 评论（确保已分析帖子有数据）
+    enrich_posts_from_db(posts)
+
     # 构建简报
     briefing = build_briefing(posts, source_statuses)
 
     # 统计
-    from classifier import CATEGORY_KEYWORDS
     cat_counts = {}
     for cat_id in CATEGORY_KEYWORDS:
         cat_counts[cat_id] = len([p for p in briefing.all_posts if p.category == cat_id])
@@ -111,6 +120,10 @@ def main():
         push_daily_briefing(briefing)
     except Exception as e:
         print(f"  ⚠️ 飞书推送失败: {e}")
+
+    # 数据库统计
+    stats = get_db_stats()
+    print(f"\n💾 数据库累计: {stats['total_posts']} 条帖子, {stats['analyzed_posts']} 条已分析")
 
     print(f"\n✅ 完成")
 

@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """
-AI 分析器 V2 - Claude Opus 专业评分
+AI 分析器 V3 - 三层评论体系
 
-每天自动分析新闻：
-  - importance: 重要程度 1-5
-  - sentiment: 正面/中性/负面
-  - summary: 一句话专业点评
-  - action: 操作建议（是否需要关注/行动）
+通过 BigModel Anthropic 兼容接口调用 GLM-5.1：
+  base_url: https://open.bigmodel.cn/api/anthropic
+  model: glm-5.1
 
-模型: Claude Opus (最强分析能力)
+为每条新闻生成三层评论：
+  1. brief_comment: 15-30字核心判断
+  2. deep_comment: 100-200字深度观点
+  3. industry_impact: 50-100字行业影响
+  + rating 1-5, sentiment, action
 """
 
 import json
 import os
 import sys
+import subprocess
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
@@ -22,142 +25,211 @@ try:
 except ImportError:
     anthropic = None
 
-BASE_DIR = Path(__file__).resolve().parent
-API_DIR = BASE_DIR / "output" / "api"
+from database import init_db, upsert_posts, save_ai_comment, get_unanalyzed_posts, get_ai_comment
 
-# 模型选择：优先用 Opus，不可用则降级
-MODEL_PRIORITY = ["claude-opus-4-20250514", "claude-sonnet-4-20250514"]
+BASE_DIR = Path(__file__).resolve().parent
+
+MAX_POSTS_PER_BATCH = 30
+MODEL = "glm-5.1"
+BASE_URL = "https://open.bigmodel.cn/api/anthropic"
 
 TZ_CN = timezone(timedelta(hours=8))
 
 
-def get_model(client):
-    """自动选择可用的最佳模型"""
-    for model in MODEL_PRIORITY:
-        try:
-            # 尝试调用，看模型是否可用
-            return model
-        except Exception:
-            continue
-    return MODEL_PRIORITY[-1]  # 兜底用 Sonnet
+def get_api_key():
+    """获取 API Key：环境变量 > Keychain"""
+    key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if key:
+        return key
+    try:
+        result = subprocess.run(
+            ["security", "find-generic-password", "-s", "openclaw/ANTHROPIC_API_KEY", "-w"],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    except Exception:
+        pass
+    return ""
 
 
-def analyze_posts(posts, max_posts=40):
-    """对 Post 对象列表进行 AI 分析，直接修改对象属性"""
+def analyze_posts(posts):
+    """对 Post 对象列表进行三层 AI 分析"""
     if anthropic is None:
-        print("  ℹ️ anthropic 未安装，跳过 AI 分析")
+        print("  ℹ️ anthropic 包未安装，跳过 AI 分析")
         return
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    api_key = get_api_key()
     if not api_key:
-        print("  ℹ️ ANTHROPIC_API_KEY 未设置，跳过 AI 分析")
+        print("  ℹ️ API Key 未找到，跳过 AI 分析")
         return
 
-    client = anthropic.Anthropic(api_key=api_key)
-    model = get_model(client)
+    client = anthropic.Anthropic(
+        api_key=api_key,
+        base_url=BASE_URL,
+    )
 
-    # 按参与度排序，只分析前 max_posts 条
-    sorted_posts = sorted(posts, key=lambda p: getattr(p, 'engagement_score', 0), reverse=True)
-    to_analyze = sorted_posts[:max_posts]
+    # 按 engagement_score 排序，取 top N
+    scored = sorted(posts, key=lambda p: getattr(p, 'engagement_score', 0), reverse=True)
+    to_analyze = scored[:MAX_POSTS_PER_BATCH]
 
     if not to_analyze:
         return
 
-    # 构建专业的分析请求
-    items = ""
+    # 构建新闻列表
+    items_text = ""
     for i, p in enumerate(to_analyze):
-        title = getattr(p, 'title', '')
-        excerpt = getattr(p, 'excerpt', '') or getattr(p, 'summary', '')
-        source = getattr(p, 'sources', [])
+        title = getattr(p, 'title', '') or ''
+        excerpt = getattr(p, 'excerpt', '') or getattr(p, 'summary', '') or ''
+        source = getattr(p, 'sources', []) or []
         category = getattr(p, 'category', '')
         score = getattr(p, 'engagement_score', 0)
         author = getattr(p, 'author', '')
 
-        items += f"\n[{i+1}] {title}\n"
+        items_text += f"\n[{i+1}] {title}\n"
         if excerpt:
-            items += f"    摘要: {excerpt[:150]}\n"
-        items += f"    来源: {', '.join(source[:3])} | 分类: {category} | 热度: {score}\n"
+            items_text += f"    摘要: {excerpt[:150]}\n"
+        items_text += f"    来源: {', '.join(source[:3])} | 分类: {category} | 热度: {score}\n"
         if author:
-            items += f"    作者: {author}\n"
+            items_text += f"    作者: {author}\n"
 
     now = datetime.now(TZ_CN).strftime("%Y-%m-%d")
 
-    prompt = f"""你是一位资深的 AI 行业分析师，今天是 {now}。
-请对以下从各渠道采集的 AI 行业动态进行专业分析。
+    prompt = f"""你是一位资深 AI 行业分析师，今天是 {now}。
+请对以下从各渠道采集的 AI 行业动态进行专业三层分析。
 
-对每条新闻，请评估：
+对每条新闻评估：
 
 1. **重要性** (1-5星):
-   ★★★★★ 行业级重大突破/颠覆性发布
-   ★★★★ 重要更新，值得所有从业者关注
-   ★★★ 有价值的行业动态，相关人员应了解
-   ★★ 一般信息，部分人群感兴趣
-   ★ 低价值/广告/水帖/重复信息
+   5 = 行业级重大突破/颠覆性发布
+   4 = 重要更新，从业者必知
+   3 = 有价值动态
+   2 = 一般信息
+   1 = 低价值/广告
 
-2. **情绪** (positive/neutral/negative):
-   positive = 利好消息/突破/进步
-   negative = 风险/故障/封禁/争议
-   neutral = 中性信息/讨论/评测
+2. **情绪** (positive/neutral/negative)
 
-3. **一句话点评** (15-30字中文):
-   精炼概括这条信息的核心价值和影响
+3. **操作建议** (act/watch/skip)
 
-4. **操作建议** (watch/act/skip):
-   act = 需要立即采取行动（如：抢购/续费/关注安全漏洞）
-   watch = 值得持续关注跟踪
-   skip = 可以忽略
+4. **短评** brief: 15-30字中文核心判断
 
-严格按以下 JSON 格式输出，不要加任何其他文字:
+5. **深度观点** deep: 100-200字中文深度分析，包括：
+   - 事件本质解读
+   - 对AI从业者/用户的直接影响
+   - 与近期同类事件关联
+   - 1-3个月趋势预判
+
+6. **行业影响** impact: 50-100字中文，包括：
+   - 受影响的产业链环节
+   - 竞品动态对比
+
+严格按以下 JSON 格式输出，不加任何其他文字:
 [
-  {{"i":1,"r":5,"s":"positive","c":"一句话点评","a":"watch"}},
+  {{"i":1,"r":4,"s":"positive","a":"watch","b":"短评","d":"深度观点","p":"行业影响"}},
   ...
 ]
 
 新闻列表:
-{items}"""
+{items_text}"""
 
     try:
-        print(f"  🤖 AI 分析中... ({len(to_analyze)} 条, 模型: {model.split('-')[1]})")
+        print(f"  🤖 GLM-5.1 三层分析中... ({len(to_analyze)} 条)")
 
         message = client.messages.create(
-            model=model,
-            max_tokens=3000,
+            model=MODEL,
+            max_tokens=8000,
             messages=[{"role": "user", "content": prompt}],
         )
 
         response_text = message.content[0].text.strip()
 
-        # 解析 JSON
         start = response_text.find("[")
         end = response_text.rfind("]") + 1
         if start < 0 or end <= start:
-            print(f"  ⚠️ AI 返回格式异常，跳过")
+            print(f"  ⚠️ AI 返回格式异常")
             return
 
         analyses = json.loads(response_text[start:end])
+        analysis_map = {a["i"]: a for a in analyses}
 
-        # 将结果写入 Post 对象
+        count = 0
         for i, p in enumerate(to_analyze):
-            analysis = next((a for a in analyses if a.get("i") == i + 1), None)
-            if analysis:
-                p.ai_rating = analysis.get("r", 0)
-                p.ai_sentiment = analysis.get("s", "neutral")
-                p.ai_comment = analysis.get("c", "")
-                p.ai_action = analysis.get("a", "skip")
+            a = analysis_map.get(i + 1)
+            if a:
+                p.ai_rating = a.get("r", 0)
+                p.ai_sentiment = a.get("s", "neutral")
+                p.ai_action = a.get("a", "skip")
+                p.ai_comment = a.get("b", "")
+                p.deep_comment = a.get("d", "")
+                p.industry_impact = a.get("p", "")
 
-        analyzed = sum(1 for p in to_analyze if getattr(p, 'ai_rating', None))
-        print(f"  ✅ AI 分析完成: {analyzed}/{len(to_analyze)} 条已评分")
+                # 写入数据库
+                save_ai_comment(
+                    post_uid=p.uid,
+                    rating=p.ai_rating,
+                    sentiment=p.ai_sentiment,
+                    action=p.ai_action,
+                    brief_comment=p.ai_comment,
+                    deep_comment=p.deep_comment,
+                    industry_impact=p.industry_impact,
+                )
+                count += 1
 
-        # 保存结果到 API 数据
-        save_ai_to_api(to_analyze)
+        print(f"  ✅ AI 三层分析完成: {count} 条已评分入库")
 
     except Exception as e:
         print(f"  ⚠️ AI 分析失败: {e}")
 
 
+def incremental_analyze():
+    """增量分析：只处理数据库中未分析的帖子"""
+    init_db()
+
+    if anthropic is None:
+        print("  ℹ️ anthropic 包未安装，跳过增量分析")
+        return
+
+    api_key = get_api_key()
+    if not api_key:
+        print("  ℹ️ API Key 未找到，跳过增量分析")
+        return
+
+    unanalyzed = get_unanalyzed_posts(limit=MAX_POSTS_PER_BATCH)
+    if not unanalyzed:
+        print("  ✅ 所有帖子已分析完毕")
+        return
+
+    print(f"  📋 待增量分析: {len(unanalyzed)} 条")
+
+    # 转换为简单对象供 analyze_posts 使用
+    class _Post:
+        pass
+
+    posts = []
+    for r in unanalyzed:
+        p = _Post()
+        p.uid = r["uid"]
+        p.title = r["title"]
+        p.excerpt = r.get("excerpt", "")
+        p.summary = r.get("summary", "")
+        p.sources = json.loads(r.get("sources", "[]"))
+        p.category = r.get("category", "")
+        p.engagement_score = r.get("engagement_score", 0)
+        p.author = r.get("author", "")
+        p.ai_rating = 0
+        p.ai_sentiment = "neutral"
+        p.ai_comment = ""
+        p.ai_action = "skip"
+        p.deep_comment = ""
+        p.industry_impact = ""
+        posts.append(p)
+
+    analyze_posts(posts)
+
+
 def save_ai_to_api(posts):
-    """将 AI 分析结果保存到 api/posts.json"""
-    api_path = API_DIR / "posts.json"
+    """将 AI 分析结果保存到 API 数据（兼容旧接口）"""
+    api_path = BASE_DIR / "output" / "api" / "posts.json"
     if not api_path.exists():
         return
 
@@ -167,23 +239,23 @@ def save_ai_to_api(posts):
     except Exception:
         return
 
-    # 建立 uid -> ai 分析 的映射
-    ai_map = {}
+    rating_map = {}
     for p in posts:
         uid = getattr(p, 'uid', '')
-        if uid and getattr(p, 'ai_rating', None):
-            ai_map[uid] = {
+        if uid and getattr(p, 'ai_rating', 0):
+            rating_map[uid] = {
                 "ai_rating": p.ai_rating,
                 "ai_sentiment": getattr(p, 'ai_sentiment', 'neutral'),
                 "ai_comment": getattr(p, 'ai_comment', ''),
                 "ai_action": getattr(p, 'ai_action', 'skip'),
+                "deep_comment": getattr(p, 'deep_comment', ''),
+                "industry_impact": getattr(p, 'industry_impact', ''),
             }
 
-    # 更新 posts 中的 AI 字段
-    for post in data.get("posts", []):
-        uid = post.get("uid", "")
-        if uid in ai_map:
-            post.update(ai_map[uid])
+    for pd in data.get("posts", []):
+        uid = pd.get("uid", "")
+        if uid in rating_map:
+            pd.update(rating_map[uid])
 
     data["ai_analyzed"] = True
     data["ai_analyzed_at"] = datetime.now(TZ_CN).isoformat()
@@ -193,55 +265,9 @@ def save_ai_to_api(posts):
 
 
 if __name__ == "__main__":
-    # 独立运行：读取 API 数据 → 分析 → 写回
-    api_path = API_DIR / "posts.json"
-    if not api_path.exists():
+    if not Path("data/radar.db").exists():
         print("请先运行 monitor.py")
         sys.exit(1)
 
-    with open(api_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    posts_data = data.get("posts", [])
-    print(f"待分析: {len(posts_data)} 条")
-
-    if not posts_data:
-        sys.exit(0)
-
-    # 转为简单对象进行分析
-    class FakePost:
-        pass
-
-    posts = []
-    for pd in posts_data:
-        fp = FakePost()
-        fp.uid = pd.get("uid", "")
-        fp.title = pd.get("title", "")
-        fp.excerpt = pd.get("excerpt", "")
-        fp.summary = pd.get("summary", "")
-        fp.sources = pd.get("source", [])
-        fp.category = pd.get("category", "")
-        fp.engagement_score = pd.get("engagement_score", 0)
-        fp.author = pd.get("author", "")
-        fp.ai_rating = pd.get("ai_rating")
-        fp.ai_sentiment = pd.get("ai_sentiment", "neutral")
-        fp.ai_comment = pd.get("ai_comment", "")
-        fp.ai_action = pd.get("ai_action", "skip")
-        posts.append(fp)
-
-    analyze_posts(posts)
-
-    # 写回
-    for fp, pd in zip(posts, posts_data):
-        if getattr(fp, 'ai_rating', None):
-            pd["ai_rating"] = fp.ai_rating
-            pd["ai_sentiment"] = getattr(fp, 'ai_sentiment', 'neutral')
-            pd["ai_comment"] = getattr(fp, 'ai_comment', '')
-            pd["ai_action"] = getattr(fp, 'ai_action', 'skip')
-
-    data["ai_analyzed"] = True
-    data["ai_analyzed_at"] = datetime.now(TZ_CN).isoformat()
-    with open(api_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2, default=str)
-
-    print("✅ 分析结果已保存")
+    incremental_analyze()
+    print("✅ 增量分析完成")
