@@ -1,0 +1,105 @@
+{
+  "date": "2026-04-19",
+  "total": 127,
+  "sections": {},
+  "source_statuses": [
+    {
+      "id": "linuxdo",
+      "name": "Linux.do",
+      "success": true,
+      "count": 505,
+      "error": ""
+    },
+    {
+      "id": "hackernews",
+      "name": "Hacker News",
+      "success": true,
+      "count": 30,
+      "error": ""
+    },
+    {
+      "id": "reddit_chatgpt",
+      "name": "Reddit r/ChatGPT",
+      "success": true,
+      "count": 0,
+      "error": ""
+    },
+    {
+      "id": "reddit_claudeai",
+      "name": "Reddit r/ClaudeAI",
+      "success": true,
+      "count": 0,
+      "error": ""
+    },
+    {
+      "id": "reddit_openai",
+      "name": "Reddit r/OpenAI",
+      "success": true,
+      "count": 0,
+      "error": ""
+    },
+    {
+      "id": "reddit_localllama",
+      "name": "Reddit r/LocalLLaMA",
+      "success": true,
+      "count": 0,
+      "error": ""
+    },
+    {
+      "id": "reddit_singularity",
+      "name": "Reddit r/singularity",
+      "success": true,
+      "count": 0,
+      "error": ""
+    },
+    {
+      "id": "v2ex",
+      "name": "V2EX",
+      "success": true,
+      "count": 3,
+      "error": ""
+    },
+    {
+      "id": "bensbites",
+      "name": "Ben's Bites",
+      "success": true,
+      "count": 10,
+      "error": ""
+    },
+    {
+      "id": "therundownai",
+      "name": "The Rundown AI",
+      "success": true,
+      "count": 10,
+      "error": ""
+    },
+    {
+      "id": "simonwillison",
+      "name": "Simon Willison",
+      "success": true,
+      "count": 10,
+      "error": ""
+    },
+    {
+      "id": "arxiv_csai",
+      "name": "arXiv cs.AI",
+      "success": true,
+      "count": 0,
+      "error": ""
+    },
+    {
+      "id": "huggingface",
+      "name": "HuggingFace",
+      "success": true,
+      "count": 10,
+      "error": ""
+    },
+    {
+      "id": "36kr_ai",
+      "name": "36kr AI",
+      "success": true,
+      "count": 8,
+      "error": ""
+    }
+  ]
+}
